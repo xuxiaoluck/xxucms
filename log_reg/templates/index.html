@@ -1,0 +1,90 @@
+<!doctype html><!doctype html>
+<title>测试</title>
+<style>
+  * {
+    box-sizing: border-box; 
+  }
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: row;
+    margin: 0;
+  }
+  .outer-col-1 {
+    background: #D7E8D4;
+    flex: 1;
+  }
+  .outer-col-2 {
+    display: flex;
+    flex-direction: column;
+    flex: 8;
+  }
+  .inner-row {
+    display: flex;
+    flex-direction: row;
+  }
+  .inner-col {
+    flex: 6;
+  }
+  .inner-row article {
+    min-height: 80vh;
+  }
+  .inner-row aside {
+    background: beige;
+    flex: 1;
+  }
+  header, footer {
+    background: yellowgreen;
+    height: 10vh;
+  }
+
+  
+  header, footer, article, nav, aside {
+    padding: 1em;
+  }
+
+
+
+ .logdiv {
+     display:flex;
+     flex-direction:row;
+     width:100px;
+     height:60px;
+ }
+
+
+ 
+ ul {
+     display: flex;
+     flex-direction: column;
+ }
+ li {
+     height: 50px;
+ }
+ 
+</style>
+
+<body>
+    <nav class="outer-col-1">导航<br />
+          <ul>
+              <li>one</li>
+              <li>two</li>
+              <li>three</li>
+          </ul>
+    </nav>
+  <div class="outer-col-2">
+  	  <header>
+          <div class="logdiv">
+              
+          </div>
+      </header>
+    <div class="inner-row">
+      <div class="inner-col">
+    	<article>主区</article>
+  		<footer>底部</footer>
+      </div>
+    	<aside>右边</aside>
+    </div>
+  </div>
+</body>
+
