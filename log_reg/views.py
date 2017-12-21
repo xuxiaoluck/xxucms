@@ -1,30 +1,34 @@
-from django.shortcuts import render
+from django.shortcuts import render_to_response
 from django import forms
-from django import user
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
 # Create your views here.
 
 class UserForm(forms.Form):
-    username = forms.CharField(label='用户名',max_length=100)
+    username = forms.CharField(label='用户名',max_length=32)
     password = forms.CharField(label='密__码',widget=forms.PasswordInput())
 
 def login(req):
     if req.method == 'POST':
         uf = UserForm(req.POST)
         if uf.is_valid():
-            username = uf.cleaned_data['username']
-            password = uf.cleaned_data['password']
-            #对比输入的用户名和密码和数据库中是否一致
-            userPassJudge = user.objects.filter(username__exact=username,password__exact=password)
-
-            if userPassJudge:
-                response = HttpResponseRedirect('/index/')
-                response.set_cookie('cookie_username',username,3600)
-                return response
+            username1 = uf.cleaned_data['username']
+            password1 = uf.cleaned_data['password']
+            
+            usr = authenticate(username=username1, password=password1)
+            if usr is not None:
+                if usr.is_active:
+                    usr.login()                    
+                else:
+                    pass
             else:
-                return HttpResponse('login.html')
+                pass
+            return HttpResponse('login.html')
+            
     else:
         uf = UserForm()
+        
     return render_to_response('login.html',{'uf':uf},context_instance=RequestContext(req))
 
 
