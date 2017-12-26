@@ -1,11 +1,11 @@
-This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.8.23)  26 DEC 2017 15:14
+This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.12.24)  26 DEC 2017 21:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **design.tex
 (./design.tex
 LaTeX2e <2016/02/01>
-Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
+Babel <3.9q> and hyphenation patterns for 12 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/ctex/ctexart.cls
 (/usr/share/texlive/texmf-dist/tex/latex/l3kernel/expl3.sty
 Package: expl3 2016/01/19 v6377 L3 programming layer (loader) 
@@ -1200,26 +1200,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 15--24
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 25--34
-
- []
-
 [1
 
 ]
 LaTeX Font Info:    Font shape `EU1/FandolSong-Regular(0)/m/sl' in size <10.539
 37> not available
 (Font)              Font shape `EU1/FandolSong-Regular(0)/m/it' tried instead o
-n input line 41.
- [2] (./design.aux) ) 
+n input line 40.
+ [2] [3] (./design.aux) ) 
 Here is how much of TeX's memory you used:
- 19862 strings out of 493638
- 417151 string characters out of 6146796
- 422579 words of memory out of 5000000
- 23124 multiletter control sequences out of 15000+600000
+ 19863 strings out of 495252
+ 417181 string characters out of 6180857
+ 418538 words of memory out of 5000000
+ 23008 multiletter control sequences out of 15000+600000
  6674 words of font info for 48 fonts, out of 8000000 for 9000
- 1328 hyphenation exceptions out of 8191
- 65i,6n,77p,10412b,259s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 264 hyphenation exceptions out of 8191
+ 65i,6n,77p,10453b,259s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on design.pdf (2 pages).
+Output written on design.pdf (3 pages).
