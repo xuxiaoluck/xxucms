@@ -2,8 +2,11 @@ from django.shortcuts import render_to_response
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.contrib import auth
 
 # Create your views here.
+
+"""
 
 class UserForm(forms.Form):
     username = forms.CharField(label='用户名',max_length=32)
@@ -19,7 +22,7 @@ def login(req):
             usr = authenticate(username=username1, password=password1)
             if usr is not None:
                 if usr.is_active:
-                    usr.login()                    
+                    auth.login(usr)                    
                 else:
                     pass
             else:
@@ -36,3 +39,5 @@ def login(req):
 def index(req):
     username = req.COOKIES.get('cookie_username','')
     return render_to_response('index.html',{'username':username})
+
+"""
