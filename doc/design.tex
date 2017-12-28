@@ -1,7 +1,7 @@
 %xxucms 设计过程文档
 
-\documentclass{ctexart}
-
+\documentclass[a4paper]{ctexart}
+\renewcommand\thesection{\Roman{section}}  %章节使用大写罗马数字
 \author{徐潇}
 \title{XxuCMS 设计说明}
 \date{2017.12.26}
@@ -30,15 +30,26 @@
       生成一系列的目录。再生成一个应用（在项目中自动生成一个应用的同名目录，目录内含此应用的一系列文件）。\\
       \indent >django-admin startproject xxucms \\
       \indent >cd xxucms \\ 
+<<<<<<< HEAD
       \indent >python.py startapp logreg \\
       \indent
 
+=======
+      \indent >manage.py startapp logreg \\
+      \indent
+    \subsection{初始化数据库、设置越级用户、测试项目}
+    在创建了项目、应用后，做一点初始工作就可以直接启动应用（WEB）进行测试并进行后台管理，不用写一行代码，如果不用后台管理，连初始化数据库、建立用户都不用。\\
+      \indent >manage.py migrate  \#初始化数据库 \\
+      \indent >manage.py createsuperuser \#创建一个越级用户(输入用户名、密码)\\
+      \indent >manage.py runserver \#运行应用，可从 127.0.0.1:8000访问或 加 /admin 后进行后台管理。
+>>>>>>> 0dcb85251b9b2f5c9ad1f3252a960bf4f6809e7c
   \newpage
   \section{开发记录}
+  sdfsdkl;fjds
+  fdsjfds
+  fsdf
     \subsection{}
-      
-      
-   
+          
   
     
   
