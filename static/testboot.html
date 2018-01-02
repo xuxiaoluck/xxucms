@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>scm登陆界面</title>
+        <style type="text/css">
+         body {
+             background-color: #999;
+         }
+        </style>
+        <link rel="stylesheet" href="./bootstrap-3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./bootstrap-3.3.7/css/bootstrapValidator.min.css">
+        <script src="./bootstrap-3.3.7/js/jquery-3.2.1.min.js"></script>
+        <script src="./bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="./bootstrap-3.3.7/js/bootstrapValidator.min.js"></script>
+        <% 
+        Response.Buffer = True 
+        Response.ExpiresAbsolute = Now() - 1 
+        Response.Expires = 0 
+        Response.CacheControl = "no-cache"
+        %>
+    </head>
+    <body >
+        <!--
+             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+             <div class="container-fluid">
+             <div class="navbar-header">
+             <a class="navbar-brand" ui-sref=".">******系统 (ver 1.0.0 beta)</a>
+             </div>
+             <div class="collapse navbar-collapse" id="navbar-ex1-collapse">
+             <ul class="nav navbar-nav navbar-right">
+             <li class="small"><a href="http://www.my80s.cc" target="_blank">80s ©2015-2010</a></li>
+             </ul>
+             </div> 
+             </div>
+             </nav>-->
+        <div class="col-lg-5 col-lg-offset-2">
+            <div class="page-header" style="margin-top:5em;">
+                <h2>******管理系统</h2>
+            </div>
+        </div>
+        <div class="col-md-offset-4 col-md-4" >
+            <div class="panel panel-primary" style="margin-top:3em;" >
+                <ul id="myTab" class="nav nav-tabs">
+                    <li class="active"><a href="#Prv" data-toggle="tab">供应商登陆</a></li>
+                    <li><a href="#CPrv" data-toggle="tab">生产商登陆</a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content"> 
+                    <div class="tab-pane fade in active" id="Prv">
+                        <div class="well well-sm " ><h3 class="panel-title">
+                            供应商登陆</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form name="LoginG" id="LoginG" action="Admin_ChkLogin_G.asp" method="post" target="_parent" >
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">账号</span>
+                                        <input name="Username" type="text" class="form-control" placeholder="Username" >
+                                        <!--<span class="help-block" id="UsernameMessage" /> -->
+                                    </div><br />
+                                </div><!-- /form-group-->
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">密码</span>
+                                        <input name="Password" type="Password" class="form-control" placeholder="Password">
+                                        <!--<span class="help-block" id="PasswordMessage" /> -->
+                                    </div> 
+                                </div><!-- /form-group--> 
+                                <h5>请将如下计算结果填入文本框内：</h5>
+                                <div class="form-group form-horizontal">
+                                    <label class="col-lg-3 control-label " id="captchaOperation"></label>
+                                    <div class="col-lg-9">
+                                        <input type="text" class="form-control " name="captcha" />
+                                    </div>
+                                </div><br /><br /> <br /> 
+                                <div class="form-group">
+                                    <input class="btn btn-primary btn-block" type="submit" value="登　　录" />
+                                </div>
+                            </form>
+                        </div><!-- /panel-body -->
+                    </div><!-- tab-pane fade in active-->
+                    <div class="tab-pane fade" id="CPrv">
+                        <div class="well well-sm"><h3 class="panel-title">
+                            生产商登陆</h3>
+                        </div>
+                        <div class="panel-body"> 
+                            <form name="LoginS" id="LoginS" action="Admin_ChkLogin_S.asp" method="post" target="_parent" >
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">账号</span>
+                                        <input name="Username2" type="text" class="form-control" placeholder="Username" >
+                                        <!--<span class="help-block" id="UsernameMessage" /> -->
+                                    </div><br />
+                                </div><!-- /form-group-->
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">密码</span>
+                                        <input name="Password2" type="Password" class="form-control" placeholder="Password">
+                                        <!--<span class="help-block" id="PasswordMessage" /> -->
+                                    </div> 
+                                </div><!-- /form-group--> 
+                                <h5>请将如下计算结果填入文本框内：</h5>
+                                <div class="form-group form-horizontal">
+                                    <label class="col-lg-3 control-label " id="captchaOperation2"></label>
+                                    <div class="col-lg-9">
+                                        <input type="text" class="form-control " name="captcha2" />
+                                    </div>
+                                </div><br /><br /> <br /> 
+                                <div class="form-group">
+                                    <input class="btn btn-primary btn-block" type="submit" value="登　　录" />
+                                </div>
+                            </form>
+                        </div><!-- /panel-body -->
+                    </div><!-- tab-pane fade--> 
+                </div><!--myTabContent-->
+            </div>
+            <script type="text/javascript">
+             $(document).ready(function() {
+                 // Generate a simple captcha
+                 function randomNumber(min, max) {
+                     return Math.floor(Math.random() * (max - min + 1) + min);
+                 };
+                 function generateCaptcha() {
+                     $('#captchaOperation').html([randomNumber(1, 50), '+', randomNumber(1, 50), '='].join(' '));
+                 };
+                 generateCaptcha();
+                 $('#LoginG')
+                     .bootstrapValidator({
+                         //message: 'This value is not valid',
+                         feedbackIcons: {
+                             valid: 'glyphicon glyphicon-ok',
+                             invalid: 'glyphicon glyphicon-remove',
+                             validating: 'glyphicon glyphicon-refresh'
+                         },
+                         fields: {
+                             Username: {
+                                 message: 'The username is not valid',
+                                 validators: {
+                                     notEmpty: {
+                                         message: '供货商账户不能为空'
+                                     },
+                                     stringLength: {
+                                         min: 5,
+                                         max: 10,
+                                         message: '供货商账号长度 5-10'
+                                     },
+                                     /*remote: {
+                                        url: 'remote.php',
+                                        message: 'The username is not available'
+                                        },*/
+                                     regexp: {
+                                         regexp: /^[a-zA-Z0-9_\.]+$/,
+                                         message: '只接受数字和字母 '
+                                     }
+                                 }
+                             },
+                             Password: {
+                                 validators: {
+                                     notEmpty: {
+                                         message: '密码不能为空'
+                                     }
+                                 }
+                             },
+                             captcha: {
+                                 validators: {
+                                     callback: {
+                                         message: '验证码错误',
+                                         callback: function(value, validator) {
+                                             var items = $('#captchaOperation').html().split(' '), sum = parseInt(items[0]) + parseInt(items[2]);
+                                             return value == sum;
+                                         }
+                                     }
+                                 }
+                             }
+                         }
+                     })
+                     .on('error.form.bv', function(e) {
+                         var $form = $(e.target),
+                             bootstrapValidator = $form.data('bootstrapValidator');
+                         if (!bootstrapValidator.isValidField('captcha')) {
+                             // The captcha is not valid
+                             // Regenerate the captcha
+                             generateCaptcha();
+                         }
+                     });
+             });
+            </script>
+            <script type="text/javascript">
+             $(document).ready(function() {
+                 // Generate a simple captcha
+                 function randomNumber(min, max) {
+                     return Math.floor(Math.random() * (max - min + 1) + min);
+                 };
+                 function generateCaptcha() {
+                     $('#captchaOperation2').html([randomNumber(1, 50), '+', randomNumber(1, 50), '='].join(' '));
+                 };
+                 generateCaptcha();
+                 $('#LoginS')
+                     .bootstrapValidator({
+                         //message: 'This value is not valid',
+                         feedbackIcons: {
+                             valid: 'glyphicon glyphicon-ok',
+                             invalid: 'glyphicon glyphicon-remove',
+                             validating: 'glyphicon glyphicon-refresh'
+                         },
+                         fields: {
+                             Username2: {
+                                 message: 'The username is not valid',
+                                 validators: {
+                                     notEmpty: {
+                                         message: '供货商账户不能为空'
+                                     },
+                                     stringLength: {
+                                         min: 5,
+                                         max: 10,
+                                         message: '供货商账号长度 5-10'
+                                     },
+                                     /*remote: {
+                                        url: 'remote.php',
+                                        message: 'The username is not available'
+                                        },*/
+                                     regexp: {
+                                         regexp: /^[a-zA-Z0-9_\.]+$/,
+                                         message: '只接受数字和字母 '
+                                     }
+                                 }
+                             },
+                             Password2: {
+                                 validators: {
+                                     notEmpty: {
+                                         message: '密码不能为空'
+                                     }
+                                 }
+                             },
+                             captcha2: {
+                                 validators: {
+                                     callback: {
+                                         message: '验证码错误',
+                                         callback: function(value, validator) {
+                                             var items = $('#captchaOperation2').html().split(' '), sum = parseInt(items[0]) + parseInt(items[2]);
+                                             return value == sum;
+                                         }
+                                     }
+                                 }
+                             }
+                         }
+                     })
+                     .on('error.form.bv', function(e) {
+                         var $form = $(e.target),
+                             bootstrapValidator = $form.data('bootstrapValidator');
+                         if (!bootstrapValidator.isValidField('captcha')) {
+                             // The captcha is not valid
+                             // Regenerate the captcha
+                             generateCaptcha();
+                         }
+                     });
+             });
+            </script>
+    </body>
+</html>
