@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <!-- Template by Quackit.com -->
 <html lang="zh">
@@ -10,10 +11,10 @@
     <title>INFO内容管理系统</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="./bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}" rel="stylesheet">
 
     <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
-    <!--  <link href="css/custom.css" rel="stylesheet">  自定义样式-->
+    <link href="{% static 'bootstrap-3.3.7/css/custom.css' %}" rel="stylesheet"> 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,7 +39,7 @@
                     <span class="icon-bar">图标2</span>
                     <span class="icon-bar">图标3</span>
                 </button>
-                <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-globe"></span> 显示Logo</a>
+               <!--  <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-globe"></span> 显示Logo</a> -->
             </div>
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="navbar">
@@ -49,15 +50,12 @@
                     <li>
                         <a href="#">关于</a>
                     </li>
-                    <li>
-                        <a href="#">产品</a>
-                    </li>
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">服务 <span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">用户<span class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="about-us">
-							<li><a href="#">服务1Engage</a></li>
-							<li><a href="#">服务2</a></li>
-							<li><a href="#">服务3</a></li>
+							<li><a href="#">用户注册</a></li>
+							<li><a href="#">修改密码</a></li>
+							<li><a href="#">退出登录</a></li>
 						</ul>
 					</li>
                 </ul>
@@ -92,6 +90,7 @@
 					<a href="#" class="list-group-item">图书文档</a>
 					<a href="#" class="list-group-item">照片管理</a>
 					<a href="#" class="list-group-item">学习记录</a>
+                    <a href="#" class="list-group-item">软件下载</a>
 					<a href="#" class="list-group-item">网站收集</a>
 				</div>
 			</div>
@@ -191,12 +190,16 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">
-						<span class="glyphicon glyphicon-log-in"></span> 
-						用户登录
+						<span class="glyphicon glyphicon-log-in"></span>
+                        {% if isok %}
+						用户({{uid}})已登录
+                        {%else%}
+                        请登录
+                        {% endif %}
 					</h3>
 				</div>
 				<div class="panel-body">
-					<form>
+					<form method="get" action="login">{% csrf_token %}
 						<div class="form-group">
 							<input type="text" class="form-control" id="uid" name="uid" placeholder="用户名">
 						</div>
@@ -255,7 +258,7 @@
 				<div class="carousel-inner" role="listbox">
 					<div class="item active">
 						<a href="#">
-							<img class="img-responsive" src="holder.js/400x300?bg=FF8C00&text=Image%201" alt="">
+							<img class="img-responsive" src="{% static 'bootstrap-3.3.7/js/holder.min.js/400x300?bg=FF8C00&text=Image%201' %}" alt="">
 						</a>
 						<div class="carousel-caption">
 							<h3>Dramatically Engage</h3>
@@ -264,7 +267,7 @@
 					</div>
 					<div class="item">
 						<a href="#">
-							<img class="img-responsive" src="holder.js/400x300?bg=FF8C00&text=Image%202" alt="">
+							<img class="img-responsive" src="{% static 'holder.js/400x300?bg=FF8C00&text=Image%202' %}" alt="">
 						</a>
 						<div class="carousel-caption">
 							<h3>Efficiently Unleash</h3>
@@ -358,16 +361,16 @@
 
 	
     <!-- jQuery -->
-    <script src="./bootstrap-3.3.7/js/jquery-1.11.3.min.js"></script>
+    <script src="{% static 'bootstrap-3.3.7/js/jquery-1.11.3.min.js' %}"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="./bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
 	
 	<!-- IE10 viewport bug workaround -->
-	<script src="./bootstrap-3.3.7/js/ie10-viewport-bug-workaround.js"></script>
+	<script src="{% static 'bootstrap-3.3.7/js/ie10-viewport-bug-workaround.js' %}"></script>
 	
 	<!-- Placeholder Images -->
-	<script src="./bootstrap-3.3.7/js/holder.min.js"></script>
+	<script src="{% static 'bootstrap-3.3.7/js/holder.min.js' %}"></script>
 	
 </body>
 
