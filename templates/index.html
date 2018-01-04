@@ -55,7 +55,7 @@
 						<ul class="dropdown-menu" aria-labelledby="about-us">
 							<li><a href="#">用户注册</a></li>
 							<li><a href="#">修改密码</a></li>
-							<li><a href="#">退出登录</a></li>
+							<li><a href="/logout/">退出登录</a></li>
 						</ul>
 					</li>
                 </ul>
@@ -191,21 +191,26 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						<span class="glyphicon glyphicon-log-in"></span>
-                        {% if isok %}
+                        {% if user.is_authenticated %}
 						用户({{uid}})已登录
                         {%else%}
-                        请登录
+                        未登录
                         {% endif %}
 					</h3>
 				</div>
 				<div class="panel-body">
-					<form method="get" action="login">{% csrf_token %}
+					<form method="POST" action="/login/">
+                       <!--  {% csrf_token %} -->
 						<div class="form-group">
 							<input type="text" class="form-control" id="uid" name="uid" placeholder="用户名">
 						</div>
 						<div class="form-group">
 							<input type="password" class="form-control" id="pwd" name="pwd" placeholder="密码">
 						</div>
+                        <!-- -<div class="form-group">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                        </div>  -->
+                       
 						<button type="submit" class="btn btn-primary">登 录</button>
 					</form>
 				</div>
@@ -258,7 +263,7 @@
 				<div class="carousel-inner" role="listbox">
 					<div class="item active">
 						<a href="#">
-							<img class="img-responsive" src="{% static 'bootstrap-3.3.7/js/holder.min.js/400x300?bg=FF8C00&text=Image%201' %}" alt="">
+							<img class="img-responsive" src="{% static 'bootstrap-3.3.7/js/holder.min.js/400x300?bg=FF8C00&text=Image%201' %}" alt="">丢失图1
 						</a>
 						<div class="carousel-caption">
 							<h3>Dramatically Engage</h3>

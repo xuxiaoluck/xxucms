@@ -18,7 +18,9 @@ from django.urls import path
 import xxucms.views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('',xxucms.views.index),
+    path('admin/', admin.site.urls),
     path('login/',xxucms.views.xlogin),
+    path('logout/',xxucms.views.xlogout),
+    
 ]
