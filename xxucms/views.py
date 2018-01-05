@@ -25,4 +25,7 @@ def xlogout(request):
     auth.logout(request)
     return render_to_response('index.html',locals())
 
+def userreg(request):
+    return render_to_response('userreg.html',locals())
+
 
