@@ -1,16 +1,24 @@
 %xxucms 设计过程文档
 
 \documentclass[a4paper]{ctexart}
-\renewcommand\thesection{\Roman{section}}  %章节使用大写罗马数字
+
+\usepackage{dirtree}
+\usepackage{color}
+%\usepackage{listings}
+%\input{dirtree}
+\usepackage{pythonhighlight}
+\renewcommand \thesection{\Roman{section}}  %章节使用大写罗马数字
 \author{徐潇}
 \title{XxuCMS 设计说明}
 \date{2017.12.26}
 
+
 \begin{document}
   \maketitle  %生成上面的 title
-
+  %第一节
   \section{系统环境、项目初始化}
-  Ubuntu16.04 Emacs24.5 TexLive2005 Ctex Python3 Django2.0 Sqlite3
+  Ubuntu16.04 Emacs24.5 TexLive2005 Ctex Python3 Django2.0 Sqlite3 Bootstrap3 Jquery1.11
+  %第一节的第一个子节
    \subsection{虚拟环境设置}
       在Ubuntu16.04下设置虚拟环境，在虚拟环境下安装各类软件、开发工具，互相不影响，只对当前虚拟环境产生影响。\\    
       \indent 1)安装虚拟环境软件\\      
@@ -21,6 +29,7 @@
        \indent 3)启动/退出虚拟环境(先进入环境目录 virtualpython3)：\\
        \indent >source ./bin/activate \\
        \indent >deactivate \\
+    %第一节的第二个子节
     \subsection{安装django创建项目、应用}
       在虚拟环境下安装django并创建一个django项目及应用k。\\
       \indent 1)安装Django \\
@@ -30,28 +39,161 @@
       生成一系列的目录。再生成一个应用（在项目中自动生成一个应用的同名目录，目录内含此应用的一系列文件）。\\
       \indent >django-admin startproject xxucms \\
       \indent >cd xxucms \\ 
-<<<<<<< HEAD
-      \indent >python.py startapp logreg \\
-      \indent
-
-=======
       \indent >manage.py startapp logreg \\
-      \indent
+    %第一节的第三个子节
     \subsection{初始化数据库、设置越级用户、测试项目}
     在创建了项目、应用后，做一点初始工作就可以直接启动应用（WEB）进行测试并进行后台管理，不用写一行代码，如果不用后台管理，连初始化数据库、建立用户都不用。\\
       \indent >manage.py migrate  \#初始化数据库 \\
       \indent >manage.py createsuperuser \#创建一个越级用户(输入用户名、密码)\\
       \indent >manage.py runserver \#运行应用，可从 127.0.0.1:8000访问或 加 /admin 后进行后台管理。
->>>>>>> 0dcb85251b9b2f5c9ad1f3252a960bf4f6809e7c
-  \newpage
-  \section{开发记录}
-  sdfsdkl;fjds
-  fdsjfds
-  fsdf
-    \subsection{}
-          
-  
-    
-  
+
+      \newpage
+      %第二节,新起一页
+      \section{开发记录}
+      记录一个CMS设计过程中的详细经过及出现的各种问题的解决方法。
+      %第二节的第一个子节
+      \subsection{目录结构}  
+      按照前面的过程，新建虚拟环境、创建一个项目、创建一个应用,创建首页、注册页、公用模板目录、静态目录等 。\\
+           \dirtree{%
+             .1 xxucms\DTcomment{项目根目录}.
+             .2 db.sqlite3\DTcomment{数据库文件}.
+             .2 doc\DTcomment{设计文档目录}.
+             .3 design.tex\DTcomment{文档目录中的一个文档}.
+             .2 hiddendanger\DTcomment{在项目中创建的一个应用，下含一些文件}.
+             .3 admin.py.
+             .3 apps.py.
+             .3 \_\_init\_\_.py.
+             .3 models.py.
+             .3 views.py.
+             .2 manage.py\DTcomment{创建项目时生成的项目管理工具}.
+             .2 static\DTcomment{自建的静态文件目录，保存图片、包库等}.
+             .3 bootstrap-3.3.7.
+             .4 css.
+             .4 fonts.
+             .4 js.
+             .2 templates\DTcomment{公用模板目录，如首页、登录模板等}.
+             .3 index.html.
+             .3 userreg.html.
+             .2 xxucms\DTcomment{项目主目录，下含一些全局配置文件}.
+             .3 \_\_init\_\_.py.
+             .3 settings.py.
+             .3 urls.py.
+             .3 views.py.
+             .3 wsgi.py.
+           }           
+           
+           {\color{red}{目录及文件详细说明：}}1、最顶层的xxucms目录是创建项目时的目录也就是项目名称，里面的xxucms子目录是创建项目是自动生成的项目主目录，包含全局配置文件settings.py（项目全局设置文件）、
+           urls.py（URL访问转发匹配控制）、views.py(全局项目视图)、wsgi.py(WEB运行配置)、init.py（python包标志）。2、doc目录是自建的文档目录。3、hiddendanger是在项目中创建的一个应用名称，自动生成目录及里面的文件，admin.py、apps.py都是要和项目或全局配置沟通的文件，后面会介绍，views.py是默认的视图文件，应用的中视图一般放在自己的这个文件中，便于隔离及应用程序重用，models.py为应用中用到的模型（就是数据库结构）。4、static目录保存静态目录。在django中要用到的所有其他文件如bootstrap框架、js文件、图片资源等都不能直接使用，要作为静态文件设置好相关配置才能使用，后面会说如何设置。5、templates目录是自建的公用模板目录，把一个各个应用程序都要用到的模板如首页、登录、项目关于信息等统一放在这，各个应用一般情况下有专有的模板目录。6、文件。db.sqlite3为数据库文件，这个是django支持的最简单的数据库，只有一个文件，在前面说过如何生成数据库，在每次对模型进行了修改后都要进行数据库更新同步;manage.py是自动生成的项目管理文件，如启动WEB、运行django shell等。
+           %第二节的第二个子节
+           \subsection{项目设置}
+           %全局设置，如静态文件、中文环境等。
+           {\color{red}{一、settings.py}}。这个文件在创建项目时在项目目录(本例为 /xxucms/xxucms)自动生成，里面包含项目中的全局设置信息，下面把重要的一些进行说明。
+           
+            {\color{blue}{BASE\_DIR}} = os.path.dirname(os.path.dirname(os.path.abspath(\\\_\_file\_\_))) BASE\_DIR 为项目的根目录，就是你在创建项目的生成的那个目录，项目中的所有文件、应用目录都是基于这个目录。
+
+            {\color{blue}{DEBUG}} = True   在开发设计时启动DEBUG模式，在出错时会显示详细信息，部署到生产环境是一定要关掉。
+
+            {\color{blue}{INSTALLED\_APPS}} =[\\                
+                'django.contrib.admin',\\                
+                'django.contrib.auth',\\
+                'django.contrib.contenttypes',\\
+                'django.contrib.sessions',\\
+                'django.contrib.messages',\\
+                'django.contrib.staticfiles',\\
+                'hiddendanger',\# 这个是新建的应用程序\\
+            ]\\
+            \indent INSTALL\_APPS 配置设置了项目中哪些应用被安装启动了，所有的应用都必须被安装启用后才能被访问到。以django开头的为系统自带的应用：后台管理、用户认证系统、会话消息管理、静态文件支持等，最后一个是在项目内建的一个应用，每次新建的应用都要加到这个设置列表中。
+
+            {\color{blue}{MIDDLEWARE}} = [\\
+    'django.middleware.security.SecurityMiddleware',\\
+    'django.contrib.sessions.middleware.SessionMiddleware',\\
+    'django.middleware.common.CommonMiddleware',\\
+    \#'django.middleware.csrf.CsrfViewMiddleware',\\
+    'django.contrib.auth.middleware.AuthenticationMiddleware',\\
+    'django.contrib.messages.middleware.MessageMiddleware',\\
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',\\
+            ]\\
+            \indent 设置了中间件，如在POST数据时进行站外交叉访问保护的csrf，一般不用修改。
+
+            {\color{blue}{TEMPLATES}} = [\\
+              \{'BACKEND': 'django.template.backends.django.DjangoTemplates',\\
+        'DIRS': [os.path.join(BASE\_DIR,'templates')],\\
+        'APP\_DIRS': True,\\
+        'OPTIONS': \{\\
+            'context\_processors': [\\
+                'django.template.context\_processors.debug',\\
+                'django.template.context\_processors.request',\\
+                'django.contrib.auth.context\_processors.auth',\\
+                'django.contrib.messages.context\_processors.messages',\\
+                \#'django.core.context\_processors.csrf',\\
+            ],\},\},]\\
+            \indent 模板参数设置，DIRS列表设置了模板目录列表，系统在此列表中寻找匹配的模板文件;APP\_DIRS为True则说明可以自动从应用程序的template目录中寻找模板;context\_processors列表一般不用修改。
+                      
+            {\color{blue}{DATABASES}} = \{'default': \\
+              \{'ENGINE': 'django.db.backends.sqlite3',\\
+                'NAME': os.path.join(BASE\_DIR, 'db.sqlite3'), \}\}\\
+            \indent 数据库设置，目前官方支持数据库有 ORACLE、MYSQL、POSTGRESQL、SQLITE，其它数据库有第三方人员在做。此处设置了使用默认的 sqlite3 数据库，并设置了数据库文件路径及名称。
+
+            {\color{blue}{LANGUAGE\_CODE}} = 'zh-hans'\\
+            \indent 设置使用的语言，默认为 'en-us',此处改为中文简体，后面自动转为中文界面。
+            %#LANGUAGE_CODE = 'en-us'
+            
+            {\color{blue}{STATIC\_URL}} = '/static/' \\
+            \indent 设置静态文件访问的 URL,在使用静态文件时使用 {\% static }来访问.
+            
+                    {\color{blue}{STATICFILES\_DIRS}} = (os.path.join(BASE\_DIR,'static'),)\\
+                    \indent 设置静态文件实际路径，为一个元组，可以设置多个路径。
+
+                    项目应用中用到的静态文件（bootstrap、图片、声音、CSS、JS等文件）分类统一放在项目根目录下的  static 目录中。在模板中要用到相应的文件时这样用(如使用bootstrap)：\\
+                    \indent <link href="\{\% static 'bootstrap-3.3.7/css/bootstrap.min.css' \%\}"\\ rel="stylesheet">
+
+                    {\color{red}{二、urls.py}}。创建项目时自动生成在项目主目录中，django项目启动后所有的WEB访问（url）都将由这里的设置转到相应的视图函数中，再由视图函数来决定怎么处理、调用哪个模板。一般小视图不多、单应用程序下用默认这个URLS文件就行了，如果应用较多，视图较多，可以用多个URLS文件，可以把应用专有的视图放在应用程序的目录下（同样取名urls.py)。如下是其中一些设置：
+                      
+                      urlpatterns = [\\
+                        path('',xxucms.views.index),\\
+                        path('home/',xxucms.views.index),\\
+                        path('admin/', admin.site.urls),\\
+                        path('login/',xxucms.views.xlogin),\\
+                        path('logout/',xxucms.views.xlogout),\\
+                        path('userreg/',xxucms.views.userreg),\\                        
+                        path('regsave/',xxucms.views.regsave),]\\
+
+             简要解释下。第一个空路径“” 是指在浏览器中访问网站根目录
+             (如本地http://127.0.0.1:8088/)时调用视图中的index函数（函数中具体做什么看设计功能，一般最后都要返回一个模板）， ‘home/' 指访问了\\http://rootweb/home/ 时也调用 index视图，其它是一样的意思。所有的WEB访问、FORM动作、点击事件等行为如果要转到某个页面都要在此进行登记，和一个视图函数配对。xxucms.views.index,为项目目录(同时也是一个包)xxucms下views.py文件下的视图函数 index。
+
+             在项目主目录中自动创建了这个文件，如果有多个项目，所有的URL转发都由项目URLS来处理会显得很混乱，并且不利于后结应用迁移，这时可以在每个应用中创建自己urls.py文件来处理应用的URL视图转发。要在应用中使用URLS.PY转发，还要在项目的URLS.PY文件中配置应用的urls.py，以通知不同的应用能正确找到相应的视图。如前面新建的应用hiddendange,为了使所有 rootweb/hiddendanger/* 的URL能正确的转发到这个应用的视图中，只要做两步就行。一、在项目的urls.py文件中urlpatterns = [ ]中加入一条 path('hiddendanger/',include(hiddendanger.urls))，指明只要是/hiddendanger/的所有访问都转发到hiddendange.urls中转发规则中。二、在应用的urls.py中把/hiddendange/看成根 ‘’ 就行。具体应用看以后的实例说明。
+                      
+                      {\color{red}{三、views.py}}。创建项目时自动生成在项目主目录中,包含应用中要用到所有实际操作、业务逻辑、程序功能模块，主要是函数。一般在每个应用中也会有这个文件来处理应用本身的业务，文件名称可以任意，只要在urls.py中配对好就行。如下例子：                   
+ \begin{python}
+ def index(request):
+     return render_to_response('index.html',{'isok':False})
+
+ def xlogin(request):
+    '''登录视图'''    
+    uid = request.POST.get('uid','')
+    pwd = request.POST.get('pwd','')
+    user = auth.authenticate(username = uid,password = pwd)
+    isok = True
+    if user is not None and user.is_active:
+        auth.login(request,user)
+        return render_to_response('index.html',locals())
+    else:
+        isok = False
+        return render_to_response('index.html',locals())
+
+ def xlogout(request):
+    auth.logout(request)
+    return render_to_response('index.html',locals())
+
+ def userreg(request):
+    '''点击了用户注册后的视图'''
+    return render_to_response('userreg.html',{'regsave':False,'regok':False})
+ \end{python}
+
+   当在浏览器中输入了前面URLS.PY中的访问地址或页面中发生了相应的事件就会调用上面的相应视图函数，在视图函数中进行业务逻辑处理，最后再返回一个模板，在模板中对传入的变量进行处理，显示相应的界面。
+
+ %第二节的第三个子节                                          
+ \subsection{设计首页、登录界面}
+   在
 
 \end{document}

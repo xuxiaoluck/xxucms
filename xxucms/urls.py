@@ -14,14 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 import xxucms.views
+import hiddendanger.urls
 
 urlpatterns = [
     path('',xxucms.views.index),
+    path('home/',xxucms.views.index), #所有的地方点击了回首页按钮
     path('admin/', admin.site.urls),
     path('login/',xxucms.views.xlogin),
     path('logout/',xxucms.views.xlogout),
-    path('userreg/',xxucms.views.userreg),
-    
+    path('userreg/',xxucms.views.userreg),   #index中点了用户注册
+    path('regsave/',xxucms.views.regsave),   #userreg.html中点击了注册按钮
+    path('hiddendanger/',include(hiddendanger.urls)),  #应用 hiddendanger的 URL转发
 ]
