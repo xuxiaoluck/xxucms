@@ -1,0 +1,378 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!-- Template by Quackit.com -->
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>CMS.电子图书文档管理工具</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
+    <link href="{% static 'bootstrap-3.3.7/css/custom.css' %}" rel="stylesheet"> 
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+ 	<script src="{% static 'bootstrap-3.3.7/js/holder.js' %}"></script>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="container">
+
+            <!-- 整体容器显示LOGO -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar">图标1</span>
+                    <span class="icon-bar">图标2</span>
+                    <span class="icon-bar">图标3</span>
+                </button>
+               <!--  <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-globe"></span> 显示Logo</a> -->
+            </div>
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="/home/">首页</a>
+                    </li>
+                    <li>
+                        <a href="#">关于</a>
+                    </li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">用户<span class="caret"></span></a>
+						<ul class="dropdown-menu" aria-labelledby="about-us">
+							<li><a href="/userreg/">用户注册</a></li>
+							<li><a href="#">修改密码</a></li>
+							<li><a href="/logout/">退出登录</a></li>
+						</ul>
+					</li>
+                </ul>
+
+				<!-- Search -->
+				<form class="navbar-form navbar-right" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control">
+					</div>
+					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> 搜索</button>
+				</form>
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container  导航头部 -->
+    </nav>
+
+    <div class="container-fluid">
+	    <!-- 下面为显示区， -->
+    	<!-- 左边列 三格 -->
+
+		<div class="col-sm-2">
+
+			<!-- List-Group Panel -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h1 class="panel-title"><span class="glyphicon glyphicon-random"></span> INFOCMS</h1>
+				</div>
+				<div class="list-group">
+					<a href="/hiddendanger/" class="list-group-item">隐患管理</a>
+					<a href="#" class="list-group-item">图书文档</a>
+					<a href="#" class="list-group-item">照片管理</a>
+					<a href="#" class="list-group-item">博   客</a>
+                    <a href="#" class="list-group-item">软件下载</a>
+					<a href="#" class="list-group-item">网站收集</a>
+				</div>
+			</div>
+
+			<!-- Text Panel -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h1 class="panel-title"><span class="glyphicon glyphicon-cog"></span> 左列第二块区域</h1>
+				</div>
+
+				<div class="panel-body">
+					<p>左二区域显示区</p>
+					<p><button class="btn btn-default">左2按钮</button></p>
+				</div>
+			</div>
+
+			<!-- Text Panel -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<span class="glyphicon glyphicon-bullhorn">左三</span>
+						左三标题区文本
+					</h3>
+				</div>
+				<div class="panel-body">
+					<p>左三</p>
+					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-default">左三1</button>
+						<button type="button" class="btn btn-default">左三2</button>
+						<button type="button" class="btn btn-default">左三3</button>
+					</div>
+				</div>
+			</div>
+
+		</div><!--/Left Column-->
+
+
+		<!-- Center Column 中间列，主显示区，占6格（一半）-->
+		<div class="col-sm-8">
+
+			<!-- Alert -->
+			<div class="alert alert-success alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<strong>alter:</strong> 警示、消息显示区
+			</div>
+
+			<!-- Articles -->
+			<div class="row">
+				<article class="col-xs-12">
+					<h2>第一行article区 二级标题</h2>
+					<p>显示内容.</p>
+					<p><button class="btn btn-default btn-sm">更多...</button></p>
+					<p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>
+					<ul class="list-inline">
+						<li><a href="#">今天</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 2 备注</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-share"></span> 8 共享</a></li>
+					</ul>
+				</article>
+			</div>
+			<hr>
+			<div class="row">
+				<article class="col-xs-12">
+					<h2>第二行 article 二级标题</h2>
+					<p>显示内容</p>
+					<p><button class="btn btn-default">更多...</button></p>
+					<p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>
+					<ul class="list-inline">
+						<li><a href="#">Yesterday</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 21 信息</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-share"></span> 36 共享</a></li>
+					</ul>
+				</article>
+			</div>
+			<hr>
+			<div class="row">
+				<article class="col-xs-12">
+					<h2>第三行 article 二级标题</h2>
+					<p>显示内容</p>
+					<p><button class="btn btn-default">更多</button></p>
+					<p class="pull-right"><span class="label label-default">关键词</span> <span class="label label-default">标签</span> <span class="label label-default">post</span></p>
+					<ul class="list-inline">
+						<li><a href="#">2 Days Ago</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 12 Comments</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-share"></span> 18 Shares</a></li>
+					</ul>
+				</article>
+			</div>
+			<hr>
+		</div><!--/Center Column-->
+
+
+	  <!-- Right Column 在边一行-->
+	  <div class="col-sm-2">
+
+			<!-- Form 一个登录FORM --> 
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<span class="glyphicon glyphicon-log-in"></span>
+                        {% if user.is_authenticated %}
+						用户({{uid}})已登录
+                        {%else%}
+                        未登录
+                        {% endif %}
+					</h3>
+				</div>
+				<div class="panel-body">
+					<form method="POST" action="/login/">                      
+						<div class="form-group">
+							<input type="text" class="form-control" id="uid" name="uid" placeholder="用户名">
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" id="pwd" name="pwd" placeholder="密码">
+						</div>
+
+						<button type="submit" class="btn btn-primary">登 录</button>
+					</form>
+				</div>
+			</div>
+ 
+			<!-- Progress Bars 处理进度条-->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<span class="glyphicon glyphicon-scale"></span> 
+						工作进度
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="progress">
+						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+						aria-valuemin="0" aria-valuemax="100" style="width:100%">
+							100% 进度A 
+						</div>
+					</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80"
+						aria-valuemin="0" aria-valuemax="100" style="width:80%">
+							80% 进度B
+						</div>
+					</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="45"
+						aria-valuemin="0" aria-valuemax="100" style="width:45%">
+							45% 进度C
+						</div>
+					</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="35"
+						aria-valuemin="0" aria-valuemax="100" style="width:35%">
+							35% 进度D
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Carousel 轮播 --> 
+ 			<h3><span class="glyphicon glyphicon-modal-window"></span> 轮播标题</h3>
+			<div id="side-carousel" class="carousel slide" data-ride="carousel">
+				<ol class="carousel-indicators">
+					<li data-target="#side-carousel" data-slide-to="0" class="active"></li>
+					<li data-target="#side-carousel" data-slide-to="1"></li>
+					<li data-target="#side-carousel" data-slide-to="2"></li>
+				</ol>
+				<div class="carousel-inner" role="listbox">
+					<div class="item active">
+						<a href="#">
+							<img class="img-responsive" src="holder.js/400x300?bg=FF8C00&text=Image%201" alt="">
+						</a>
+						<div class="carousel-caption">
+							<h3>Dramatically Engage</h3>
+							<p>Objectively innovate empowered manufactured products whereas parallel platforms.</p>
+						</div>
+					</div>
+					<div class="item">
+						<a href="#">
+							<img class="img-responsive" src="holder.js/400x300?bg=FF8C00&text=Image%202" alt="">
+						</a>
+						<div class="carousel-caption">
+							<h3>Efficiently Unleash</h3>
+							<p>Dramatically maintain clicks-and-mortar solutions without functional solutions.</p>
+						</div>
+					</div>
+					<div class="item">
+						<a href="#">
+							<img class="img-responsive" src="holder.js/400x300?bg=FF8C00&text=Image%203" alt="">
+						</a>
+						<div class="carousel-caption">
+							<h3>Proactively Pontificate</h3>
+							<p>Holistically pontificate installed base portals after maintainable products.</p>
+						</div>
+					</div>
+				</div>
+				<a class="left carousel-control" href="#side-carousel" role="button" data-slide="prev">
+				    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				    <span class="sr-only">Previous</span>
+				</a>
+				<a class="right carousel-control" href="#side-carousel" role="button" data-slide="next">
+				    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				    <span class="sr-only">Next</span>
+				</a>
+			</div>
+
+	  </div><!--/Right Column -->
+
+	</div><!--/container-fluid-->
+
+	<footer>
+		<div class="footer-blurb">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3 footer-blurb-item">
+						<h3><span class="glyphicon glyphicon-text-size"></span> 页脚1</h3>
+						<p>页脚内容.</p>
+						<p><a class="btn btn-default" href="#">Procrastinate</a></p>
+					</div>
+					<div class="col-sm-3 footer-blurb-item">
+						<h3><span class="glyphicon glyphicon-wrench"></span> 页脚2</h3>
+						<p>页脚内容</p>
+						<p><a class="btn btn-default" href="#">Unleash</a></p>
+					</div>
+					<div class="col-sm-3 footer-blurb-item">
+						<h3><span class="glyphicon glyphicon-paperclip"></span> 页脚3</h3>
+						<p>页脚内容</p>
+						<p><a class="btn btn-default" href="#">Complete</a></p>
+					</div>
+					<div class="col-sm-3 footer-blurb-item">
+						
+						<!-- Thumbnails 缩略图 --> 
+						<h3><span class="glyphicon glyphicon-camera"></span> 页脚4 缩略图</h3>
+						<div class="row">
+							<div class="col-xs-6">
+								<a href="#" class="thumbnail">
+									<img data-src="{% static 'bootstrap-3.3.7/js/holder.js/110x80' %}" alt="">
+								</a>
+							</div>
+							<div class="col-xs-6">
+								<a href="#" class="thumbnail">
+									<img data-src="{% static 'bootstrap-3.3.7/js/holder.js/110x80' %}" alt="">
+								</a>
+							</div>
+							<div class="col-xs-6">
+								<a href="#" class="thumbnail">
+									<img data-src="{% static 'bootstrap-3.3.7/js/holder.js/110x80' %}" alt="">
+								</a>
+							</div>
+							<div class="col-xs-6">
+								<a href="#" class="thumbnail">
+									<img data-src="{% static 'bootstrap-3.3.7/js/holder.js/110x80' %}" alt="">
+									</a>
+								</div>
+							</div>
+							
+					</div>
+
+				</div>
+				<!-- /.row -->	
+			</div>
+        </div>
+        
+        <div class="small-print">
+        	<div class="container">
+        		<p><a href="#">Terms &amp; Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact</a></p>
+        		<p>版权 &copy; Example.com 2015 </p>
+        	</div>
+        </div>
+	</footer>
+
+	
+    <!-- jQuery -->
+    <script src="{% static 'bootstrap-3.3.7/js/jquery-1.11.3.min.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
+	
+	<!-- IE10 viewport bug workaround -->
+	<script src="{% static 'bootstrap-3.3.7/js/ie10-viewport-bug-workaround.js' %}"></script>
+	
+	<!-- Placeholder Images -->
+	<script src="{% static 'bootstrap-3.3.7/js/holder.js' %}"></script>
+	
+</body>
+
+</html>

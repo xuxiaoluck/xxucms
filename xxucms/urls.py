@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path,include
 import xxucms.views
 import hiddendanger.urls
+import ebook.urls
 
 urlpatterns = [
     path('',xxucms.views.index),
@@ -27,4 +28,5 @@ urlpatterns = [
     path('userreg/',xxucms.views.userreg),   #index中点了用户注册
     path('regsave/',xxucms.views.regsave),   #userreg.html中点击了注册按钮
     path('hiddendanger/',include(hiddendanger.urls)),  #应用 hiddendanger的 URL转发
+    path('ebook/',include(ebook.urls)),
 ]
