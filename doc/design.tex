@@ -194,6 +194,97 @@
 
  %第二节的第三个子节                                          
  \subsection{设计首页、登录界面}
-   在
+ 在
+ %第二节的第四个子节
+ \subsection{电子书籍管理工具}
+ 首页面使用主页模板。上面一行为软件功能区（上传、查询。。。），左边为书籍分类列表。中间开始时为更新列表（显示最近上传的20本图书资源）。
 
+ 模型设计：出版社、作者、书籍类别、图书列表几个模型，其中 出版社、类别与书籍是一对多关系，作者与图书是多对多关系。在设计好模型、或对模型进行了更改后，要对模型进行更新,如下。
+ \begin{python}
+   >./manage.py makemigrations  #对所有的更改进行更新
+   >./manage.py migrate 
+ \end{python}
+
+ 下面创建了实际的模型代码，用上述命令后生成实际的数据库。
+ \begin{python}
+from django.db import models
+
+"""电子图书模型"""
+
+class BookType(models.Model):
+    '''书籍模型'''
+    name = models.CharField(max_length = 20,verbose_name = '分类名称')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']  #按书籍名称升序排列
+
+class Publisher(models.Model):
+    '''出版社'''
+    name = models.CharField(max_length = 80,verbose_name = '出版社名称')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+
+class Author(models.Model):
+    '''作者'''
+    name = models.CharField(max_length = 50,verbose_name = '作者')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+
+class Books(models.Model):
+    '''书籍模型'''
+    name = models.CharField(max_length = 60,verbose_name = '图书名称')
+    booktype = models.ForeignKey(BookType,on_delete = models.CASCADE)  #2.0开始要加 on_delete
+    publisher = models.ForeignKey(Publisher,on_delete = models.CASCADE)
+    authors = models.ManyToManyField('Author')
+    detial = models.TextField(verbose_name = '内容简介')   #书籍描述
+    uploadtime = models.DateTimeField(auto_now_add = True,verbose_name = '上传时间')
+    uploaduser = models.CharField(max_length = 30,verbose_name = '上传用户')
+    accessnums = models.IntegerField(verbose_name = '访问次数')
+    thumbupnums = models.IntegerField(verbose_name = '点赞')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+   
+ \end{python}
+
+ 在django shell 中测试刚才的模型,对Publisher模型进行操作。
+ \begin{python}
+   >./manage shell
+   >>>import ebook.models.Publisher
+   #插入数据，两种方式
+   >>>p = Publisher.objects.create(name = '上海辞书出版社')
+   #上面直接用模型的create方法插入一条数据，name为段名，返回刚插入一条内容的对象。
+   >>>p1 = Publisher(name = '人民出版社')
+   >>>p1.save()
+   #这两条命令与上面create等价，先生成对象及数据，再保存到模型中。
+
+   #访问数据
+   >>>pobj = Publisher.objects.all()  #得到Publisher模型的所有数据，返回一下列表，列表每项为一个Publisher的行级对象.
+   >>>pobj = Publisher.objects.all().values('name'),取出一列，返回列表，列表项为包含行的列数据字典。
+   >>>pobj = Publisher.objects.all().values_list('列名1','列名2',...),同上，返回多列。
+   >>>pobj = Publisher.objects.get(id = 1,name = ‘。。。’)，按列名返回 pulisher对象，只含一行，如果无匹配会抛出异常。字段数量不限。
+
+   #删除
+   objects.get(name = 'test').delete()
+   objects.filter(name = 'test').delete()
+
+   #更新
+   objects.filter(name  = '测试').update(name = 'test)
+      
+ \end{python}
+ 
 \end{document}
