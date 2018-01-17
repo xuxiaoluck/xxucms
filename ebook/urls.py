@@ -6,5 +6,6 @@ from django.urls import path,include
 import ebook.views
 
 urlpatterns = [
-    path('',ebook.views.index), #首页 
+    path('',ebook.views.index), #首页
+    path('uploadbook/',ebook.views.addbooks)
 ]

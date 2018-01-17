@@ -3,7 +3,7 @@
 <!-- Template by Quackit.com -->
 <html lang="zh">
 <head>
-    <meta charset="utf-8">
+    <meta charset="butf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -51,11 +51,11 @@
                         <a href="#">关于</a>
                     </li>
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">用户<span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">操作<span class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="about-us">
-							<li><a href="/userreg/">用户注册</a></li>
-							<li><a href="#">修改密码</a></li>
-							<li><a href="/logout/">退出登录</a></li>
+							<li><a href="/ebook/uploadbook/">增加</a></li>
+							<li><a href="/ebook/deletebook/">删除</a></li>
+							<li><a href="/ebook/modifybook/">修改</a></li>
 						</ul>
 					</li>
                 </ul>
@@ -83,15 +83,11 @@
 			<!-- List-Group Panel -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h1 class="panel-title"><span class="glyphicon glyphicon-random"></span> INFOCMS</h1>
+					<h1 class="panel-title"><span class="glyphicon glyphicon-random"></span>图书文档</h1>
 				</div>
-				<div class="list-group">
-					<a href="/hiddendanger/" class="list-group-item">隐患管理</a>
-					<a href="#" class="list-group-item">图书文档</a>
-					<a href="#" class="list-group-item">照片管理</a>
-					<a href="#" class="list-group-item">博   客</a>
-                    <a href="#" class="list-group-item">软件下载</a>
-					<a href="#" class="list-group-item">网站收集</a>
+				<div class="list-group">  <!-- 下面动态显示图书分类，分类下的每个图书都可以有多个图书资源 -->
+
+					<a href="#" class="list-group-item">显示分类名称</a>
 				</div>
 			</div>
 
@@ -141,7 +137,7 @@
 			<div class="row">
 				<article class="col-xs-12">
 					<h2>第一行article区 二级标题</h2>
-					<p>显示内容.</p>
+					<p>显示最近上传的30个图书资源.</p>
 					<p><button class="btn btn-default btn-sm">更多...</button></p>
 					<p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>
 					<ul class="list-inline">

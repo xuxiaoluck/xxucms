@@ -1,0 +1,280 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!-- Template by Quackit.com -->
+<html lang="zh">
+<head>
+    <meta charset="butf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>CMS.电子图书文档管理工具.增加图书资料</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
+    <link href="{% static 'bootstrap-3.3.7/css/custom.css' %}" rel="stylesheet"> 
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+ 	<script src="{% static 'bootstrap-3.3.7/js/holder.js' %}"></script>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="container">
+
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="/home/">返回</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container  导航头部 -->
+    </nav>
+
+    <div class="container-fluid">
+	    <!-- 下面为显示区， -->
+    	<!-- 共两列 -->
+
+		<div class="col-sm-5">
+
+			<!-- List-Group Panel -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h1 class="panel-title"><span class="glyphicon glyphicon-random"></span>图书文档</h1>
+				</div>
+				<div class="list-group">  <!-- 下面动态显示图书分类，分类下的每个图书都可以有多个图书资源 -->
+
+					<a href="#" class="list-group-item">显示分类名称</a>
+				</div>
+			</div>
+
+			<!-- Text Panel -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h1 class="panel-title"><span class="glyphicon glyphicon-cog"></span> 左列第二块区域</h1>
+				</div>
+
+				<div class="panel-body">
+					<p>左二区域显示区</p>
+					<p><button class="btn btn-default">左2按钮</button></p>
+				</div>
+			</div>
+
+		
+
+		</div><!--/Left Column-->
+
+
+		<!-- Center Column 中间列，主显示区，占6格（一半）-->
+		<div class="col-sm-7">
+
+			<!-- Alert -->
+			<div class="alert alert-success alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<strong>alter:</strong> 警示、消息显示区
+			</div>
+
+			<!-- Articles -->
+			<div class="row">
+				<article class="col-xs-12">
+					<!-- 下面是增加图书资源form  -->
+                    <form class="form-horizontal">
+                        <fieldset>
+                            <div id="legend" class="">
+                                <legend class="">增加书籍</legend>
+                            </div>
+                            
+
+                            <div class="control-group">
+
+                                <!-- Text input-->
+                                <label class="control-label" for="input01">图书资源名称</label>
+                                <div class="controls">
+                                    <input type="text" placeholder="书籍名称" class="input-xlarge">
+                                    <p class="help-block">图书的细分名称，不一定是主要图书，可以是一个小类</p>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+
+                                <!-- Select Basic -->
+                                <label class="control-label">分类</label>
+                                <div class="controls">
+                                    <select class="input-xlarge">
+                                        <option>图书分类</option>
+                                        <option>A</option>
+                                        <option>B</option></select>
+                                </div>
+
+                            </div><div class="control-group">
+
+                                <!-- Select Basic -->
+                                <label class="control-label">出版社</label>
+                                <div class="controls">
+                                    <select class="input-xlarge">
+                                        <option>出版社</option>
+                                        <option>A</option>
+                                        <option>B</option></select>
+                                </div>
+
+                            </div><div class="control-group">
+
+                                <!-- Select Multiple -->
+                                <label class="control-label">作者</label>
+                                <div class="controls">
+                                    <select class="input-xlarge" multiple="multiple">
+                                        <option>选择作者</option>
+                                        <option>A</option>
+                                        <option>B</option></select>
+                                </div>
+                            </div><div class="control-group">
+
+                                <!-- Textarea -->
+                                <label class="control-label">内容简介</label>
+                                <div class="controls">
+                                    <div class="textarea">
+                                        <textarea type="" class=""> </textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label"></label>
+
+                                <!-- Button -->
+                                <div class="controls">
+                                    <button class="btn btn-primary">保存</button>
+                                </div>
+                            </div>
+
+                            
+                            <div class="control-group">
+                                <label class="control-label"></label>
+
+                                <!-- Button -->
+                                <div class="controls">
+                                    <button class="btn btn-info">取消</button>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+
+					<p>显示最近上传的30个图书资源.</p>
+					<p><button class="btn btn-default btn-sm">更多...</button></p>
+					<p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>
+					<ul class="list-inline">
+						<li><a href="#">今天</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 2 备注</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-share"></span> 8 共享</a></li>
+					</ul>
+				</article>
+			</div>
+			<hr>
+			<div class="row">
+				<article class="col-xs-12">
+					<h2>第二行 article 二级标题</h2>
+					<p>显示内容</p>
+					<p><button class="btn btn-default">更多...</button></p>
+					<p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>
+					<ul class="list-inline">
+						<li><a href="#">Yesterday</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 21 信息</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-share"></span> 36 共享</a></li>
+					</ul>
+				</article>
+			</div>
+			<hr>
+		
+	</div><!--/container-fluid-->
+
+	<footer>
+		<div class="footer-blurb">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3 footer-blurb-item">
+						<h3><span class="glyphicon glyphicon-text-size"></span> 页脚1</h3>
+						<p>页脚内容.</p>
+						<p><a class="btn btn-default" href="#">Procrastinate</a></p>
+					</div>
+					<div class="col-sm-3 footer-blurb-item">
+						<h3><span class="glyphicon glyphicon-wrench"></span> 页脚2</h3>
+						<p>页脚内容</p>
+						<p><a class="btn btn-default" href="#">Unleash</a></p>
+					</div>
+					<div class="col-sm-3 footer-blurb-item">
+						<h3><span class="glyphicon glyphicon-paperclip"></span> 页脚3</h3>
+						<p>页脚内容</p>
+						<p><a class="btn btn-default" href="#">Complete</a></p>
+					</div>
+					<div class="col-sm-3 footer-blurb-item">
+						
+						<!-- Thumbnails 缩略图 --> 
+						<h3><span class="glyphicon glyphicon-camera"></span> 页脚4 缩略图</h3>
+						<div class="row">
+							<div class="col-xs-6">
+								<a href="#" class="thumbnail">
+									<img data-src="{% static 'bootstrap-3.3.7/js/holder.js/110x80' %}" alt="">
+								</a>
+							</div>
+							<div class="col-xs-6">
+								<a href="#" class="thumbnail">
+									<img data-src="{% static 'bootstrap-3.3.7/js/holder.js/110x80' %}" alt="">
+								</a>
+							</div>
+							<div class="col-xs-6">
+								<a href="#" class="thumbnail">
+									<img data-src="{% static 'bootstrap-3.3.7/js/holder.js/110x80' %}" alt="">
+								</a>
+							</div>
+							<div class="col-xs-6">
+								<a href="#" class="thumbnail">
+									<img data-src="{% static 'bootstrap-3.3.7/js/holder.js/110x80' %}" alt="">
+									</a>
+								</div>
+							</div>
+							
+					</div>
+
+				</div>
+				<!-- /.row -->	
+			</div>
+        </div>
+        
+        <div class="small-print">
+        	<div class="container">
+        		<p><a href="#">Terms &amp; Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact</a></p>
+        		<p>版权 &copy; Example.com 2015 </p>
+        	</div>
+        </div>
+	</footer>
+
+	
+    <!-- jQuery -->
+    <script src="{% static 'bootstrap-3.3.7/js/jquery-1.11.3.min.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
+	
+	<!-- IE10 viewport bug workaround -->
+	<script src="{% static 'bootstrap-3.3.7/js/ie10-viewport-bug-workaround.js' %}"></script>
+	
+	<!-- Placeholder Images -->
+	<script src="{% static 'bootstrap-3.3.7/js/holder.js' %}"></script>
+	
+</body>
+
+</html>
