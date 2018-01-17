@@ -51,33 +51,53 @@
 		<div class="col-sm-5">
 
 			<!-- List-Group Panel -->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h1 class="panel-title"><span class="glyphicon glyphicon-random"></span>图书文档</h1>
-				</div>
-				<div class="list-group">  <!-- 下面动态显示图书分类，分类下的每个图书都可以有多个图书资源 -->
+          <div class ="row">
+            <form class="form-horizontal" method="post" action="/ebook/addpublisher/">
+                <fieldset>
+                    <div id="legend" class="">
+                        <legend class="">{%ifequal dotype 1%}
+                            增加出版社({{pname}})成功,select( {%for item in testval%} {{item}}A {%endfor%})
+                            {%else%}
+                            增加出版社
+                            {%endifequal%}
+                        </legend>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">出版社列表</label>
+                        <div class="controls">
+                            <select class="form-control input-xlarge" multiple="multiple" name="publisherlist1" id="publisherlist1">
+                                {% for pbone in pblist%}
+                                <option>{{pbone.1}}</option>
+                                <!--  value={{phone.0}} -->
+                                {%endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input01">出版社名称</label>
+                        <div class="controls">
+                            <input type="text" placeholder="请输入出版社名称" class="form-control input-xlarge" name ="addpublishername">
+                            <p class="help-block">系统中用到的出版社名称或图书源出处</p>
+                        </div>
+                    </div>
 
-					<a href="#" class="list-group-item">显示分类名称</a>
-				</div>
-			</div>
+                    <div class="control-group">
+                        <label class="control-label"></label>
+                        <div class="controls">
+                            <button type="submit" class="btn btn-primary">保存</button> 
+                        </div>
+                    </div>
 
-			<!-- Text Panel -->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h1 class="panel-title"><span class="glyphicon glyphicon-cog"></span> 左列第二块区域</h1>
-				</div>
+                   
+                </fieldset>
+            </form>
+          </div>
 
-				<div class="panel-body">
-					<p>左二区域显示区</p>
-					<p><button class="btn btn-default">左2按钮</button></p>
-				</div>
-			</div>
+          <div class="row">
 
-		
-
-		</div><!--/Left Column-->
-
-
+          </div>
+        </div> <!-- 左列 -->
+        
 		<!-- Center Column 中间列，主显示区，占6格（一半）-->
 		<div class="col-sm-7">
 

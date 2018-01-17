@@ -7,5 +7,6 @@ import ebook.views
 
 urlpatterns = [
     path('',ebook.views.index), #首页
-    path('uploadbook/',ebook.views.addbooks)
+    path('uploadbook/',ebook.views.addbooks),
+    path('addpublisher/',ebook.views.addpublisher),  #增加一个出版社
 ]
