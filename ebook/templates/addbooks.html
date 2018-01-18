@@ -23,6 +23,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
  	<script src="{% static 'bootstrap-3.3.7/js/holder.js' %}"></script>
+ 	<script src="{% static 'bootstrap-3.3.7/js/validator.min.js' %}"></script>
 </head>
 
 <body>
@@ -35,8 +36,12 @@
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="nav navbar-nav">
                     <li class="active">
-                        <a href="/home/">返回</a>
+                        <a href="/home/">首页</a>
                     </li>
+                    <li class="active">
+                        <a href="/ebook/">返回</a>
+                    </li>
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -47,64 +52,120 @@
     <div class="container-fluid">
 	    <!-- 下面为显示区， -->
     	<!-- 共两列 -->
-
-		<div class="col-sm-5">
+        <div class="col-sm-1">
+        </div>
+		<div class="col-sm-3">
 
 			<!-- List-Group Panel -->
           <div class ="row">
-            <form class="form-horizontal" method="post" action="/ebook/addpublisher/">
+              <form class="form-horizontal" data-toggle="validator" role="form" method="post" action="/ebook/addpublisher/" >
                 <fieldset>
                     <div id="legend" class="">
-                        <legend class="">{%ifequal dotype 1%}
+                        <legend class="">{%if dotype == 1 and isaddpublisher %}
                             增加出版社({{pname}})成功
                             {%else%}
-                            增加出版社
-                            {%endifequal%}
+                            {%if dotype == -100 and isaddpublisher%}
+                            出版社({{pname}})已存在
+                            {%else%}
+                            增加出版社                            
+                            {%endif%}
+                            {%endif%}
                         </legend>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">出版社列表</label>
-                        <div class="controls">
-                            <select class="form-control input-xlarge" multiple="multiple" name="publisherlist1" id="publisherlist1">
-                                {% for pbone in pblist%}
-                                <option>{{pbone}}</option>
-                                {%endfor%}
-                            </select>
-                        </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="input01">出版社名称</label>
                         <div class="controls">
-                            <input type="text" placeholder="请输入出版社名称" class="form-control input-xlarge" name ="addpublishername">
-                            <p class="help-block">系统中用到的出版社名称或图书源出处</p>
+                            <input type="text" placeholder="请输入出版社名称" class="form-control input-xlarge" name ="addpublishername" required
+                                   data-bv-notempty-message="firstName不能为空(提示语)" >
+                            <div class="help-block">系统中用到的出版社名称或图书源出处</div>
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label"></label>
                         <div class="controls">
                             <button type="submit" class="btn btn-primary">保存</button> 
                         </div>
                     </div>
 
-                   
                 </fieldset>
-            </form>
+              </form>
           </div>
+          <hr><hr>
 
           <div class="row">
+                  <form class="form-horizontal" data-toggle="validator" role="form" method="post" action="/ebook/addbooktype/" >
+                      <fieldset>
+                          <div id="legend" class="">
+                              <legend class="">{%if dotype == 3 and isaddbooktype%}
+                                  增加图书类别({{pname}})成功
+                                  {%else%}
+                                  {%if dotype == -100 and isaddbooktype%}
+                                  类别({{pname}})已存在
+                                  {%else%}
+                                  增加图书类别
+                                  {%endif%}
+                                  {%endif%}
+                              </legend>
+                          </div>
+                          <div class="control-group">
+                              <label class="control-label" for="input01">类别名称</label>
+                              <div class="controls">
+                                  <input type="text" placeholder="请输入图书类别名称" class="form-control input-xlarge" name ="addbooktypename" required
+                                         data-bv-notempty-message="类别名称不能为空！" >
+                                  <div class="help-block">系统中用到的图书大分类、主分类</div>
+                              </div>
+                          </div>
 
+                          <div class="control-group">
+                              <div class="controls">
+                                  <button type="submit" class="btn btn-primary">保存</button> 
+                              </div>
+                          </div>
+
+                      </fieldset>
+                  </form>              
           </div>
-        </div> <!-- 左列 -->
-        
-		<!-- Center Column 中间列，主显示区，占6格（一半）-->
-		<div class="col-sm-7">
+          <hr><hr>
+          <div class="row">
+              <form class="form-horizontal" data-toggle="validator" role="form" method="post" action="/ebook/addauthor/" >
+                  <fieldset>
+                      <div id="legend" class="">
+                          <legend class="">{%if dotype == 2 and isaddauthor%}
+                              增加作者({{pname}})成功
+                              {%else%}
+                              {%if dotype == -100 and isaddauthor%}
+                              作者({{pname}})已存在
+                              {%else%}
+                              增加作者
+                              {%endif%}
+                              {%endif%}
+                          </legend>
+                      </div>
+                      <div class="control-group">
+                          <label class="control-label" for="input01">作者名</label>
+                          <div class="controls">
+                              <input type="text" placeholder="请输入作者名" class="form-control input-xlarge" name ="addauthorname" required
+                                     data-bv-notempty-message="作者名不能为空！" >
+                              <div class="help-block">系统中用到的作者</div>
+                          </div>
+                      </div>
 
-			<!-- Alert -->
-			<div class="alert alert-success alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<strong>alter:</strong> 警示、消息显示区
-			</div>
+                      <div class="control-group">
+                          <div class="controls">
+                              <button type="submit" class="btn btn-primary">保存</button> 
+                          </div>
+                      </div>
+
+                  </fieldset>
+              </form>
+          </div>
+
+        </div> <!-- 左列 -->
+
+        <div class="col-sm-1">
+        </div>
+		<!-- Center Column 中间列，主显示区，占6格（一半）-->
+		<div class="col-sm-6">
 
 			<!-- Articles -->
 			<div class="row">
@@ -128,7 +189,6 @@
                             </div>
 
                             <div class="control-group">
-
                                 <!-- Select Basic -->
                                 <label class="control-label">分类</label>
                                 <div class="controls">
@@ -191,96 +251,11 @@
 
                         </fieldset>
                     </form>
-
-					<p>显示最近上传的30个图书资源.</p>
-					<p><button class="btn btn-default btn-sm">更多...</button></p>
-					<p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>
-					<ul class="list-inline">
-						<li><a href="#">今天</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 2 备注</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-share"></span> 8 共享</a></li>
-					</ul>
-				</article>
 			</div>
 			<hr>
-			<div class="row">
-				<article class="col-xs-12">
-					<h2>第二行 article 二级标题</h2>
-					<p>显示内容</p>
-					<p><button class="btn btn-default">更多...</button></p>
-					<p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>
-					<ul class="list-inline">
-						<li><a href="#">Yesterday</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 21 信息</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-share"></span> 36 共享</a></li>
-					</ul>
-				</article>
-			</div>
-			<hr>
-		
+	        <div class="col-sm-1">
+            </div>
 	</div><!--/container-fluid-->
-
-	<footer>
-		<div class="footer-blurb">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-3 footer-blurb-item">
-						<h3><span class="glyphicon glyphicon-text-size"></span> 页脚1</h3>
-						<p>页脚内容.</p>
-						<p><a class="btn btn-default" href="#">Procrastinate</a></p>
-					</div>
-					<div class="col-sm-3 footer-blurb-item">
-						<h3><span class="glyphicon glyphicon-wrench"></span> 页脚2</h3>
-						<p>页脚内容</p>
-						<p><a class="btn btn-default" href="#">Unleash</a></p>
-					</div>
-					<div class="col-sm-3 footer-blurb-item">
-						<h3><span class="glyphicon glyphicon-paperclip"></span> 页脚3</h3>
-						<p>页脚内容</p>
-						<p><a class="btn btn-default" href="#">Complete</a></p>
-					</div>
-					<div class="col-sm-3 footer-blurb-item">
-						
-						<!-- Thumbnails 缩略图 --> 
-						<h3><span class="glyphicon glyphicon-camera"></span> 页脚4 缩略图</h3>
-						<div class="row">
-							<div class="col-xs-6">
-								<a href="#" class="thumbnail">
-									<img data-src="{% static 'bootstrap-3.3.7/js/holder.js/110x80' %}" alt="">
-								</a>
-							</div>
-							<div class="col-xs-6">
-								<a href="#" class="thumbnail">
-									<img data-src="{% static 'bootstrap-3.3.7/js/holder.js/110x80' %}" alt="">
-								</a>
-							</div>
-							<div class="col-xs-6">
-								<a href="#" class="thumbnail">
-									<img data-src="{% static 'bootstrap-3.3.7/js/holder.js/110x80' %}" alt="">
-								</a>
-							</div>
-							<div class="col-xs-6">
-								<a href="#" class="thumbnail">
-									<img data-src="{% static 'bootstrap-3.3.7/js/holder.js/110x80' %}" alt="">
-									</a>
-								</div>
-							</div>
-							
-					</div>
-
-				</div>
-				<!-- /.row -->	
-			</div>
-        </div>
-        
-        <div class="small-print">
-        	<div class="container">
-        		<p><a href="#">Terms &amp; Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact</a></p>
-        		<p>版权 &copy; Example.com 2015 </p>
-        	</div>
-        </div>
-	</footer>
-
 	
     <!-- jQuery -->
     <script src="{% static 'bootstrap-3.3.7/js/jquery-1.11.3.min.js' %}"></script>
@@ -293,6 +268,8 @@
 	
 	<!-- Placeholder Images -->
 	<script src="{% static 'bootstrap-3.3.7/js/holder.js' %}"></script>
+
+    <script src="{% static 'bootstrap-3.3.7/js/validator.min.js' %}"></script>
 	
 </body>
 

@@ -4,7 +4,7 @@ from django.db import models
 
 class BookType(models.Model):
     '''书籍模型'''
-    name = models.CharField(max_length = 20,primary_key = True,verbose_name = '分类名称')
+    name = models.CharField(max_length = 20,verbose_name = '分类名称')
 
     def __str__(self):
         return self.name
@@ -14,7 +14,7 @@ class BookType(models.Model):
 
 class Publisher(models.Model):
     '''出版社'''
-    name = models.CharField(max_length = 80,primary_key = True,verbose_name = '出版社名称')
+    name = models.CharField(max_length = 80,verbose_name = '出版社名称')
 
     def __str__(self):
         return self.name
@@ -24,7 +24,7 @@ class Publisher(models.Model):
 
 class Author(models.Model):
     '''作者'''
-    name = models.CharField(max_length = 50,primary_key = True,verbose_name = '作者')
+    name = models.CharField(max_length = 50,verbose_name = '作者')
 
     def __str__(self):
         return self.name
