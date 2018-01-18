@@ -56,7 +56,7 @@
                 <fieldset>
                     <div id="legend" class="">
                         <legend class="">{%ifequal dotype 1%}
-                            增加出版社({{pname}})成功,select( {%for item in testval%} {{item}}A {%endfor%})
+                            增加出版社({{pname}})成功
                             {%else%}
                             增加出版社
                             {%endifequal%}
@@ -67,8 +67,7 @@
                         <div class="controls">
                             <select class="form-control input-xlarge" multiple="multiple" name="publisherlist1" id="publisherlist1">
                                 {% for pbone in pblist%}
-                                <option>{{pbone.1}}</option>
-                                <!--  value={{phone.0}} -->
+                                <option>{{pbone}}</option>
                                 {%endfor%}
                             </select>
                         </div>

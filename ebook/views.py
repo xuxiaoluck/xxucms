@@ -5,9 +5,7 @@ from ebook.models import Publisher
 def getallpublisher(request):
     '''取得所有出版社名称和ID'''
     db = Publisher.objects.all() 
-    pblist = []
-    for db_one in db:
-        pblist.append((db_one.id,db_one.name)) #列表项一个元组(id,name)
+    pblist = [one.name for one in db]
     return pblist
 
 def index(request):
@@ -33,7 +31,6 @@ def addpublisher(request):
            db.save()
            dotype = 1
 
-    testval = request.POST.getlist('publisherlist1')
     pblist =  getallpublisher(request)
     return render_to_response('addbooks.html',locals())
 
