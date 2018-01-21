@@ -1,17 +1,34 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
-from ebook.models import Publisher,Author,BookType
+from ebook.models import Publisher,BookType,Books,BookFiles
 
 def getallpublisher(request):
-    '''取得所有出版社名称和ID'''
+    '''取得所有出版社名称'''
     db = Publisher.objects.all() 
-    pblist = ["{0}_{1}".format(one.name,one.id) for one in db]
+    pblist = [one.name for one in db]
     return pblist
+
+"""
+
+def getallauthor(request):
+    '''取得所有作者名称'''
+    db = Author.objects.all() 
+    ablist = [one.name for one in db]
+    return ablist
+"""
+
+def getallbooktype(request):
+    '''取得所有分类'''
+    db = BookType.objects.all() 
+    btblist = [one.name for one in db]
+    return btblist
 
 def index(request):
     '''进行书籍首页'''
     dotype = 0 #无操作
-    #pblist = getallpublisher(request)
+    pblist = getallpublisher(request)
+    #ablist = getallauthor(request)
+    btblist = getallbooktype(request)
 
     return render_to_response('ebindex.html',locals())
 
@@ -36,6 +53,10 @@ def addpublisher(request):
                 db.save()
                 dotype = 1
 
+    pblist = getallpublisher(request)
+    #ablist = getallauthor(request)
+    btblist = getallbooktype(request)
+    
     return render_to_response('addbooks.html',locals())
 
 def addauthor(request):
@@ -52,7 +73,9 @@ def addauthor(request):
                 db = Author(name = pname)
                 db.save()
                 dotype = 2
-
+                
+    pblist = getallpublisher(request)
+    btblist = getallbooktype(request)
     return render_to_response('addbooks.html',locals())
 
 
@@ -70,15 +93,21 @@ def addbooktype(request):
                 db = BookType(name = pname)
                 db.save()
                 dotype = 3
-
+    pblist = getallpublisher(request)
+    btblist = getallbooktype(request)
     return render_to_response('addbooks.html',locals())
 
 def addbooks(request):
     '''增加书籍'''
-    #pblist = getallpublisher(request)
+
+    pblist = getallpublisher(request)
+    btblist = getallbooktype(request)
     return render_to_response('addbooks.html',locals())
 
 
-
+def uploadfiles(request):
+    '''上传图书附件，不会对原视图进行刷新'''
+    return render_to_response('addbooks.html',locals())
+    
 
 

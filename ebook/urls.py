@@ -11,4 +11,6 @@ urlpatterns = [
     path('addpublisher/',ebook.views.addpublisher),  #增加一个出版社
     path('addbooktype/',ebook.views.addbooktype),
     path('addauthor/',ebook.views.addauthor),
+    path('addbooks/',ebook.views.addbooks),
+    path('uploadfiles/',ebook.views.uploadfiles),
 ]
