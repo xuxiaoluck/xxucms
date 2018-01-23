@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from ebook.models import Publisher,BookType,Books,BookFiles
+import simplejson
 
 def getallpublisher(request):
     '''取得所有出版社名称'''
@@ -29,7 +30,7 @@ def index(request):
     pblist = getallpublisher(request)
     #ablist = getallauthor(request)
     btblist = getallbooktype(request)
-
+    bookid = 10000
     return render_to_response('ebindex.html',locals())
 
 
@@ -73,7 +74,7 @@ def addauthor(request):
                 db = Author(name = pname)
                 db.save()
                 dotype = 2
-                
+
     pblist = getallpublisher(request)
     btblist = getallbooktype(request)
     return render_to_response('addbooks.html',locals())
@@ -102,15 +103,24 @@ def addbooks(request):
 
     pblist = getallpublisher(request)
     btblist = getallbooktype(request)
+    bookid = 10000
     return render_to_response('addbooks.html',locals())
 
 
 def uploadfiles(request):
     '''上传图书附件，不会对原视图进行刷新'''
 
-    url = request.FILES.get('files-my')
-    print(url)
+    if request.method == 'POST':
+        fileobjs = request.FILES.getlist('files-my')
+        for i in range(len(fileobjs)):
+            bookid = request.POST.get('bookid','')
+            #UploadFile objects
+            oneobj = fileobjs[i]
+            if oneobj:
+                print('bookid:',bookid,oneobj.name,oneobj.size,oneobj.content_type)
+    #json = simplejson.dumps({'success': True, 'errors': 'upload ok!'})
+    #return HttpResponse(json)
     return render_to_response('addbooks.html',locals())
-    
+
 
 
