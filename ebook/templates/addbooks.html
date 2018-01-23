@@ -150,34 +150,40 @@
 
 			<div class="row">
 					<!-- 下面是增加图书资源form  -->
-                    <form class="form-horizontal" action="/ebook/addbooks/" method ="post">
+                <form class="form-horizontal" action="/ebook/addbooks/" method ="post"  data-toggle="validator" role="form">
                         <fieldset>
                             <div id="legend" class="">
-                                <legend class="">增加书籍</legend>
+                                <legend class="">
+                                    {%if dotype == 4 and isaddbook%}
+                                    增加图书资源({{bookname}})成功
+                                    {%else%}
+                                    {%if dotype == -100 and isaddbook%}
+                                    增加图书资源错误({{pname}})
+                                    {%else%}
+                                    增加图书资源
+                                    {%endif%}
+                                    {%endif%}
+                                    </legend>
                             </div>
 
                             <div class="control-group">
                                 <div class="controls">
-                                    <input type="text" class="form-control input-xlarge" value="{{bookid}}" style="display:none">
+                                    <input type="text" class="form-control input-xlarge" value="{{bookid}}" style="display:none" id="addbookid" name="addbookid">
                                 </div>
                             </div>
 
-
                             <div class="control-group">
-
-                                <!-- Text input-->
                                 <label class="control-label" for="input01">图书资源名称</label>
                                 <div class="controls">
-                                    <input type="text" placeholder="书籍名称" class="form-control input-xlarge" >
+                                    <input type="text" placeholder="图书书籍名称" class="form-control input-xlarge" name="addbookname" id="addbookname" required>
                                     <p class="help-block">图书的细分名称，不一定是主要图书，可以是一个小类</p>
                                 </div>
                             </div>
 
                             <div class="control-group">
-                                <!-- Select Basic -->
                                 <label class="control-label">分类</label>
                                 <div class="controls">
-                                    <select class="form-control input-xlarge">
+                                    <select class="form-control input-xlarge" name="addbookselecttype" id="addbookselecttype">
                                         {% for name in btblist%}
                                         <option>{{name}}</option>
                                         {%endfor%}
@@ -189,7 +195,7 @@
                                 <!-- Select Basic -->
                                 <label class="control-label">出版社</label>
                                 <div class="controls">
-                                    <select class="form-control input-xlarge">
+                                    <select class="form-control input-xlarge" name="addbookselectpublisher" id="addbookselectpublisher">
                                         {% for name in pblist%}
                                         <option>{{name}}</option>
                                         {%endfor%}
@@ -199,15 +205,14 @@
                             </div>
                             <div class="control-group">
                                 <label class="control-label">作者</label>
-                                <input type="text" placeholder="作者" class="form-control input-xlarge">
+                                <input type="text" placeholder="作者" class="form-control input-xlarge" name="addbookauthor" id="addbookauthor" required>
                                 <p class="help-block">图书的作者，多个作者以空格分开</p>
                             </div><div class="control-group">
 
-                                <!-- Textarea -->
                                 <label class="control-label">内容简介</label>
                                 <div class="controls">
                                     <div class="textarea">
-                                        <textarea type=""   style="height:300px" class="form-control"> </textarea>
+                                        <textarea type=""   style="height:300px" class="form-control" name="addbookmemo" id="addbookmemo" required> </textarea>
                                     </div>
                                 </div>
                             </div>

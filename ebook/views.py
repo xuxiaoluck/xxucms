@@ -28,14 +28,13 @@ def index(request):
     '''进行书籍首页'''
     dotype = 0 #无操作
     pblist = getallpublisher(request)
-    #ablist = getallauthor(request)
     btblist = getallbooktype(request)
     bookid = 10000
     return render_to_response('ebindex.html',locals())
 
 
 '''
-错误、无操作、增加出版社、作者、分类、书籍标题、图书列表都由一个页面完成，用一个变量来判断当前是哪个操作
+错误-1、无操作0、增加出版社1、作者2、分类3、图书资源4、图书列表5都由一个页面完成，用一个变量来判断当前是哪个操作
 dotype:-1,0,1,2,3,4
 dotype:-100,数据已存在
 '''
@@ -55,9 +54,8 @@ def addpublisher(request):
                 dotype = 1
 
     pblist = getallpublisher(request)
-    #ablist = getallauthor(request)
     btblist = getallbooktype(request)
-    
+
     return render_to_response('addbooks.html',locals())
 
 def addauthor(request):
@@ -103,7 +101,24 @@ def addbooks(request):
 
     pblist = getallpublisher(request)
     btblist = getallbooktype(request)
-    bookid = 10000
+    dotype = -1
+    isaddbook = True
+    if request.method == 'POST':
+        booktype = request.POST.get('addbookselecttype')
+        publisher = request.POST.get('addbookselectpublisher')
+        booktypeid = BookType.objects.get(name = booktype)
+        publisherid = Publisher.objects.get(name = publisher)  #得到外键对象
+        bookname = request.POST.get('addbookname'),
+        bookobj = Books(name = bookname,
+                          authors = request.POST.get('addbookauthor'),
+                          detial = request.POST.get('addbookmemo'),
+                          booktype = booktypeid,
+                          publisher = publisherid
+        )
+        bookobj.save()   #保存一项图书资源
+        bookid = bookobj.id  #得到最新的BOOKiD
+        dotype = 4
+
     return render_to_response('addbooks.html',locals())
 
 
