@@ -107,6 +107,9 @@ def addbooks(request):
 
 def uploadfiles(request):
     '''上传图书附件，不会对原视图进行刷新'''
+
+    url = request.FILES.get('files-my')
+    print(url)
     return render_to_response('addbooks.html',locals())
     
 

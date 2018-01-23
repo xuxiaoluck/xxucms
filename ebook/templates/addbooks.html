@@ -148,9 +148,7 @@
 		<!-- Center Column 中间列，主显示区，占6格（一半）-->
 		<div class="col-sm-6">
 
-			<!-- Articles -->
 			<div class="row">
-				<article class="col-xs-12">
 					<!-- 下面是增加图书资源form  -->
                     <form class="form-horizontal" action="/ebook/addbooks/" method ="post">
                         <fieldset>
@@ -214,56 +212,58 @@
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label class="control-label"></label>
-
                              <div class="controls">
-                             <button type="submit" class="btn btn-primary">保存</button>
-                             <button type="reset" class="btn btn-info">重设</button>
+                                 <button type="submit" class="btn btn-primary">保存</button>
+                                 <button type="reset" class="btn btn-info">重设</button>
                              </div>
                             </div>
-
                         </fieldset>
-                    </form>
-                    <form class="form-horizontal"  enctype="multipart/form-data" method="post">
-                    <div class="file-loading">
-                        <input id="file-my" name="file-my" type="file"  class="file" multiple data-show-upload="true" >
+                    </form>  <!-- 增加图书 FORM -->
+            </div>   <!-- addbooks row -->
+            <hr>
+            <hr>
+            <div class="row"> <!-- uloadfiles row -->
+                <form class="form-horizontal" method="post" enctype='multipart/form-data'>
+                    <div class="controls">
+                        <input type="file" class="file form-control"  id="files-my" name="files-my" multiple>
                     </div>
-                    
-                    <script type="text/javascript">
-                     $("#file-my").fileinput({
-                         language: 'zh', //设置语言
-                         'theme': 'explorer-fa',
-                         'uploadUrl': "/ebook/uploadfiles/", //上传的地址(访问接口地址)
-                         allowedFileExtensions: ['rar','zip','pdf','xls','doc','docx','ceb','mobi','pub'],//接收的文件后缀
-                         uploadAsync: true, //默认异步上传
-                         showUpload: true, //是否显示上传按钮
-                         showRemove : true, //显示移除按钮
-                         showPreview : true, //是否显示预览
-                         showCaption: true,//是否显示标题
-                         browseClass: "btn btn-primary", //按钮样式  
-                         dropZoneEnabled: false,//是否显示拖拽区域
-                         //minImageWidth: 50, //图片的最小宽度
-                         //minImageHeight: 50,//图片的最小高度
-                         //maxImageWidth: 1000,//图片的最大宽度
-                         //maxImageHeight: 1000,//图片的最大高度
-                         //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
-                         maxFileCount: 10, //表示允许同时上传的最大文件个数
-                         enctype: 'multipart/form-data',
-                         validateInitialCount:true,
-                         previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-                         msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-                     });
-                    </script>
-                    </form>
+                </form>
+            </div> <!-- 上传文件ROW -->
+            <script type="text/javascript">             
+             $("#files-my").fileinput({
+                 language: 'zh', //设置语言
+                 theme: 'explorer-fa',
+                 uploadUrl: "/ebook/uploadfiles/", //上传的地址
+                 allowedFileExtensions: ['rar','zip','xls','xlsx','doc','docx','pdf','txt','ceb'],//接收的文件后缀
+                 uploadAsync: true, //默认异步上传
+                 showUpload: true, //是否显示上传按钮
+                 showRemove : true, //显示移除按钮
+                 showPreview : true, //是否显示预览
+                 showCaption: false,//是否显示标题
+                 browseClass: "btn btn-primary", //按钮样式     
+                 dropZoneEnabled: false,//是否显示拖拽区域
+                 //minImageWidth: 50, //图片的最小宽度
+                 //minImageHeight: 50,//图片的最小高度
+                 //maxImageWidth: 1000,//图片的最大宽度
+                 //maxImageHeight: 1000,//图片的最大高度
+                 maxFileSize: 102400,//单位为kb，如果为0表示不限制文件大小
+                 //minFileCount: 0,
+                 maxFileCount: 10, //表示允许同时上传的最大文件个数
+                 enctype: 'multipart/form-data',
+                 validateInitialCount:true,
+                 //previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+                 msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+             });
+            </script>
 
-			                 </div>
-			                 <hr>
-	                         <div class="col-sm-1">
-                             </div>
-	                         </div><!--/container-fluid-->
-	                         
+          </div>  <!-- 中间一列 -->
+
+          <div class="col-sm-1">  <!-- right col space-1 -->
+           </div>
+  </div><!--/container-fluid-->
+
                              <!-- jQuery -->
-<script src="{% static 'bootstrap-3.3.7/js/jquery-1.11.3.min.js' %}"></script>
+    <script src="{% static 'bootstrap-3.3.7/js/jquery-1.11.3.min.js' %}"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
@@ -276,79 +276,6 @@
 
     <script src="{% static 'bootstrap-3.3.7/js/validator.min.js' %}"></script>
 
- </body>
-<!-- 
-    <script type="text/javascript">
-     $("#file-my").fileinput({
-         language: 'zh', //设置语言
-         uploadUrl: "/ebook/uploadfiles/", //上传的地址(访问接口地址)
-         allowedFileExtensions: ['rar','zip','pdf','xls','doc','docx','ceb','mobi','pub'],//接收的文件后缀
-         //uploadExtraData:{"id": 1, "fileName":'123.mp3'},
-         uploadAsync: true, //默认异步上传
-         showUpload: false, //是否显示上传按钮
-         showRemove : false, //显示移除按钮
-         showPreview : true, //是否显示预览
-         showCaption: true,//是否显示标题
-         browseClass: "btn btn-primary", //按钮样式  
-         dropZoneEnabled: false,//是否显示拖拽区域
-         //minImageWidth: 50, //图片的最小宽度
-         //minImageHeight: 50,//图片的最小高度
-         //maxImageWidth: 1000,//图片的最大宽度
-         //maxImageHeight: 1000,//图片的最大高度
-         //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
-         maxFileCount: 10, //表示允许同时上传的最大文件个数
-         enctype: 'multipart/form-data',
-         validateInitialCount:true,
-         previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-         msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-     });
-     //异步上传返回错误结果处理
-     $('#file-my').on('fileerror', function(event, data, msg) {
-         console.log(data.id);
-         console.log(data.index);
-         console.log(data.file);
-         console.log(data.reader);
-         console.log(data.files);
-         // get message
-         alert(msg);
-     });
-     //异步上传返回结果处理
-     $("#file-my").on("fileuploaded", function (event, data, previewId, index) {
-         console.log(data.id);
-         console.log(data.index);
-         console.log(data.file);
-         console.log(data.reader);
-         console.log(data.files);
-         var obj = data.response;
-         alert(JSON.stringify(data.success));
-     });
-     //批量同步上传错误处理
-     $('#uploadfile').on('filebatchuploaderror', function(event, data, msg) {
-         console.log(data.id);
-         console.log(data.index);
-         console.log(data.file);
-         console.log(data.reader);
-         console.log(data.files);
-         // get message
-         alert(msg);
-     });
-     //批量同步上传成功结果处理
-     $("#file-my").on("filebatchuploadsuccess", function (event, data, previewId, index) {
-         console.log(data.id);
-         console.log(data.index);
-         console.log(data.file);
-         console.log(data.reader);
-         console.log(data.files);
-         var obj = data.response;
-         alert(JSON.stringify(data.success));
-     });
-     //上传前
-     $('#file-my').on('filepreupload', function(event, data, previewId, index) {
-         var form = data.form, files = data.files, extra = data.extra,
-             response = data.response, reader = data.reader;
-         console.log('File pre upload triggered');
-     });
- </script>
-	-->
+</body>
 
 </html>
