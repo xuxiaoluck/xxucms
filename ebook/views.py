@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from ebook.models import Publisher,BookType,Books,BookFiles
-import simplejson
+
 
 def getallpublisher(request):
     '''取得所有出版社名称'''
@@ -108,10 +108,13 @@ def addbooks(request):
         publisher = request.POST.get('addbookselectpublisher')
         booktypeid = BookType.objects.get(name = booktype)
         publisherid = Publisher.objects.get(name = publisher)  #得到外键对象
+        publishername = publisherid.name
+        booktypename = booktypeid.name #传回到页面中
         bookname = request.POST.get('addbookname'),
+        detial = request.POST.get('addbookmemo')
         bookobj = Books(name = bookname,
                           authors = request.POST.get('addbookauthor'),
-                          detial = request.POST.get('addbookmemo'),
+                          detial = detial,
                           booktype = booktypeid,
                           publisher = publisherid
         )
@@ -123,7 +126,7 @@ def addbooks(request):
 
 
 def uploadfiles(request):
-    '''上传图书附件，不会对原视图进行刷新'''
+    '''上传图书附件'''
 
     if request.method == 'POST':
         fileobjs = request.FILES.getlist('files-my')
@@ -131,10 +134,11 @@ def uploadfiles(request):
             bookid = request.POST.get('bookid','')
             #UploadFile objects
             oneobj = fileobjs[i]
-            if oneobj:
-                print('bookid:',bookid,oneobj.name,oneobj.size,oneobj.content_type)
-    #json = simplejson.dumps({'success': True, 'errors': 'upload ok!'})
-    #return HttpResponse(json)
+            if oneobj:  #得到上传的一个 file对象，可以直接保存到 FileField字段中
+                booksid = Books.objects.get(id = 'bookid')
+                bookfile = BookFiles(name = oneobj.name,book_list = booksid,uploadfile = oneobj)
+                bookfile.save()  #生成一条上传文件记录
+
     return render_to_response('addbooks.html',locals())
 
 

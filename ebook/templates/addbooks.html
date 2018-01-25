@@ -175,7 +175,10 @@
                             <div class="control-group">
                                 <label class="control-label" for="input01">图书资源名称</label>
                                 <div class="controls">
-                                    <input type="text" placeholder="图书书籍名称" class="form-control input-xlarge" name="addbookname" id="addbookname" required>
+                                    <input type="text" placeholder="图书书籍名称" class="form-control input-xlarge" name="addbookname" id="addbookname" required
+                                           {%if dotype == 4 and isaddbook%}
+                                           value="{{bookname}}"
+                                           {%endif%}>
                                     <p class="help-block">图书的细分名称，不一定是主要图书，可以是一个小类</p>
                                 </div>
                             </div>
@@ -189,6 +192,11 @@
                                         {%endfor%}
                                     </select>
                                 </div>
+                                <script type="text/javascript">
+                                 $(function(){
+                                     $("#addbookselecttype").val({{booktypename}});
+                                 });
+                                </script>
 
                             </div><div class="control-group">
 
@@ -201,7 +209,11 @@
                                         {%endfor%}
                                     </select>
                                 </div>
-
+                                <script type="text/javascript">
+                                 $(function(){
+                                     $("#addbookselectpublisher").val({{publsihername}});
+                                 });
+                                </script>
                             </div>
                             <div class="control-group">
                                 <label class="control-label">作者</label>
@@ -212,7 +224,11 @@
                                 <label class="control-label">内容简介</label>
                                 <div class="controls">
                                     <div class="textarea">
-                                        <textarea type=""   style="height:300px" class="form-control" name="addbookmemo" id="addbookmemo" required> </textarea>
+                                        <textarea type=""   style="height:300px" class="form-control" name="addbookmemo" id="addbookmemo" required>
+                                           {%if dotype == 4 and isaddbook%}
+                                           {{detial}}
+                                           {%endif%}
+                                        </textarea>
                                     </div>
                                 </div>
                             </div>
@@ -234,7 +250,7 @@
                     </div>
                     <div class="control-group">
                         <div class="controls">
-                            <input type="text" class="form-control input-xlarge" name="bookid" id="bookid" value="{{bookid}}">
+                            <input type="text" class="form-control input-xlarge" name="bookid" id="bookid" value="{{bookid}}" style="display:none">
                         </div>
                     </div>
                     <div class="control-group">
