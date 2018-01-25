@@ -55,7 +55,6 @@
 						<ul class="dropdown-menu" aria-labelledby="about-us">
 							<li><a href="/ebook/uploadbook/">增加</a></li>
 							<li><a href="/ebook/deletebook/">删除</a></li>
-							<li><a href="/ebook/modifybook/">修改</a></li>
 						</ul>
 					</li>
                 </ul>
@@ -83,43 +82,20 @@
 			<!-- List-Group Panel -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h1 class="panel-title"><span class="glyphicon glyphicon-random"></span>图书文档</h1>
+					<h1 class="panel-title"><span class="glyphicon glyphicon-random"></span>图书资源分类</h1>
 				</div>
-				<div class="list-group">  <!-- 下面动态显示图书分类，分类下的每个图书都可以有多个图书资源 -->
-
-					<a href="#" class="list-group-item">显示分类名称</a>
-				</div>
+                <div class="col-sm-6">
+                     {%for typename in typelist%}
+                    <a href="#" class="list-group-item">{{typename}}</a>
+                    {%endfor%}
+                </div>
+                <div class="col-sm-6">
+                     {%for typename in typelist1%}
+                    <a href="#" class="list-group-item">{{typename}}</a>
+                    {%endfor%}
+                </div>
 			</div>
 
-			<!-- Text Panel -->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h1 class="panel-title"><span class="glyphicon glyphicon-cog"></span> 左列第二块区域</h1>
-				</div>
-
-				<div class="panel-body">
-					<p>左二区域显示区</p>
-					<p><button class="btn btn-default">左2按钮</button></p>
-				</div>
-			</div>
-
-			<!-- Text Panel -->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">
-						<span class="glyphicon glyphicon-bullhorn">左三</span>
-						左三标题区文本
-					</h3>
-				</div>
-				<div class="panel-body">
-					<p>左三</p>
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default">左三1</button>
-						<button type="button" class="btn btn-default">左三2</button>
-						<button type="button" class="btn btn-default">左三3</button>
-					</div>
-				</div>
-			</div>
 
 		</div><!--/Left Column-->
 

@@ -29,7 +29,8 @@ def index(request):
     dotype = 0 #无操作
     pblist = getallpublisher(request)
     btblist = getallbooktype(request)
-    bookid = 10000
+    typelist = btblist[::2]
+    typelist1 = btblist[1::2]
     return render_to_response('ebindex.html',locals())
 
 
@@ -110,18 +111,29 @@ def addbooks(request):
         publisherid = Publisher.objects.get(name = publisher)  #得到外键对象
         publishername = publisherid.name
         booktypename = booktypeid.name #传回到页面中
-        bookname = request.POST.get('addbookname'),
+        bookname = request.POST.get('addbookname')
         detial = request.POST.get('addbookmemo')
-        bookobj = Books(name = bookname,
-                          authors = request.POST.get('addbookauthor'),
+        bookauthors = request.POST.get('addbookauthor')
+        checkboxstate = request.POST.get('modifydata','NO')
+        if checkboxstate == 'OK': #修改
+            modiobj = Books.objects.get(id = int(request.POST.get('addbookid')))
+            modiobj.name = bookname
+            modiobj.authors = bookauthors
+            modiobj.booktype = booktypeid
+            modiobj.publisher = publisherid
+            modiobj.detial = detial
+            modiobj.save()
+            bookid = modiobj.id
+        else:
+            bookobj = Books(name = bookname,
+                          authors = bookauthors,
                           detial = detial,
                           booktype = booktypeid,
                           publisher = publisherid
-        )
-        bookobj.save()   #保存一项图书资源
-        bookid = bookobj.id  #得到最新的BOOKiD
+                          )
+            bookobj.save()   #保存一项图书资源
+            bookid = bookobj.id  #得到最新的BOOKiD
         dotype = 4
-
     return render_to_response('addbooks.html',locals())
 
 
@@ -129,15 +141,24 @@ def uploadfiles(request):
     '''上传图书附件'''
 
     if request.method == 'POST':
+        bookid = int(request.POST.get('bookid',0))
         fileobjs = request.FILES.getlist('files-my')
         for i in range(len(fileobjs)):
-            bookid = request.POST.get('bookid','')
             #UploadFile objects
             oneobj = fileobjs[i]
             if oneobj:  #得到上传的一个 file对象，可以直接保存到 FileField字段中
-                booksid = Books.objects.get(id = 'bookid')
+                booksid = Books.objects.get(id = bookid)
                 bookfile = BookFiles(name = oneobj.name,book_list = booksid,uploadfile = oneobj)
                 bookfile.save()  #生成一条上传文件记录
+
+        bookobj = Books.objects.get(id = bookid)
+        booktypename = bookobj.booktype.name
+        publishername = bookobj.publisher.name
+        bookname = bookobj.name
+        detial = bookobj.detial
+        bookauthors = bookobj.authors
+        dotype = 4
+        isaddbook = True
 
     return render_to_response('addbooks.html',locals())
 

@@ -194,7 +194,7 @@
                                 </div>
                                 <script type="text/javascript">
                                  $(function(){
-                                     $("#addbookselecttype").val({{booktypename}});
+                                     $("#addbookselecttype").val("{{booktypename}}");
                                  });
                                 </script>
 
@@ -210,14 +210,15 @@
                                     </select>
                                 </div>
                                 <script type="text/javascript">
-                                 $(function(){
-                                     $("#addbookselectpublisher").val({{publsihername}});
-                                 });
+                                 $("#addbookselectpublisher").val("{{publishername}}")
                                 </script>
                             </div>
                             <div class="control-group">
                                 <label class="control-label">作者</label>
-                                <input type="text" placeholder="作者" class="form-control input-xlarge" name="addbookauthor" id="addbookauthor" required>
+                                <input type="text" placeholder="作者" class="form-control input-xlarge" name="addbookauthor" id="addbookauthor" required
+                                       {%if dotype == 4 and isaddbook%}
+                                       value="{{bookauthors}}"
+                                       {%endif%}>
                                 <p class="help-block">图书的作者，多个作者以空格分开</p>
                             </div><div class="control-group">
 
@@ -233,7 +234,8 @@
                                 </div>
                             </div>
                             <div class="control-group">
-                             <div class="controls">
+                                <div class="controls">
+                                 <label><input type="checkbox" class="from-control" id="modifydata" name="modifydata" value="OK">修改数据</label>
                                  <button type="submit" class="btn btn-primary">保存</button>
                                  <button type="reset" class="btn btn-info">重设</button>
                              </div>
@@ -241,7 +243,6 @@
                         </fieldset>
                     </form>  <!-- 增加图书 FORM -->
             </div>   <!-- addbooks row -->
-            <hr>
             <hr>
             <div class="row"> <!-- uloadfiles row -->
                 <form class="form-horizontal" method="post" enctype='multipart/form-data' action="/ebook/uploadfiles/">
