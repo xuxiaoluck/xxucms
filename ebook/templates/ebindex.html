@@ -109,16 +109,25 @@
 				<article class="col-xs-12">
                     <ul class="pagination">
                         <li><a href="#">&laquo;</a></li>
-                        {%if pagenums%}
                         {%for i in pagenums%}
-                        <li><a href="/ebook/openbooksbypage/?pagenum={{i}}>{{i}}</a></li>
+                        <li><a href="/ebook/openbooksbypage/?pagenum={{i}}">{{i}}</a></li>
                         {%endfor%}
-                        {%endif%}
                         <li><a href="#">&raquo;</a></li>
-                    </ul>
+                    </ul><br>
+
                     {%for book in bookrlt%}
-                    <hr />
-                    <H3><a href="/ebook/downloadfiles/?bookid={{book.bookid}}">{{book.bookname}}</a></H3>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{book.bookname}}
+                        </button>
+                            <ul class="dropdown-menu">
+                            {%for file in book.filelist%}
+                                <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>{{file.name}}</strong>,
+                                    {{file.size}},{{file.uploaddate}}</a></li>
+                            {%endfor%}
+                            </ul>
+
+                    </div> <!-- 下拉菜单显示资源文件列表 -->
                     <h4>出版社：{{book.bookpublisher}}</h4>
                     <h4>作者：{{book.bookauthors}}</h4>
                     <h4>简介：{{book.bookdetial}}</h4>
@@ -131,20 +140,20 @@
 	  <!-- Right Column 在边一行-->
 	  <div class="col-sm-2">
 
-			<!-- Form 一个登录FORM --> 
+			<!-- Form 一个登录FORM -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						<span class="glyphicon glyphicon-log-in"></span>
-                        {% if user.is_authenticated %}
-						用户({{uid}})已登录
+                        {% if request.user.is_authenticated %}
+						用户({{request.user.username}})已登录
                         {%else%}
                         未登录
                         {% endif %}
 					</h3>
 				</div>
 				<div class="panel-body">
-					<form method="POST" action="/login/">                      
+					<form method="POST" action="/login/">
 						<div class="form-group">
 							<input type="text" class="form-control" id="uid" name="uid" placeholder="用户名">
 						</div>
@@ -157,89 +166,6 @@
 				</div>
 			</div>
  
-			<!-- Progress Bars 处理进度条-->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">
-						<span class="glyphicon glyphicon-scale"></span> 
-						工作进度
-					</h3>
-				</div>
-				<div class="panel-body">
-					<div class="progress">
-						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
-						aria-valuemin="0" aria-valuemax="100" style="width:100%">
-							100% 进度A 
-						</div>
-					</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80"
-						aria-valuemin="0" aria-valuemax="100" style="width:80%">
-							80% 进度B
-						</div>
-					</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="45"
-						aria-valuemin="0" aria-valuemax="100" style="width:45%">
-							45% 进度C
-						</div>
-					</div>
-					<div class="progress">
-						<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="35"
-						aria-valuemin="0" aria-valuemax="100" style="width:35%">
-							35% 进度D
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- Carousel 轮播 --> 
- 			<h3><span class="glyphicon glyphicon-modal-window"></span> 轮播标题</h3>
-			<div id="side-carousel" class="carousel slide" data-ride="carousel">
-				<ol class="carousel-indicators">
-					<li data-target="#side-carousel" data-slide-to="0" class="active"></li>
-					<li data-target="#side-carousel" data-slide-to="1"></li>
-					<li data-target="#side-carousel" data-slide-to="2"></li>
-				</ol>
-				<div class="carousel-inner" role="listbox">
-					<div class="item active">
-						<a href="#">
-							<img class="img-responsive" src="holder.js/400x300?bg=FF8C00&text=Image%201" alt="">
-						</a>
-						<div class="carousel-caption">
-							<h3>Dramatically Engage</h3>
-							<p>Objectively innovate empowered manufactured products whereas parallel platforms.</p>
-						</div>
-					</div>
-					<div class="item">
-						<a href="#">
-							<img class="img-responsive" src="holder.js/400x300?bg=FF8C00&text=Image%202" alt="">
-						</a>
-						<div class="carousel-caption">
-							<h3>Efficiently Unleash</h3>
-							<p>Dramatically maintain clicks-and-mortar solutions without functional solutions.</p>
-						</div>
-					</div>
-					<div class="item">
-						<a href="#">
-							<img class="img-responsive" src="holder.js/400x300?bg=FF8C00&text=Image%203" alt="">
-						</a>
-						<div class="carousel-caption">
-							<h3>Proactively Pontificate</h3>
-							<p>Holistically pontificate installed base portals after maintainable products.</p>
-						</div>
-					</div>
-				</div>
-				<a class="left carousel-control" href="#side-carousel" role="button" data-slide="prev">
-				    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-				    <span class="sr-only">Previous</span>
-				</a>
-				<a class="right carousel-control" href="#side-carousel" role="button" data-slide="next">
-				    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-				    <span class="sr-only">Next</span>
-				</a>
-			</div>
-
 	  </div><!--/Right Column -->
 
 	</div><!--/container-fluid-->
@@ -247,62 +173,10 @@
 	<footer>
 		<div class="footer-blurb">
 			<div class="container">
-				<div class="row">
-					<div class="col-sm-3 footer-blurb-item">
-						<h3><span class="glyphicon glyphicon-text-size"></span> 页脚1</h3>
-						<p>页脚内容.</p>
-						<p><a class="btn btn-default" href="#">Procrastinate</a></p>
-					</div>
-					<div class="col-sm-3 footer-blurb-item">
-						<h3><span class="glyphicon glyphicon-wrench"></span> 页脚2</h3>
-						<p>页脚内容</p>
-						<p><a class="btn btn-default" href="#">Unleash</a></p>
-					</div>
-					<div class="col-sm-3 footer-blurb-item">
-						<h3><span class="glyphicon glyphicon-paperclip"></span> 页脚3</h3>
-						<p>页脚内容</p>
-						<p><a class="btn btn-default" href="#">Complete</a></p>
-					</div>
-					<div class="col-sm-3 footer-blurb-item">
-						
-						<!-- Thumbnails 缩略图 --> 
-						<h3><span class="glyphicon glyphicon-camera"></span> 页脚4 缩略图</h3>
-						<div class="row">
-							<div class="col-xs-6">
-								<a href="#" class="thumbnail">
-									<img data-src="{% static 'bootstrap-3.3.7/js/holder.js/110x80' %}" alt="">
-								</a>
-							</div>
-							<div class="col-xs-6">
-								<a href="#" class="thumbnail">
-									<img data-src="{% static 'bootstrap-3.3.7/js/holder.js/110x80' %}" alt="">
-								</a>
-							</div>
-							<div class="col-xs-6">
-								<a href="#" class="thumbnail">
-									<img data-src="{% static 'bootstrap-3.3.7/js/holder.js/110x80' %}" alt="">
-								</a>
-							</div>
-							<div class="col-xs-6">
-								<a href="#" class="thumbnail">
-									<img data-src="{% static 'bootstrap-3.3.7/js/holder.js/110x80' %}" alt="">
-									</a>
-								</div>
-							</div>
-							
-					</div>
-
-				</div>
-				<!-- /.row -->	
+			
 			</div>
         </div>
         
-        <div class="small-print">
-        	<div class="container">
-        		<p><a href="#">Terms &amp; Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact</a></p>
-        		<p>版权 &copy; Example.com 2015 </p>
-        	</div>
-        </div>
 	</footer>
 
 	

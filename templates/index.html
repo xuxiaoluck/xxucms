@@ -191,8 +191,8 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						<span class="glyphicon glyphicon-log-in"></span>
-                        {% if user.is_authenticated %}
-						用户({{uid}})已登录
+                        {% if request.user.is_authenticated %}
+						用户({{request.user.username}})已登录
                         {%else%}
                         未登录
                         {% endif %}

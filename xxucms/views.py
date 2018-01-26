@@ -1,26 +1,30 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.contrib import auth
-from django.template.context_processors import csrf
+#from django.template.context_processors import csrf
 from django.template import RequestContext
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 
 def index(request):
-    return render_to_response('index.html',{'isok':False})
+    return render_to_response('index.html',locals())
 
 def xlogin(request):
     '''登录视图'''
-    
+
     uid = request.POST.get('uid','')
     pwd = request.POST.get('pwd','')
     user = auth.authenticate(username = uid,password = pwd)
-    isok = True
+    
     if user is not None and user.is_active:
         auth.login(request,user)
-        return render_to_response('index.html',locals())
+        return HttpResponseRedirect("/home/")
+        #return render_to_response('index.html',locals())
     else:
-        isok = False
-        return render_to_response('index.html',locals())
+        #return render_to_response('index.html',locals())
+        return HttpResponseRedirect("/home/")
+
+
 
 def xlogout(request):
     auth.logout(request)
@@ -38,12 +42,12 @@ def regsave(request):
     pwd = request.POST.get('password','')
     if uid == '':
         return render_to_response('userreg.html',{'idnone':'uid is null',"regsave":True})
-    
+
     User.objects.create_user(username = uid,password = pwd,email='template@xxu.com')
-    
+
     regsave = True
     regok = True
     return render_to_response('userreg.html',locals())
-    
+
 
 

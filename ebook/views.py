@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from ebook.models import Publisher,BookType,Books,BookFiles
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import StreamingHttpResponse
+from django.utils.http import urlquote
 
 def getallpublisher(request):
     '''取得所有出版社名称'''
@@ -188,14 +190,49 @@ def booklistbytypename(request):
         bookdetial = book.detial[:50]
         bookpublisher = book.publisher.name
         bookauthors = book.authors
-        #bookfiles = book.bookfiles_set.all()  #得到所有附件
-        bookrlt.append({'bookid':bookid,'bookname':bookname,'bookdetial':book.detial,'bookpublisher':bookpublisher,'bookauthors':bookauthors})
+        bookfiles = book.bookfiles_set.all()  #得到所有附件
+        filelist = []
+        for onefile in bookfiles:
+            tmpdict = {}
+            tmpdict['name'] = onefile.name
+            tmpdict['uploaddate'] = onefile.uploadtime.strftime('%Y%m%d')
+            tmpdict['size'] = "{0:.2f}K".format(onefile.uploadfile.size / 1024.0)
+            tmpdict['url'] = onefile.uploadfile.url
+            tmpdict['fileid'] = onefile.id
+            filelist.append(tmpdict)
+
+        bookrlt.append({'bookid':bookid,'bookname':bookname,'bookdetial':book.detial,
+                        'bookpublisher':bookpublisher,'bookauthors':bookauthors,'filelist':filelist})
 
     dotype = 0 #无操作
     pblist = getallpublisher(request)
     btblist = getallbooktype(request)
     typelist = btblist[::2]
     typelist1 = btblist[1::2]
-    return render_to_response('ebindex.html',{'bookrlt':bookrlt,'bookcount':len(bookrlt),'pagenums':range(1,paginator.num_pages + 1),
-                                              'typelist':typelist,'typelist1':typelist1,'dotype':dotype
-     })
+
+    bookcount = len(bookrlt)
+    pagenums = range(1,paginator.num_pages + 1)
+
+    return render_to_response('ebindex.html',locals())
+
+
+def downloadfile(request):
+    '''下载文件到本地'''
+
+    def file_iterator(file_name, chunk_size=1024):
+        with open(file_name,'rb') as f:
+            while True:
+                c = f.read(chunk_size)
+                if c:
+                    yield c
+                else:
+                    break
+
+    onefile = BookFiles.objects.get(id = request.GET.get('fileid'))
+    the_file_name = onefile.uploadfile.path
+    file_name = onefile.name
+    response = StreamingHttpResponse(file_iterator(the_file_name))
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="{0}"'.format(urlquote(file_name))
+
+    return response

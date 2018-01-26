@@ -14,4 +14,5 @@ urlpatterns = [
     path('addbooks/',ebook.views.addbooks),
     path('uploadfiles/',ebook.views.uploadfiles),
     path('booklistbytypename/',ebook.views.booklistbytypename),   #按类别名称列出一类书籍数据
+    path('downloadfile/',ebook.views.downloadfile),  #下载文件到本地
 ]
