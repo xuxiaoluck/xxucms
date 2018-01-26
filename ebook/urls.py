@@ -13,4 +13,5 @@ urlpatterns = [
     path('addauthor/',ebook.views.addauthor),
     path('addbooks/',ebook.views.addbooks),
     path('uploadfiles/',ebook.views.uploadfiles),
+    path('booklistbytypename/',ebook.views.booklistbytypename),   #按类别名称列出一类书籍数据
 ]

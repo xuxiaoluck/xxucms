@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from ebook.models import Publisher,BookType,Books,BookFiles
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def getallpublisher(request):
     '''取得所有出版社名称'''
@@ -164,3 +164,38 @@ def uploadfiles(request):
 
 
 
+def booklistbytypename(request):
+    '''按类别名称列出一类书籍数据'''
+
+    typename = request.GET.get('typename')
+    booktype = BookType.objects.get(name = typename)
+    booklist = booktype.books_set.all() #先得到外键对象，再找到外键的所有对象列表
+    paginator = Paginator(booklist, 10) # 一页显示10条
+    page = request.GET.get('page',1)
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        contacts = paginator.page(paginator.num_pages)
+
+    bookrlt = [] #书籍列表
+    for book in contacts:  #该页数据
+        bookid = book.id
+        bookname = book.name
+        bookdetial = book.detial[:50]
+        bookpublisher = book.publisher.name
+        bookauthors = book.authors
+        #bookfiles = book.bookfiles_set.all()  #得到所有附件
+        bookrlt.append({'bookid':bookid,'bookname':bookname,'bookdetial':book.detial,'bookpublisher':bookpublisher,'bookauthors':bookauthors})
+
+    dotype = 0 #无操作
+    pblist = getallpublisher(request)
+    btblist = getallbooktype(request)
+    typelist = btblist[::2]
+    typelist1 = btblist[1::2]
+    return render_to_response('ebindex.html',{'bookrlt':bookrlt,'bookcount':len(bookrlt),'pagenums':range(1,paginator.num_pages + 1),
+                                              'typelist':typelist,'typelist1':typelist1,'dotype':dotype
+     })

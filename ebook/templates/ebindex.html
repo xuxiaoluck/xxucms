@@ -64,7 +64,7 @@
 					<div class="form-group">
 						<input type="text" class="form-control">
 					</div>
-					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> 搜索</button>
+					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>搜索</button>
 				</form>
 
             </div>
@@ -86,14 +86,15 @@
 				</div>
                 <div class="col-sm-6">
                      {%for typename in typelist%}
-                    <a href="#" class="list-group-item">{{typename}}</a>
+                    <a href="/ebook/booklistbytypename/?typename={{typename}}" class="list-group-item">{{typename}}</a>
                     {%endfor%}
                 </div>
                 <div class="col-sm-6">
                      {%for typename in typelist1%}
-                    <a href="#" class="list-group-item">{{typename}}</a>
+                    <a href="/ebook/booklistbytypename/?typename={{typename}}" class="list-group-item">{{typename}}</a>
                     {%endfor%}
                 </div>
+                <!-- 分两列显示分类 -->
 			</div>
 
 
@@ -103,55 +104,27 @@
 		<!-- Center Column 中间列，主显示区，占6格（一半）-->
 		<div class="col-sm-8">
 
-			<!-- Alert -->
-			<div class="alert alert-success alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<strong>alter:</strong> 警示、消息显示区
-			</div>
-
 			<!-- Articles -->
 			<div class="row">
 				<article class="col-xs-12">
-					<h2>第一行article区 二级标题</h2>
-					<p>显示最近上传的30个图书资源.</p>
-					<p><button class="btn btn-default btn-sm">更多...</button></p>
-					<p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>
-					<ul class="list-inline">
-						<li><a href="#">今天</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 2 备注</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-share"></span> 8 共享</a></li>
-					</ul>
+                    <ul class="pagination">
+                        <li><a href="#">&laquo;</a></li>
+                        {%if pagenums%}
+                        {%for i in pagenums%}
+                        <li><a href="/ebook/openbooksbypage/?pagenum={{i}}>{{i}}</a></li>
+                        {%endfor%}
+                        {%endif%}
+                        <li><a href="#">&raquo;</a></li>
+                    </ul>
+                    {%for book in bookrlt%}
+                    <hr />
+                    <H3><a href="/ebook/downloadfiles/?bookid={{book.bookid}}">{{book.bookname}}</a></H3>
+                    <h4>出版社：{{book.bookpublisher}}</h4>
+                    <h4>作者：{{book.bookauthors}}</h4>
+                    <h4>简介：{{book.bookdetial}}</h4>
+                    {%endfor%}
 				</article>
 			</div>
-			<hr>
-			<div class="row">
-				<article class="col-xs-12">
-					<h2>第二行 article 二级标题</h2>
-					<p>显示内容</p>
-					<p><button class="btn btn-default">更多...</button></p>
-					<p class="pull-right"><span class="label label-default">keyword</span> <span class="label label-default">tag</span> <span class="label label-default">post</span></p>
-					<ul class="list-inline">
-						<li><a href="#">Yesterday</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 21 信息</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-share"></span> 36 共享</a></li>
-					</ul>
-				</article>
-			</div>
-			<hr>
-			<div class="row">
-				<article class="col-xs-12">
-					<h2>第三行 article 二级标题</h2>
-					<p>显示内容</p>
-					<p><button class="btn btn-default">更多</button></p>
-					<p class="pull-right"><span class="label label-default">关键词</span> <span class="label label-default">标签</span> <span class="label label-default">post</span></p>
-					<ul class="list-inline">
-						<li><a href="#">2 Days Ago</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 12 Comments</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-share"></span> 18 Shares</a></li>
-					</ul>
-				</article>
-			</div>
-			<hr>
 		</div><!--/Center Column-->
 
 
