@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render_to_response
 from ebook.models import Publisher,BookType,Books,BookFiles
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -7,7 +7,7 @@ from django.utils.http import urlquote
 
 def getallpublisher(request):
     '''取得所有出版社名称'''
-    db = Publisher.objects.all() 
+    db = Publisher.objects.all()
     pblist = [one.name for one in db]
     return pblist
 
@@ -15,14 +15,14 @@ def getallpublisher(request):
 
 def getallauthor(request):
     '''取得所有作者名称'''
-    db = Author.objects.all() 
+    db = Author.objects.all()
     ablist = [one.name for one in db]
     return ablist
 """
 
 def getallbooktype(request):
     '''取得所有分类'''
-    db = BookType.objects.all() 
+    db = BookType.objects.all()
     btblist = [one.name for one in db]
     return btblist
 
@@ -101,6 +101,11 @@ def addbooktype(request):
 
 def addbooks(request):
     '''增加书籍'''
+
+    if not request.user.is_authenticated:
+        return render_to_response('nologin.html',locals())
+
+    #先判断是否已登录，非登录用户不能增加数据
 
     pblist = getallpublisher(request)
     btblist = getallbooktype(request)

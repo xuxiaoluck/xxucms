@@ -18,6 +18,7 @@ from django.urls import path,include
 import xxucms.views
 import hiddendanger.urls
 import ebook.urls
+from django.shortcuts import redirect
 
 urlpatterns = [
     path('',xxucms.views.index),

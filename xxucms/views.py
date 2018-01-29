@@ -15,7 +15,7 @@ def xlogin(request):
     uid = request.POST.get('uid','')
     pwd = request.POST.get('pwd','')
     user = auth.authenticate(username = uid,password = pwd)
-    
+
     if user is not None and user.is_active:
         auth.login(request,user)
         return HttpResponseRedirect("/home/")
