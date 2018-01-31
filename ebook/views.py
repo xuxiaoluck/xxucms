@@ -192,7 +192,7 @@ def booklistbytypename(request):
     for book in contacts:  #该页数据
         bookid = book.id
         bookname = book.name
-        bookdetial = book.detial[:50]
+        bookdetial = book.detial[:200]
         bookpublisher = book.publisher.name
         bookauthors = book.authors
         bookfiles = book.bookfiles_set.all()  #得到所有附件
