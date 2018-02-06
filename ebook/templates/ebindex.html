@@ -87,14 +87,14 @@
                 <div class="col-sm-6">
                     <ul class="nav nav-tabs nav-stacked">
                         {%for typename in typelist%}
-                        <li><a href="/ebook/booklistbytypename/?typename={{typename}}">{{typename}}</a></li>
+                        <li><a href="/ebook/booklistbytypename/?typename={{typename | urlencode}}">{{typename}}</a></li>
                         {%endfor%}
                    </ul>
                 </div>
                 <div class="col-sm-6">
                     <ul class="nav nav-tabs nav-stacked">
                         {%for typename in typelist1%}
-                        <li><a href="/ebook/booklistbytypename/?typename={{typename}}">{{typename}}</a></li>
+                        <li><a href="/ebook/booklistbytypename/?typename={{typename}}">{{typename | urlencode}}</a></li>
                         {%endfor%}
                     </ul>
                 </div>
@@ -128,9 +128,8 @@
                             {%for file in book.filelist%}
                                 <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>{{file.name}}</strong>,
                                     {{file.size}},{{file.uploaddate}}</a></li>
-                            {%endfor%}
+                                {%endfor%}
                             </ul>
-
                     </div> <!-- 下拉菜单显示资源文件列表 -->
                     <h5>出版社：{{book.bookpublisher}}</h5>
                     <h5>作者：{{book.bookauthors}}</h5>
