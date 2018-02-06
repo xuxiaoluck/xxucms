@@ -5,8 +5,35 @@ from django.contrib import auth
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
+from ebook.models import Books
+
 
 def index(request):
+    """主页,显示最新上传的五个软件、文章、图书"""
+
+    bookn = Books.objects.order_by('updatetime')[:5]  #按更新时间取最新的五条图书数据
+    bookrlt = [] #书籍列表
+    for book in bookn:  #附件生成下拦菜单
+        bookid = book.id
+        bookname = book.name
+        bookdetial = book.detial[:200]
+        bookpublisher = book.publisher.name
+        bookauthors = book.authors
+        bookupdatetime = book.updatetime.strftime('%Y%m%d')
+        bookfiles = book.bookfiles_set.all()  #得到所有附件
+        filelist = []
+        for onefile in bookfiles:
+            tmpdict = {}
+            tmpdict['name'] = onefile.name
+            tmpdict['size'] = "{0:.2f}K".format(onefile.uploadfile.size / 1024.0)
+            tmpdict['url'] = onefile.uploadfile.url
+            tmpdict['fileid'] = onefile.id
+            filelist.append(tmpdict)
+
+        bookrlt.append({'bookid':bookid,'bookname':bookname,'bookdetial':book.detial,
+                        'bookpublisher':bookpublisher,'bookauthors':bookauthors,'filelist':filelist})
+
+
     return render_to_response('index.html',locals())
 
 def xlogin(request):
@@ -18,12 +45,8 @@ def xlogin(request):
 
     if user is not None and user.is_active:
         auth.login(request,user)
-        return HttpResponseRedirect("/home/")
-        #return render_to_response('index.html',locals())
-    else:
-        #return render_to_response('index.html',locals())
-        return HttpResponseRedirect("/home/")
 
+    return HttpResponseRedirect("/home/")
 
 
 def xlogout(request):

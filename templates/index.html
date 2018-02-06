@@ -95,15 +95,6 @@
                     <li><a href="#">网站收集</a></li>
                 </ul>
 
-                <!-- -				<div class="list-group"> 
-					<a href="/hiddendanger/" class="list-group-item">隐患管理</a>
-					<a href="/ebook/" class="list-group-item">图书文档</a>
-					<a href="#" class="list-group-item">照片管理</a>
-					<a href="#" class="list-group-item">博   客</a>
-                    <a href="#" class="list-group-item">软件下载</a>
-					<a href="#" class="list-group-item">网站收集</a>
-			</div>
-            -->
 			</div>
 
 			<!-- Text Panel -->
@@ -124,18 +115,35 @@
 			<!-- Alert -->
 			<div class="alert alert-success alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<strong>alter:</strong> 警示、消息显示区
 			</div>
 
 			<!-- Articles -->
 			<div class="row">
 				<article class="col-xs-12">
-					<p class="pull-left"><span class="label label-default">最新图书</span></p>
+					<p class="pull-right"><span class="label label-success">最新图书</span></p>
+                    <hr>
+                    {%for book in bookrlt%}
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{book.bookname}}
+                        </button>
+                        <ul class="dropdown-menu">
+                            {%for file in book.filelist%}
+                            <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>{{file.name}}</strong>,
+                                {{file.size}},{{file.uploaddate}}</a></li>
+                            {%endfor%}
+                        </ul>
+
+                    </div> <!-- 下拉菜单显示资源文件列表 -->
+                    <h6>出版社：{{book.bookpublisher}}</h6>
+                    <h6>作者：{{book.bookauthors}}</h6>
+                    <h6>简介：{{book.bookdetial}}</h6>
 					<ul class="list-inline">
-						<li><a href="#">今天</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 2 备注</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-share"></span> 8 共享</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-comment"></span>上传时间</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-share"></span>访问次数</a></li>
 					</ul>
+                    {%endfor%}
+
 				</article>
 			</div>
 			<hr>

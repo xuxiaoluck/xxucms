@@ -4,6 +4,7 @@ from ebook.models import Publisher,BookType,Books,BookFiles
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import StreamingHttpResponse
 from django.utils.http import urlquote
+from datetime import datetime
 
 def getallpublisher(request):
     '''取得所有出版社名称'''
@@ -129,6 +130,8 @@ def addbooks(request):
             modiobj.booktype = booktypeid
             modiobj.publisher = publisherid
             modiobj.detial = detial
+            modiobj.updateuser = request.user.username
+            modiobj.updatetime = datetime.now()
             modiobj.save()
             bookid = modiobj.id
         else:
@@ -136,7 +139,8 @@ def addbooks(request):
                           authors = bookauthors,
                           detial = detial,
                           booktype = booktypeid,
-                          publisher = publisherid
+                          publisher = publisherid,
+                          updateuser = request.user.username
                           )
             bookobj.save()   #保存一项图书资源
             bookid = bookobj.id  #得到最新的BOOKiD
@@ -195,12 +199,12 @@ def booklistbytypename(request):
         bookdetial = book.detial[:200]
         bookpublisher = book.publisher.name
         bookauthors = book.authors
+        bookupdatetime = book.updatetime.strftime('%Y%m%d')
         bookfiles = book.bookfiles_set.all()  #得到所有附件
         filelist = []
         for onefile in bookfiles:
             tmpdict = {}
             tmpdict['name'] = onefile.name
-            tmpdict['uploaddate'] = onefile.uploadtime.strftime('%Y%m%d')
             tmpdict['size'] = "{0:.2f}K".format(onefile.uploadfile.size / 1024.0)
             tmpdict['url'] = onefile.uploadfile.url
             tmpdict['fileid'] = onefile.id

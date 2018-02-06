@@ -42,6 +42,11 @@ class Books(models.Model):
     publisher = models.ForeignKey(Publisher,on_delete = models.CASCADE)
     authors = models.CharField(max_length = 100,verbose_name = '作者列表')
     detial = models.TextField(verbose_name = '内容简介')   #书籍描述
+    accessnums = models.IntegerField(default = 0)
+    thumbupnums = models.IntegerField(verbose_name = '点赞',default=0)
+    updatetime = models.DateTimeField(auto_now_add = True,verbose_name = '上传时间')
+    updateuser = models.CharField(max_length = 30,verbose_name = 'uploaduser',default = 'defaultuser')
+
 
     def __str__(self):
         return self.name
@@ -54,10 +59,8 @@ class BookFiles(models.Model):
     name = models.CharField(max_length = 60,verbose_name = '名称')  #文件名称
     book_list = models.ForeignKey(Books,on_delete = models.CASCADE) #指向 Books
     uploadfile = models.FileField(upload_to="ebooks/%Y/%m/%d/",verbose_name = '文件') #文件路径 直接挂在 MEDIA_ROOT
-    uploadtime = models.DateTimeField(auto_now_add = True,verbose_name = '上传时间')
-    uploaduser = models.CharField(max_length = 30,verbose_name = 'uploaduser')
     accessnums = models.IntegerField(verbose_name = '访问次数',default=0)
-    thumbupnums = models.IntegerField(verbose_name = '点赞',default=0)
+
 
     def __str__(self):
         return self.name
