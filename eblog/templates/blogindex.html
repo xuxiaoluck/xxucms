@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>CMS.电子图书文档管理工具</title>
+    <title>CMS.个人博客</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -51,8 +51,7 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">操作<span class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="about-us">
-							<li><a href="/ebook/uploadbook/">增加</a></li>
-							<li><a href="/ebook/deletebook/">删除</a></li>
+							<li><a href="/eblog/addblogandtype/">增加</a></li>
 						</ul>
 					</li>
                 </ul>
@@ -81,20 +80,20 @@
 			<!-- List-Group Panel -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h4 class="panel-title"><span class="glyphicon glyphicon-random"></span>图书资源分类</h4>
+					<h4 class="panel-title"><span class="glyphicon glyphicon-random"></span>博文分类</h4>
 				</div>
 
                 <div class="col-sm-6">
                     <ul class="nav nav-tabs nav-stacked">
                         {%for typename in typelist%}
-                        <li><a href="/ebook/booklistbytypename/?typename={{typename | urlencode}}">{{typename}}</a></li>
+                        <li><a href="/eblog/bloglistbytypename/?typename={{typename | urlencode}}">{{typename}}</a></li>
                         {%endfor%}
                    </ul>
                 </div>
                 <div class="col-sm-6">
                     <ul class="nav nav-tabs nav-stacked">
                         {%for typename in typelist1%}
-                        <li><a href="/ebook/booklistbytypename/?typename={{typename | urlencode}}">{{typename}}</a></li>
+                        <li><a href="/eblog/bloglistbytypename/?typename={{typename | urlencode}}">{{typename}}</a></li>
                         {%endfor%}
                     </ul>
                 </div>
@@ -114,31 +113,11 @@
                     <ul class="pagination">
                         <li><a href="#">&laquo;</a></li>
                         {%for i in pagenums%}
-                        <li><a href="/ebook/openbooksbypage/?pagenum={{i}}">{{i}}</a></li>
+                        <li><a href="/eblog/openbloglistbypage/?pagenum={{i}}">{{i}}</a></li>
                         {%endfor%}
                         <li><a href="#">&raquo;</a></li>
                     </ul><br>
-
-                    {%for book in bookrlt%}
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{book.bookname}}
-                        </button>
-                            <ul class="dropdown-menu">
-                            {%for file in book.filelist%}
-                                <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>{{file.name}}</strong>,
-                                    {{file.size}},{{file.uploaddate}}</a></li>
-                                {%endfor%}
-                            </ul>
-                    </div> <!-- 下拉菜单显示资源文件列表 -->
-                    {%if request.user.is_authenticated%}
-					    <a href="/home/ebook/modifybook?bookid={{book.bookid}}">修改</a>
-                    {%endif%}
-
-                    <h5>出版社：{{book.bookpublisher}}</h5>
-                    <h5>作者：{{book.bookauthors}}</h5>
-                    <h5>简介：{{book.bookdetial}}</h5>
-                    {%endfor%}
+                    <!-- 下面显示一页博客标题列表 -->
 				</article>
 			  </div>
 		</div><!--/Center Column-->
@@ -147,33 +126,9 @@
 	  <!-- Right Column 在边一行-->
 	  <div class="col-sm-2">
 
-			<!-- Form 一个登录FORM -->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">
-						<span class="glyphicon glyphicon-log-in"></span>
-                        {% if request.user.is_authenticated %}
-						用户({{request.user.username}})已登录
-                        {%else%}
-                        未登录
-                        {% endif %}
-					</h3>
-				</div>
-				<div class="panel-body">
-					<form method="POST" action="/login/">
-						<div class="form-group">
-							<input type="text" class="form-control" id="uid" name="uid" placeholder="用户名">
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" id="pwd" name="pwd" placeholder="密码">
-						</div>
 
-						<button type="submit" class="btn btn-primary">登 录</button>
-					</form>
-				</div>
-			</div>
 
-	  </div><!--/Right Column -->
+	  </div><!--/Right Column 显示最新的一系统博客 -->
 
       <div class="col-sm-1">
       </div>

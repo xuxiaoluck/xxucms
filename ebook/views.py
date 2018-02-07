@@ -62,6 +62,7 @@ def addpublisher(request):
 
     return render_to_response('addbooks.html',locals())
 
+"""
 def addauthor(request):
     '''增加作者'''
     dotype = -1
@@ -80,7 +81,7 @@ def addauthor(request):
     pblist = getallpublisher(request)
     btblist = getallbooktype(request)
     return render_to_response('addbooks.html',locals())
-
+"""
 
 def addbooktype(request):
     '''增加图书类别'''
@@ -245,3 +246,9 @@ def downloadfile(request):
     response['Content-Disposition'] = 'attachment;filename="{0}"'.format(urlquote(file_name))
 
     return response
+
+def modifybook(request):
+    """修改已上传的书籍资料"""
+
+    pass
+    

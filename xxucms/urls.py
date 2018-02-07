@@ -16,9 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 import xxucms.views
-#import hiddendanger.urls
 import ebook.urls
-from django.shortcuts import redirect
+import eblog.urls
 
 urlpatterns = [
     path('',xxucms.views.index),
@@ -28,6 +27,6 @@ urlpatterns = [
     path('logout/',xxucms.views.xlogout),
     path('userreg/',xxucms.views.userreg),   #index中点了用户注册
     path('regsave/',xxucms.views.regsave),   #userreg.html中点击了注册按钮
-    #path('hiddendanger/',include(hiddendanger.urls)),  #应用hiddendanger的URL转发
     path('ebook/',include(ebook.urls)),
+    path('eblog/',include(eblog.urls)),
 ]
