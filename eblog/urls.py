@@ -7,7 +7,7 @@ from eblog.views import *
 
 urlpatterns = [
     path('',index), #首页
+    path('addblogandtype/',openaddblogandtype),  #打开增加类别、博文的页面
     path('addblog/',addblog),
-    path('addblogandtype/',addblogandtype),
     path('addblogtype/',addblogtype),
 ]

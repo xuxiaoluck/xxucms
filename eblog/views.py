@@ -21,26 +21,26 @@ def index(request):
     typelist1 = btblist[1::2] #分奇偶得到两个列表
     return render_to_response('blogindex.html',locals())
 
+def openaddblogandtype(request):
+    """打开增加类别、博文的页面"""
+
+    return render_to_response('addblogandtype.html',locals())
 
 def addblogtype(request):
-    '''增加类别'''
+    '''增加类别,通过jquery.post传递数据'''
 
-    if request.method == 'POST':
-        pname = request.POST.get('blogtypename','')
-        if pname != '':
-            try:
-                tmpobj  = BlogType.objects.get(name = pname)
-                #无异常，说明已存在
-            except BlogType.DoesNotExist:
-                db = BlogType(name = pname)
+    typename = request.POST.get('typename')
+
+    if typename != '':
+        try:
+            tmpobj  = BlogType.objects.get(name = typename)
+            #无异常，说明已存在
+            return HttpResponse('(<font color=red>{0}</font>)已存在!'.format(typename))
+        except BlogType.DoesNotExist:
+                db = BlogType(name = typename)
                 db.save()
+                return HttpResponse('(<font color=red>{0}</font>)成功!'.format(typename))
 
-    btlist = getallblogtype(request)
-    return render_to_response('addblogandtype.html',locals())
-
-def addblogandtype(request):
-    '''增加'''
-    return render_to_response('addblogandtype.html',locals())
 
 def addblog(request):
     '''增加博文'''

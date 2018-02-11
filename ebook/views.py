@@ -12,15 +12,6 @@ def getallpublisher(request):
     pblist = [one.name for one in db]
     return pblist
 
-"""
-
-def getallauthor(request):
-    '''取得所有作者名称'''
-    db = Author.objects.all()
-    ablist = [one.name for one in db]
-    return ablist
-"""
-
 def getallbooktype(request):
     '''取得所有分类'''
     db = BookType.objects.all()
@@ -36,6 +27,10 @@ def index(request):
     typelist1 = btblist[1::2]
     return render_to_response('ebindex.html',locals())
 
+def openaddbookandtype(request):
+    """打开新增界面"""
+    return render_to_response('addbooks.html',locals())
+
 
 '''
 错误-1、无操作0、增加出版社1、作者2、分类3、图书资源4、图书列表5都由一个页面完成，用一个变量来判断当前是哪个操作
@@ -44,62 +39,36 @@ dotype:-100,数据已存在
 '''
 def addpublisher(request):
     '''增加出版社'''
-    dotype = -1
-    isaddpublisher = True
-    if request.method == 'POST':
-        pname = request.POST.get('addpublishername','')
-        if pname != '':
-            try:
-                tmpobj  = Publisher.objects.get(name = pname)
-                dotype = -100 #无异常，说明已存在
-            except Publisher.DoesNotExist:
-                db = Publisher(name = pname)
-                db.save()
-                dotype = 1
 
-    pblist = getallpublisher(request)
-    btblist = getallbooktype(request)
+    pname = request.POST.get('typename')
+    info = ''
+    if pname != '':
+        try:
+            tmpobj  = Publisher.objects.get(name = pname)
+            info = "(<font color=red>{0}</font>)已存在!".format(pname)
+        except Publisher.DoesNotExist:
+            db = Publisher(name = pname)
+            info = "增加(<font color=red>{0}</font>)成功!".format(pname)
+            db.save()
 
-    return render_to_response('addbooks.html',locals())
+    return HttpResponse(info)
 
-"""
-def addauthor(request):
-    '''增加作者'''
-    dotype = -1
-    isaddauthor = True
-    if request.method == 'POST':
-        pname = request.POST.get('addauthorname','')
-        if pname != '':
-            try:
-                tmpobj  = Author.objects.get(name = pname)
-                dotype = -100 #无异常，说明已存在
-            except Author.DoesNotExist:
-                db = Author(name = pname)
-                db.save()
-                dotype = 2
-
-    pblist = getallpublisher(request)
-    btblist = getallbooktype(request)
-    return render_to_response('addbooks.html',locals())
-"""
 
 def addbooktype(request):
     '''增加图书类别'''
-    dotype = -1
-    isaddbooktype = True
-    if request.method == 'POST':
-        pname = request.POST.get('addbooktypename','')
-        if pname != '':
-            try:
-                tmpobj  = BookType.objects.get(name = pname)
-                dotype = -100 #无异常，说明已存在
-            except BookType.DoesNotExist:
-                db = BookType(name = pname)
-                db.save()
-                dotype = 3
-    pblist = getallpublisher(request)
-    btblist = getallbooktype(request)
-    return render_to_response('addbooks.html',locals())
+
+    pname = request.POST.get('typename')
+    info = ''
+    if pname != '':
+        try:
+            tmpobj  = BookType.objects.get(name = pname)
+            info = "(<font color=red>{0}</font>)已存在!".format(pname)
+        except BookType.DoesNotExist:
+            db = BookType(name = pname)
+            db.save()
+            info = "增加(<font color=red>{0}</font>)成功!".format(pname)
+    return HttpResponse(info)
+
 
 def addbooks(request):
     '''增加书籍'''
