@@ -31,7 +31,7 @@ class Blogs(models.Model):
 
     class Meta:
         ordering = ['name']
-
+"""
 class BlogFiles(models.Model):
     '''Blog附件'''
     name = models.CharField(max_length = 60,verbose_name = '名称')  #文件名称
@@ -43,7 +43,7 @@ class BlogFiles(models.Model):
 
     class Meta:
         ordering = ['name']
-
+"""
 
 class BlogImages(models.Model):
     '''Blog图片列表'''

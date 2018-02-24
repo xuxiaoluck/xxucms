@@ -21,6 +21,7 @@ import eblog.urls
 
 urlpatterns = [
     path('',xxucms.views.index),
+    path('test/',xxucms.views.test),  #测试单元
     path('home/',xxucms.views.index), #所有的地方点击了回首页按钮
     path('admin/', admin.site.urls),
     path('login/',xxucms.views.xlogin),

@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import StreamingHttpResponse
 from django.utils.http import urlquote
 from datetime import datetime
-from eblog.models import BlogType,Blogs,BlogFiles,BlogImages
+from eblog.models import BlogType,Blogs,BlogImages
 
 
 def getallblogtype(request):
@@ -24,6 +24,8 @@ def index(request):
 def openaddblogandtype(request):
     """打开增加类别、博文的页面"""
 
+    btlist = getallblogtype(request)
+    print(btlist)
     return render_to_response('addblogandtype.html',locals())
 
 def addblogtype(request):
@@ -42,49 +44,21 @@ def addblogtype(request):
                 return HttpResponse('(<font color=red>{0}</font>)成功!'.format(typename))
 
 
-def addblog(request):
-    '''增加博文'''
+def saveblog(request):
+    '''增加、修改博文'''
 
-    if not request.user.is_authenticated:
-        return render_to_response('nologin.html',locals())
+#    if not request.user.is_authenticated:
+#        return render_to_response('nologin.html',locals())
 
     #先判断是否已登录，非登录用户不能增加数据
 
-    pblist = getallpublisher(request)
-    btblist = getallbooktype(request)
-
     if request.method == 'POST':
-        booktype = request.POST.get('addbookselecttype')
-        publisher = request.POST.get('addbookselectpublisher')
-        booktypeid = BookType.objects.get(name = booktype)
-        publisherid = Publisher.objects.get(name = publisher)  #得到外键对象
-        publishername = publisherid.name
-        booktypename = booktypeid.name #传回到页面中
-        bookname = request.POST.get('addbookname')
-        detial = request.POST.get('addbookmemo')
-        bookauthors = request.POST.get('addbookauthor')
-        checkboxstate = request.POST.get('modifydata','NO')
-        if checkboxstate == 'OK': #修改
-            modiobj = Books.objects.get(id = int(request.POST.get('addbookid')))
-            modiobj.name = bookname
-            modiobj.authors = bookauthors
-            modiobj.booktype = booktypeid
-            modiobj.publisher = publisherid
-            modiobj.detial = detial
-            modiobj.updateuser = request.user.username
-            modiobj.updatetime = datetime.now()
-            modiobj.save()
-            bookid = modiobj.id
-        else:
-            bookobj = Books(name = bookname,
-                          authors = bookauthors,
-                          detial = detial,
-                          booktype = booktypeid,
-                          publisher = publisherid,
-                          updateuser = request.user.username
-                          )
-            bookobj.save()   #保存一项图书资源
-            bookid = bookobj.id  #得到最新的BOOKiD
-        dotype = 4
-    return render_to_response('addblogandtype.html',locals())
+        typename = request.POST.get('blogtypename')
+        blogname = request.POST.get('blogname')
+        blogmemo = request.POST.get('blogmemo')
+        print(typename)
+
+    return HttpResponse("succ")
+
+
 

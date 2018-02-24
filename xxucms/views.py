@@ -8,6 +8,10 @@ from django.http import HttpResponseRedirect
 from ebook.models import Books
 
 
+def test(request):
+    '''测试视图'''
+    return render_to_response('test.html',locals())
+
 def index(request):
     """主页,显示最新上传的五个软件、文章、图书"""
 
