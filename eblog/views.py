@@ -25,7 +25,6 @@ def openaddblogandtype(request):
     """打开增加类别、博文的页面"""
 
     btlist = getallblogtype(request)
-    print(btlist)
     return render_to_response('addblogandtype.html',locals())
 
 def addblogtype(request):
@@ -42,7 +41,8 @@ def addblogtype(request):
                 db = BlogType(name = typename)
                 db.save()
                 return HttpResponse('(<font color=red>{0}</font>)成功!'.format(typename))
-
+    else:
+                return HttpResponse('(<font color=red>{0}</font>)'.format('名称不能为空'))
 
 def saveblog(request):
     '''增加、修改博文'''
@@ -51,12 +51,11 @@ def saveblog(request):
 #        return render_to_response('nologin.html',locals())
 
     #先判断是否已登录，非登录用户不能增加数据
-
     if request.method == 'POST':
-        typename = request.POST.get('blogtypename')
+        typename = request.POST['blogtypename']
         blogname = request.POST.get('blogname')
         blogmemo = request.POST.get('blogmemo')
-        print(typename)
+        print(typename,blogname,blogmemo)
 
     return HttpResponse("succ")
 

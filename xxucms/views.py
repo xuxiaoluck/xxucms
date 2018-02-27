@@ -10,6 +10,7 @@ from ebook.models import Books
 
 def test(request):
     '''测试视图'''
+
     return render_to_response('test.html',locals())
 
 def index(request):

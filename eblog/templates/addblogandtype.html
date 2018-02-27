@@ -31,19 +31,18 @@
     <link href="{% static 'summernote3/summernote.css' %}" media="all" rel="stylesheet" type="text/css"/>
     <script src="{% static 'summernote3/lang/summernote-zh-CN.js' %}" type="text/javascript"></script>
 
-    <script>
-     $(document).ready(function(){
+    <script type="text/javascript">
+     $(function(){
          $("#saveblogmemo").click(function()
              {
-                 $.post("/eblog/sddaveblog/", //post参数
+                 $.post("/eblog/saveblog/", //post参数
                         {
                             blogtypename:$("#blogselecttype").val(),
                             blogname:$("#blogname").val(),
-                            blogmemo:$("summernote").summernote('code')
+                            blogmemo:$("#summernote").summernote("code")
                         },//post参数
-
                         function(ret){
-                            alter("post summernote")
+                            //alter("post summernote")
                         }//POSt参数
                  );
              });//单击参数，也是一个函数
@@ -216,7 +215,7 @@
                             <div class="control-group">
                                 <div class="controls">
                                     <button type="button" class="btn btn-primary">新建</button>
-                                    <button type="button" class="btn btn-primary" id="saveblogmemo">保存</button>
+                                    <button type="button" class="btn btn-primary" name="saveblogmemo" id="saveblogmemo">保存</button>
                                 </div>
                             </div>
                         </fieldset>
