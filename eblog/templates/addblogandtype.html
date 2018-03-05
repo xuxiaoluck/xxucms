@@ -42,7 +42,7 @@
                             blogmemo:$("#summernote").summernote("code")
                         },//post参数
                         function(ret){
-                            //alter("post summernote")
+                           // $("#showret").html($("#summernote").summernote("code"))
                         }//POSt参数
                  );
              });//单击参数，也是一个函数
@@ -217,6 +217,9 @@
                                     <button type="button" class="btn btn-primary">新建</button>
                                     <button type="button" class="btn btn-primary" name="saveblogmemo" id="saveblogmemo">保存</button>
                                 </div>
+                            </div>
+                            <div class="control-group" id="showret">
+                                
                             </div>
                         </fieldset>
                     </form>
