@@ -1,10 +1,12 @@
 from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render_to_response
-from ebook.models import Publisher,BookType,Books,BookFiles
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import StreamingHttpResponse
 from django.utils.http import urlquote
 from datetime import datetime
+
+from ebook.models import Publisher,BookType,Books,BookFiles
+
 
 def getallpublisher(request):
     '''取得所有出版社名称'''
@@ -28,7 +30,7 @@ def index(request):
     return render_to_response('ebindex.html',locals())
 
 def openaddbookandtype(request):
-    """打开新增界面"""
+    '''打开新增界面'''
     return render_to_response('addbooks.html',locals())
 
 

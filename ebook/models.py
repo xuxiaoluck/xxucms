@@ -22,18 +22,6 @@ class Publisher(models.Model):
     class Meta:
         ordering = ['name']
 
-"""
-class Author(models.Model):
-    '''作者'''
-    name = models.CharField(max_length = 50,verbose_name = '作者')
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['name']
-
-"""
 
 class Books(models.Model):
     '''书籍模型'''
@@ -58,7 +46,7 @@ class BookFiles(models.Model):
     '''书籍的实际文件，单独用一个表，这样可以把同类文件放在一个标题里，特别是在做文档管理时基本上都是多个文件的。'''
     name = models.CharField(max_length = 60,verbose_name = '名称')  #文件名称
     book_list = models.ForeignKey(Books,on_delete = models.CASCADE) #指向 Books
-    uploadfile = models.FileField(upload_to="ebooks/%Y/%m/%d/",verbose_name = '文件') #文件路径 直接挂在 MEDIA_ROOT
+    uploadfile = models.FileField(upload_to='ebooks/%Y/%m/%d/',verbose_name = '文件') #文件路径 直接挂在 MEDIA_ROOT
     accessnums = models.IntegerField(verbose_name = '访问次数',default=0)
 
 
@@ -67,3 +55,5 @@ class BookFiles(models.Model):
 
     class Meta:
         ordering = ['name']
+
+        

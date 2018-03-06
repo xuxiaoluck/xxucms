@@ -4,7 +4,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import StreamingHttpResponse
 from django.utils.http import urlquote
 from datetime import datetime
-from eblog.models import BlogType,Blogs,BlogImages
+
+from eblog.models import BlogType,Blogs
 
 
 def getallblogtype(request):
@@ -22,7 +23,7 @@ def index(request):
     return render_to_response('blogindex.html',locals())
 
 def openaddblogandtype(request):
-    """打开增加类别、博文的页面"""
+    '''打开增加类别、博文的页面'''
 
     btlist = getallblogtype(request)
     return render_to_response('addblogandtype.html',locals())

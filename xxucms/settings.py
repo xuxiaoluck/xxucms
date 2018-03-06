@@ -77,6 +77,7 @@ WSGI_APPLICATION = 'xxucms.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -84,6 +85,20 @@ DATABASES = {
         'NAME':'/home/xuxiaoc/data/db.sqlite3',
     }
 }
+"""
+
+DATABASES = {
+    'default': {
+         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+         'NAME': 'xxupg',
+         'USER': 'xxupg',
+         'PASSWORD': 'xxu8328256!!!!',
+         'HOST': '127.0.0.1',
+         'PORT': '6699',
+         # 'CONN_MAX_AGE': 5,
+     }
+}
+
 
 
 # Password validation

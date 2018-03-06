@@ -26,14 +26,28 @@
 
     <script>
      $(document).ready(function(){
-         $("#savepublishertypebtn").click(function()
+         $("#addpublisher_btn").click(function()
              {
                  $.post("/ebook/addpublisher/",
                         {
                             typename:$("#addpublishername").val()
                         },
                         function(ret){
-                            $("#savepublisherinfo").html(ret)
+                            $("#addpublisherinfo").html(ret)
+                        });
+             });
+     });
+
+
+     $(document).ready(function(){
+         $("#addbooktype_btn").click(function()
+             {
+                 $.post("/ebook/addbooktype/",
+                        {
+                            typename:$("#addbooktypename").val()
+                        },
+                        function(ret){
+                            $("#addbooktypeinfo").html(ret)
                         });
              });
      });
@@ -77,7 +91,7 @@
               <form class="form-horizontal" data-toggle="validator" role="form" method="post">
                 <fieldset>
                     <div id="legend" class="">
-                        <legend id ="savepublisherinfo"class="">
+                        <legend id ="addpublisherinfo" name="addpublisherinfo" class="">
                             增加出版社
                         </legend>
                     </div>
@@ -92,7 +106,7 @@
 
                     <div class="control-group">
                         <div class="controls">
-                            <button type="button" id ="savepublisherbtn"class="btn btn-primary">保存</button> 
+                            <button type="button" id ="addpublisher_btn" name="addpublisher_btn" class="btn btn-primary">保存</button> 
                         </div>
                     </div>
 
@@ -102,24 +116,17 @@
           <hr><hr>
 
           <div class="row">
-                  <form class="form-horizontal" data-toggle="validator" role="form" method="post" action="/ebook/addbooktype/" >
+                  <form class="form-horizontal" data-toggle="validator" role="form" method="post" >
                       <fieldset>
                           <div id="legend" class="">
-                              <legend class="">{%if dotype == 3 and isaddbooktype%}
-                                  增加图书类别({{pname}})成功
-                                  {%else%}
-                                  {%if dotype == -100 and isaddbooktype%}
-                                  类别({{pname}})已存在
-                                  {%else%}
+                              <legend class="" id ="addbooktypeinfo" name="addbooktypeinfo">
                                   增加图书类别
-                                  {%endif%}
-                                  {%endif%}
                               </legend>
                           </div>
                           <div class="control-group">
                               <label class="control-label" for="input01">类别名称</label>
                               <div class="controls">
-                                  <input type="text" placeholder="请输入图书类别名称" class="form-control input-xlarge" name ="addbooktypename" required
+                                  <input type="text" placeholder="请输入图书类别名称" class="form-control input-xlarge" id="addbooktypename" name ="addbooktypename" required
                                          data-bv-notempty-message="类别名称不能为空！" >
                                   <div class="help-block">系统中用到的图书大分类、主分类</div>
                               </div>
@@ -127,7 +134,7 @@
 
                           <div class="control-group">
                               <div class="controls">
-                                  <button type="submit" class="btn btn-primary">保存</button> 
+                                  <button type="button" class="btn btn-primary" id ="addbooktype_btn" name="addbooktype_btn">保存</button> 
                               </div>
                           </div>
 

@@ -31,29 +31,3 @@ class Blogs(models.Model):
 
     class Meta:
         ordering = ['name']
-"""
-class BlogFiles(models.Model):
-    '''Blog附件'''
-    name = models.CharField(max_length = 60,verbose_name = '名称')  #文件名称
-    files_list = models.ForeignKey(Blogs,on_delete = models.CASCADE) 
-    uploadfile = models.FileField(upload_to="eblogs/files/%Y/%m/%d/") #文件路径 直接挂在 MEDIA_ROOT
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['name']
-"""
-
-class BlogImages(models.Model):
-    '''Blog图片列表'''
-    name = models.CharField(max_length = 60,verbose_name = '名称')  #
-    images_list = models.ForeignKey(Blogs,on_delete = models.CASCADE) #
-    uploadfile = models.FileField(upload_to="eblogs/images/%Y/%m/%d/") #文件路径 直接挂在 MEDIA_ROOT
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['name']
-
