@@ -4,6 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import StreamingHttpResponse
 from django.utils.http import urlquote
 from datetime import datetime
+import json
 
 from eblog.models import BlogType,Blogs
 
@@ -25,6 +26,9 @@ def index(request):
 def openaddblogandtype(request):
     '''打开增加类别、博文的页面'''
 
+    if not request.user.is_authenticated:
+        return render_to_response('nologin.html',locals())
+
     btlist = getallblogtype(request)
     return render_to_response('addblogandtype.html',locals())
 
@@ -33,32 +37,46 @@ def addblogtype(request):
 
     typename = request.POST.get('typename')
 
+    retinfo = ''
+    retflag = False
     if typename != '':
         try:
             tmpobj  = BlogType.objects.get(name = typename)
             #无异常，说明已存在
-            return HttpResponse('(<font color=red>{0}</font>)已存在!'.format(typename))
+            retinfo =  '(<font color=red>{0}</font>)已存在!'.format(typename)
         except BlogType.DoesNotExist:
                 db = BlogType(name = typename)
                 db.save()
-                return HttpResponse('(<font color=red>{0}</font>)成功!'.format(typename))
+                retinfo = '(<font color=red>{0}</font>)成功!'.format(typename)
+                retflag = True
     else:
-                return HttpResponse('(<font color=red>{0}</font>)'.format('名称不能为空'))
+                retinfo = '(<font color=red>{0}</font>)'.format('名称不能为空')
+
+    return HttpResponse(json.dumps({'retflag':retflag,'retinfo':retinfo}),content_type="application/json")
 
 def saveblog(request):
     '''增加、修改博文'''
 
-#    if not request.user.is_authenticated:
-#        return render_to_response('nologin.html',locals())
+    #后端默认使用 POST传输
+    '''数据库字段：
+    name,blogtype,detial,authors,accessnums,thumbnums,updatetime  后三个有默认值
+    '''
+    typename = request.POST['blogtypename']
+    blogname = request.POST.get('blogname')
+    blogmemo = request.POST.get('blogmemo')
+    #print(typename,blogname,blogmemo)
+    if typename == '' or blogname == '' or blogmemo == '':
+        return HttpResponse('增加文章:<font color=red>标题、类别、内容不能为空!</font>')
 
-    #先判断是否已登录，非登录用户不能增加数据
-    if request.method == 'POST':
-        typename = request.POST['blogtypename']
-        blogname = request.POST.get('blogname')
-        blogmemo = request.POST.get('blogmemo')
-        print(typename,blogname,blogmemo)
+    blogtypeobj = BlogType.objects.get(name = typename)  #得到类型的外键对象
+    blogobj = Blogs(name = blogname,
+                          detial = blogmemo,
+                          blogtype = blogtypeobj,
+                          authors = request.user.username
+                          )
+    blogobj.save()
 
-    return HttpResponse("succ")
+    return HttpResponse('增加文章<font color=red>[{0}]</font>成功!'.format(typename))
 
 
 

@@ -31,6 +31,10 @@ def index(request):
 
 def openaddbookandtype(request):
     '''打开新增界面'''
+
+    if not request.user.is_authenticated:
+        return render_to_response('nologin.html',locals())
+
     return render_to_response('addbooks.html',locals())
 
 

@@ -42,7 +42,7 @@
                             blogmemo:$("#summernote").summernote("code")
                         },//post参数
                         function(ret){
-                           // $("#showret").html($("#summernote").summernote("code"))
+                            $("#showaddbloginfo").html(ret);
                         }//POSt参数
                  );
              });//单击参数，也是一个函数
@@ -55,7 +55,12 @@
                  $.post("/eblog/addblogtype/", //post参数
                         {typename:$("#newblogtypename").val()},//post参数
                         function(ret){
-                            $("#showaddblogtypeinfo").html(ret)
+                            $("#showaddblogtypeinfo").html(ret.retinfo);
+                            if (ret.retflag)
+                                {
+                                    $("#blogselecttype").append("<option>"+$("#newblogtypename").val()+"</option>");
+                                }
+
                         }//POSt参数
                  );
              });//单击参数，也是一个函数
@@ -171,7 +176,7 @@
 					<!-- 下面是增加图书资源form  -->
                 <form class="form-horizontal" method ="post"  data-toggle="validator" role="form">
                         <fieldset>
-                            <div id="legend" class="">
+                            <div id="showaddbloginfo" class="">
                                 <legend class="">
                                     增加博文
                                 </legend>
@@ -214,13 +219,9 @@
                             </div>
                             <div class="control-group">
                                 <div class="controls">
-                                    <button type="button" class="btn btn-primary">新建</button>
+                                    <button type="button" class="btn btn-primary" id="newblog_btn">新建</button>
                                     <button type="button" class="btn btn-primary" name="saveblogmemo" id="saveblogmemo">保存</button>
                                 </div>
-                            </div>
-                            <div class="control-group" id="showret">
-                                
-                            </div>
                         </fieldset>
                     </form>
             </div>   <!-- addblo row -->
