@@ -52,7 +52,7 @@ def addblogtype(request):
     else:
                 retinfo = '(<font color=red>{0}</font>)'.format('名称不能为空')
 
-    return HttpResponse(json.dumps({'retflag':retflag,'retinfo':retinfo}),content_type="application/json")
+    return HttpResponse(json.dumps({'retflag':retflag,'retinfo':retinfo}),content_type='application/json')
 
 def saveblog(request):
     '''增加、修改博文'''
@@ -69,14 +69,28 @@ def saveblog(request):
         return HttpResponse('增加文章:<font color=red>标题、类别、内容不能为空!</font>')
 
     blogtypeobj = BlogType.objects.get(name = typename)  #得到类型的外键对象
-    blogobj = Blogs(name = blogname,
+    retid = request.POST['blogid']
+    retinfo = '增加文章<font color=red>[{0}]</font>成功!'.format(typename)
+
+    if retid == '':
+        ##新建
+        blogobj = Blogs(name = blogname,
                           detial = blogmemo,
                           blogtype = blogtypeobj,
                           authors = request.user.username
                           )
-    blogobj.save()
+        blogobj.save()
+        retid = blogobj.id
+    else:
+        #修改 只更新标题、内容、类别三个字段，其它暂未考虑
+        blogobj = Blogs.objects.get(id = int(request.POST['blogid']))
+        blogobj.name = blogname
+        blogobj.detial = blogmemo
+        blogobj.blogtype = blogtypeobj
+        blogobj.save()
+        retinfo = '修改文章<font color=red>[{0}]</font>成功!'.format(typename)
 
-    return HttpResponse('增加文章<font color=red>[{0}]</font>成功!'.format(typename))
+    return HttpResponse(json.dumps({'retinfo':retinfo,'retid':retid}),content_type = 'application/json')
 
 
 

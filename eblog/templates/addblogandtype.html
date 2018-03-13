@@ -35,14 +35,22 @@
      $(function(){
          $("#saveblogmemo").click(function()
              {
+                 var blogid = "";
+                 if ($("#blogid").val() != "")
+                 {
+                     blogid = $("#blogid").val();
+                 }
+
                  $.post("/eblog/saveblog/", //post参数
                         {
                             blogtypename:$("#blogselecttype").val(),
                             blogname:$("#blogname").val(),
-                            blogmemo:$("#summernote").summernote("code")
+                            blogmemo:$("#summernote").summernote("code"),
+                            blogid:blogid
                         },//post参数
                         function(ret){
-                            $("#showaddbloginfo").html(ret);
+                            $("#showaddbloginfo").html(ret.retinfo);
+                            $("#blogid").val(ret.retid);
                         }//POSt参数
                  );
              });//单击参数，也是一个函数
@@ -184,7 +192,8 @@
 
                             <div class="control-group">
                                 <div class="controls">
-                                    <input type="text" class="form-control input-xlarge" value="{{blogid}}" style="display:none" id="blogid" name="blogid">
+                                    <input type="text" class="form-control input-xlarge"  id="blogid" name="blogid">
+                                    <!-- style="display:none" -->
                                 </div>
                             </div>
 
