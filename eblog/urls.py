@@ -10,4 +10,6 @@ urlpatterns = [
     path('addblogandtype/',openaddblogandtype),  #打开增加类别、博文的页面
     path('saveblog/',saveblog),
     path('addblogtype/',addblogtype),
+    path('getbloglist/',getbloglist), #返回博客列表
+    path('getoneblog/',getoneblog),
 ]

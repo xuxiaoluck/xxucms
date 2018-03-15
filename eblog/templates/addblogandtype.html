@@ -192,7 +192,7 @@
 
                             <div class="control-group">
                                 <div class="controls">
-                                    <input type="text" class="form-control input-xlarge"  id="blogid" name="blogid">
+                                    <input type="text" class="form-control input-xlarge"  id="blogid" name="blogid" style="display:none">
                                     <!-- style="display:none" -->
                                 </div>
                             </div>
@@ -207,7 +207,7 @@
                                 <label class="control-label">所属分类</label>
                                 <div class="controls">
                                     <select class="form-control input-xlarge" name="blogselecttype" id="blogselecttype">
-                                        {% for name in btlist%}
+                                        {% for name in blogtypelist%}
                                         <option>{{name}}</option>
                                         {%endfor%}
                                     </select>

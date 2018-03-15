@@ -18,9 +18,10 @@ def getallblogtype(request):
 def index(request):
     '''首页'''
 
-    btblist = getallblogtype(request)
-    typelist = btblist[::2]
-    typelist1 = btblist[1::2] #分奇偶得到两个列表
+    blogtypelist = getallblogtype(request)
+    #typelist = btblist[::2]
+    #typelist1 = btblist[1::2] #分奇偶得到两个列表
+
     return render_to_response('blogindex.html',locals())
 
 def openaddblogandtype(request):
@@ -29,7 +30,7 @@ def openaddblogandtype(request):
     if not request.user.is_authenticated:
         return render_to_response('nologin.html',locals())
 
-    btlist = getallblogtype(request)
+    blogtypelist = getallblogtype(request)
     return render_to_response('addblogandtype.html',locals())
 
 def addblogtype(request):
@@ -94,3 +95,23 @@ def saveblog(request):
 
 
 
+def getbloglist(request):
+    '''返回博客列表'''
+    typename = request.POST['typename']
+
+    typeobj = BlogType.objects.get(name = typename)
+    blogobj = typeobj.blogs_set.values('id','name')
+    #先得到外键对象，再从外键对象得到相应的博文列表，取id, name字段，可以多个字段，用逗号分开
+    retlist = []
+    for one in blogobj:
+        retlist.append({'id':one['id'],'name':one['name']})
+
+    #print(retlist)
+    return HttpResponse(json.dumps({'retlist':retlist}),content_type = 'application/json')
+
+def getoneblog(request):
+    '''得到一条博文内容'''
+    blogid = request.POST['blogid']
+    blogobj = Blogs.objects.get(id=blogid)
+    memo = blogobj.detial
+    return HttpResponse(memo)
