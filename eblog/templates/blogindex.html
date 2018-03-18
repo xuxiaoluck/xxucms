@@ -49,10 +49,23 @@
                         for (var i in ret.retlist)
                             {
                                 //$("#showbloglist").append("<li>&emsp;" + ret.retlist[i].name + "</li>");//&emsp;
-                                //var blogid = ret.retlist[i].id;
-                                $("#showbloglist").append("<li><button type='button' class='btn btn-info btn-sm btn-link' value='"
-                                                        + ret.retlist[i].id + "' onclick='getoneblog(this)'>"
-                                                        + ret.retlist[i].name + "</button></li>");
+                                var blogid = ret.retlist[i].id;
+                                var blogname = ret.retlist[i].name;
+                                var isauth = ret.retlist[i].isauth;
+                                var appendhtml = '';
+                                if (isauth){//可以修改
+                                    appendhtml = "<li><button type='button' class='btn btn-info btn-sm btn-link' value='"
+                                               + blogid + "' onclick='getoneblog(this)'>"
+                                               + blogname + "</button>"
+                                               + "<a href='/eblog/modifyblog/?blogid=" + blogid + "'><font color=red>.</font></a>"
+                                               + "</li>";
+                                }
+                                else{
+                                    appendhtml = "<li><button type='button' class='btn btn-info btn-sm btn-link' value='"
+                                               + blogid + "' onclick='getoneblog(this)'>"
+                                               + blogname + "</button></li>";
+                                }
+                                $("#showbloglist").append(appendhtml);
                             }
                     });
          }
@@ -63,7 +76,7 @@
              var blogid = $(buttonitem).attr('value');
              $.post("/eblog/getoneblog/",{blogid:blogid},
                     function(ret){
-                       $("#showblogmemo").html(ret);
+                        $("#showblogmemo").html(ret);
                     });
          }
         </script>

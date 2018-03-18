@@ -100,13 +100,13 @@ def getbloglist(request):
     typename = request.POST['typename']
 
     typeobj = BlogType.objects.get(name = typename)
-    blogobj = typeobj.blogs_set.values('id','name')
-    #先得到外键对象，再从外键对象得到相应的博文列表，取id, name字段，可以多个字段，用逗号分开
+    blogobj = typeobj.blogs_set.values('id','name','authors')
+    #先得到外键对象，再从外键对象得到相应的博文列表，取id, name...字段，可以多个字段，用逗号分开
     retlist = []
     for one in blogobj:
-        retlist.append({'id':one['id'],'name':one['name']})
+        isauth = request.user.is_authenticated and request.user.username == one['authors']  #是否登录，如果登录则可以修改自己的博文
+        retlist.append({'id':one['id'],'name':one['name'],'isauth':isauth})
 
-    #print(retlist)
     return HttpResponse(json.dumps({'retlist':retlist}),content_type = 'application/json')
 
 def getoneblog(request):
@@ -115,3 +115,15 @@ def getoneblog(request):
     blogobj = Blogs.objects.get(id=blogid)
     memo = blogobj.detial
     return HttpResponse(memo)
+
+
+def modifyblog(request):
+    '''修改一条博文'''
+    blogtypelist = getallblogtype(request)
+    blogid =  request.GET['blogid']
+    blogobj = Blogs.objects.get(id=blogid)
+    blogname = blogobj.name
+    #blogdetial = blogobj.detial
+
+    #return render_to_response('blogmodify.html',locals())
+    return render_to_response('blogmodify.html',{'blogid':blogid,'blogtype':blogobj.blogtype,'blogtypelist':blogtypelist,"blogname":blogname}) #,"blogdetial":blogdetial})

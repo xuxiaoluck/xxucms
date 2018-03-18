@@ -12,4 +12,5 @@ urlpatterns = [
     path('addblogtype/',addblogtype),
     path('getbloglist/',getbloglist), #返回博客列表
     path('getoneblog/',getoneblog),
+    path('modifyblog/',modifyblog),
 ]
