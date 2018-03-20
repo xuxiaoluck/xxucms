@@ -35,14 +35,12 @@ def openaddbookandtype(request):
     if not request.user.is_authenticated:
         return render_to_response('nologin.html',locals())
 
+    booktypelist = getallbooktype(request)
+    publisherlist = getallpublisher(request)
+
     return render_to_response('addbooks.html',locals())
 
 
-'''
-错误-1、无操作0、增加出版社1、作者2、分类3、图书资源4、图书列表5都由一个页面完成，用一个变量来判断当前是哪个操作
-dotype:-1,0,1,2,3,4
-dotype:-100,数据已存在
-'''
 def addpublisher(request):
     '''增加出版社'''
 
@@ -79,49 +77,38 @@ def addbooktype(request):
 def addbooks(request):
     '''增加书籍'''
 
-    if not request.user.is_authenticated:
-        return render_to_response('nologin.html',locals())
-
-    #先判断是否已登录，非登录用户不能增加数据
-
-    pblist = getallpublisher(request)
-    btblist = getallbooktype(request)
-    dotype = -1
-    isaddbook = True
-    if request.method == 'POST':
-        booktype = request.POST.get('addbookselecttype')
-        publisher = request.POST.get('addbookselectpublisher')
-        booktypeid = BookType.objects.get(name = booktype)
-        publisherid = Publisher.objects.get(name = publisher)  #得到外键对象
-        publishername = publisherid.name
-        booktypename = booktypeid.name #传回到页面中
-        bookname = request.POST.get('addbookname')
-        detial = request.POST.get('addbookmemo')
-        bookauthors = request.POST.get('addbookauthor')
-        checkboxstate = request.POST.get('modifydata','NO')
-        if checkboxstate == 'OK': #修改
-            modiobj = Books.objects.get(id = int(request.POST.get('addbookid')))
-            modiobj.name = bookname
-            modiobj.authors = bookauthors
-            modiobj.booktype = booktypeid
-            modiobj.publisher = publisherid
-            modiobj.detial = detial
-            modiobj.updateuser = request.user.username
-            modiobj.updatetime = datetime.now()
-            modiobj.save()
-            bookid = modiobj.id
-        else:
-            bookobj = Books(name = bookname,
+    bookid = request.POST['bookid']
+    booktype = request.POST['booktype']
+    bookname = request.POST['bookname']
+    bookpublisher = request.POST['bookpublisher']
+    bookauthors = request.POST['bookauthors']
+    bookmemo = request.POST['bookmemo']
+    booktypeobj = BookType.object.get(name = booktype)
+    publisherobj = Publisher.object.get(name = bookpublisher)
+    info = ""
+    if booikd == '': #新建
+        bookobj = Books(name = bookname,
                           authors = bookauthors,
-                          detial = detial,
-                          booktype = booktypeid,
-                          publisher = publisherid,
+                          detial = bookmemo,
+                          booktype = booktypeobj,
+                          publisher = publisherobj,
                           updateuser = request.user.username
                           )
-            bookobj.save()   #保存一项图书资源
-            bookid = bookobj.id  #得到最新的BOOKiD
-        dotype = 4
-    return render_to_response('addbooks.html',locals())
+        bookobj.save()   #保存一项图书资源
+        info = "增加<font color=red>({0}</font>)成功!".format(bookname)
+    else: #修改
+        modiobj = Books.objects.get(id = int(bookid))
+        modiobj.name = bookname
+        modiobj.authors = bookauthors
+        modiobj.booktype = booktypeobj
+        modiobj.publisher = publisherobj
+        modiobj.detial = bookmemo
+        modiobj.updateuser = request.user.username
+        modiobj.updatetime = datetime.now()
+        modiobj.save()
+        info = "修改<font color=red>({%})</font>成功!".format(bookname)
+
+    return HttpResponse(info)
 
 
 def uploadfiles(request):
@@ -226,4 +213,3 @@ def modifybook(request):
     """修改已上传的书籍资料"""
 
     pass
-    

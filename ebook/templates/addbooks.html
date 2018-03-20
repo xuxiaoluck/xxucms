@@ -51,6 +51,25 @@
                         });
              });
      });
+
+
+     //新加或保存书籍资料
+     $(function(){
+         $.post("/ebook/addbooks/",
+                {
+                    bookid:$("#addbookid").val(),
+                    bookname:$("#addbookname").val(),
+                    booktype:$("#addbookselecttype").val(),
+                    bookpublisher:$("#addbookselectpublisher"),
+                    bookauthors:$("#addbookauthor"),
+                    bookmemo:$("#addbookmemo")
+                },
+                function(ret){
+                    $("#showaddbookinfo_legend").html(ret);
+             };
+         );
+     });
+
     </script>
 
 
@@ -119,7 +138,7 @@
                   <form class="form-horizontal" data-toggle="validator" role="form" method="post" >
                       <fieldset>
                           <div id="legend" class="">
-                              <legend class="" id ="addbooktypeinfo" name="addbooktypeinfo">
+                              <legend class="" id="addbooktypeinfo" name="addbooktypeinfo">
                                   增加图书类别
                               </legend>
                           </div>
@@ -152,35 +171,24 @@
 
 			<div class="row">
 					<!-- 下面是增加图书资源form  -->
-                <form class="form-horizontal" action="/ebook/addbooks/" method ="post"  data-toggle="validator" role="form">
+                <form class="form-horizontal"  method ="post"  data-toggle="validator" role="form"> <!--  action="/ebook/addbooks/" -->
                         <fieldset>
                             <div id="legend" class="">
-                                <legend class="">
-                                    {%if dotype == 4 and isaddbook%}
-                                    增加图书资源({{bookname}})成功
-                                    {%else%}
-                                    {%if dotype == -100 and isaddbook%}
-                                    增加图书资源错误({{pname}})
-                                    {%else%}
+                                <legend class="" id="showaddbokinfo_legend">
                                     增加图书资源
-                                    {%endif%}
-                                    {%endif%}
                                     </legend>
                             </div>
 
                             <div class="control-group">
                                 <div class="controls">
-                                    <input type="text" class="form-control input-xlarge" value="{{bookid}}" style="display:none" id="addbookid" name="addbookid">
+                                    <input type="text" class="form-control input-xlarge" style="display:none" id="addbookid" name="addbookid">
                                 </div>
                             </div>
 
                             <div class="control-group">
                                 <label class="control-label" for="input01">图书资源名称</label>
                                 <div class="controls">
-                                    <input type="text" placeholder="图书书籍名称" class="form-control input-xlarge" name="addbookname" id="addbookname" required
-                                           {%if dotype == 4 and isaddbook%}
-                                           value="{{bookname}}"
-                                           {%endif%}>
+                                    <input type="text" placeholder="图书书籍名称" class="form-control input-xlarge" name="addbookname" id="addbookname" required>
                                     <p class="help-block">图书的细分名称，不一定是主要图书，可以是一个小类</p>
                                 </div>
                             </div>
@@ -189,14 +197,14 @@
                                 <label class="control-label">分类</label>
                                 <div class="controls">
                                     <select class="form-control input-xlarge" name="addbookselecttype" id="addbookselecttype">
-                                        {% for name in btblist%}
+                                        {% for name in booktypelist%}
                                         <option>{{name}}</option>
                                         {%endfor%}
                                     </select>
                                 </div>
                                 <script type="text/javascript">
                                  $(function(){
-                                     $("#addbookselecttype").val("{{booktypename}}");
+                                     //$("#addbookselecttype").val("{{booktypename}}");
                                  });
                                 </script>
 
@@ -206,21 +214,18 @@
                                 <label class="control-label">出版社</label>
                                 <div class="controls">
                                     <select class="form-control input-xlarge" name="addbookselectpublisher" id="addbookselectpublisher">
-                                        {% for name in pblist%}
+                                        {% for name in publisherlist%}
                                         <option>{{name}}</option>
                                         {%endfor%}
                                     </select>
                                 </div>
                                 <script type="text/javascript">
-                                 $("#addbookselectpublisher").val("{{publishername}}")
+                                 //$("#addbookselectpublisher").val("{{publishername}}")
                                 </script>
                             </div>
                             <div class="control-group">
                                 <label class="control-label">作者</label>
-                                <input type="text" placeholder="作者" class="form-control input-xlarge" name="addbookauthor" id="addbookauthor" required
-                                       {%if dotype == 4 and isaddbook%}
-                                       value="{{bookauthors}}"
-                                       {%endif%}>
+                                <input type="text" placeholder="作者" class="form-control input-xlarge" name="addbookauthor" id="addbookauthor" required>
                                 <p class="help-block">图书的作者，多个作者以空格分开</p>
                             </div><div class="control-group">
 
@@ -228,18 +233,14 @@
                                 <div class="controls">
                                     <div class="textarea">
                                         <textarea type=""   style="height:300px" class="form-control" name="addbookmemo" id="addbookmemo" required>
-                                           {%if dotype == 4 and isaddbook%}
-                                           {{detial}}
-                                           {%endif%}
                                         </textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="control-group">
                                 <div class="controls">
-                                 <label><input type="checkbox" class="from-control" id="modifydata" name="modifydata" value="OK">修改数据</label>
-                                 <button type="submit" class="btn btn-primary">保存</button>
-                                 <button type="reset" class="btn btn-info">重设</button>
+                                 <button type="button" class="btn btn-primary">保存</button>
+                                 <button type="button" class="btn btn-info">重设</button>
                              </div>
                             </div>
                         </fieldset>
@@ -258,8 +259,8 @@
                     </div>
                     <div class="control-group">
                         <div class="controls">
-                            <button type="submit" class="btn btn-primary">保存</button>
-                            <button type="reset" class="btn btn-info">重设</button>
+                            <button type="submit" class="btn btn-primary" id="savebook_btn">保存</button>
+                            <button type="reset" class="btn btn-info" id="newaddbook_btn">新建</button>
                         </div>
                     </div>
 
@@ -282,7 +283,7 @@
                  //minImageHeight: 50,//图片的最小高度
                  //maxImageWidth: 1000,//图片的最大宽度
                  //maxImageHeight: 1000,//图片的最大高度
-                 maxFileSize: 102400,//单位为kb，如果为0表示不限制文件大小
+                 maxFileSize: 204800,//单位为kb，如果为0表示不限制文件大小 204800K = 200M
                  //minFileCount: 0,
                  maxFileCount: 10, //表示允许同时上传的最大文件个数
                  enctype: 'multipart/form-data',
