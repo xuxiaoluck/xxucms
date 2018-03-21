@@ -4,6 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import StreamingHttpResponse
 from django.utils.http import urlquote
 from datetime import datetime
+import json
 
 from ebook.models import Publisher,BookType,Books,BookFiles
 
@@ -49,10 +50,10 @@ def addpublisher(request):
     if pname != '':
         try:
             tmpobj  = Publisher.objects.get(name = pname)
-            info = "(<font color=red>{0}</font>)已存在!".format(pname)
+            info = '(<font color=red>{0}</font>)已存在!'.format(pname)
         except Publisher.DoesNotExist:
             db = Publisher(name = pname)
-            info = "增加(<font color=red>{0}</font>)成功!".format(pname)
+            info = '增加(<font color=red>{0}</font>)成功!'.format(pname)
             db.save()
 
     return HttpResponse(info)
@@ -66,11 +67,11 @@ def addbooktype(request):
     if pname != '':
         try:
             tmpobj  = BookType.objects.get(name = pname)
-            info = "(<font color=red>{0}</font>)已存在!".format(pname)
+            info = '(<font color=red>{0}</font>)已存在!'.format(pname)
         except BookType.DoesNotExist:
             db = BookType(name = pname)
             db.save()
-            info = "增加(<font color=red>{0}</font>)成功!".format(pname)
+            info = '增加(<font color=red>{0}</font>)成功!'.format(pname)
     return HttpResponse(info)
 
 
@@ -83,10 +84,14 @@ def addbooks(request):
     bookpublisher = request.POST['bookpublisher']
     bookauthors = request.POST['bookauthors']
     bookmemo = request.POST['bookmemo']
-    booktypeobj = BookType.object.get(name = booktype)
-    publisherobj = Publisher.object.get(name = bookpublisher)
-    info = ""
-    if booikd == '': #新建
+    booktypeobj = BookType.objects.get(name = booktype)
+    publisherobj = Publisher.objects.get(name = bookpublisher)
+    info = ''
+    #print('BookID:',bookid,bookname)
+    if booktype == '' or bookname == '' or bookpublisher == '' or bookauthors == '' or bookmemo == '':
+        return HttpResponse(json.dumps({'retinfo':info,'bookid':''}),content_type = 'application/json')
+
+    if bookid == '': #新建
         bookobj = Books(name = bookname,
                           authors = bookauthors,
                           detial = bookmemo,
@@ -95,7 +100,8 @@ def addbooks(request):
                           updateuser = request.user.username
                           )
         bookobj.save()   #保存一项图书资源
-        info = "增加<font color=red>({0}</font>)成功!".format(bookname)
+        bookid = str(bookobj.id)
+        info = '增加<font color=red>({0}</font>)成功!'.format(bookname)
     else: #修改
         modiobj = Books.objects.get(id = int(bookid))
         modiobj.name = bookname
@@ -106,16 +112,19 @@ def addbooks(request):
         modiobj.updateuser = request.user.username
         modiobj.updatetime = datetime.now()
         modiobj.save()
-        info = "修改<font color=red>({%})</font>成功!".format(bookname)
+        info = '修改<font color=red>({0})</font>成功!'.format(bookname)
 
-    return HttpResponse(info)
-
+    return HttpResponse(json.dumps({'retinfo':info,'bookid':bookid}),content_type = 'application/json')
 
 def uploadfiles(request):
     '''上传图书附件'''
 
+
+    print (request.GET['bookid'],request.FILES.getlist('files-my'))
+    return HttpResponse(json.dumps({'succ':'succ'}))
+
     if request.method == 'POST':
-        bookid = int(request.POST.get('bookid',0))
+        bookid = int(request.POST['bookid'])
         fileobjs = request.FILES.getlist('files-my')
         for i in range(len(fileobjs)):
             #UploadFile objects
@@ -131,8 +140,6 @@ def uploadfiles(request):
         bookname = bookobj.name
         detial = bookobj.detial
         bookauthors = bookobj.authors
-        dotype = 4
-        isaddbook = True
 
     return render_to_response('addbooks.html',locals())
 
@@ -210,6 +217,6 @@ def downloadfile(request):
     return response
 
 def modifybook(request):
-    """修改已上传的书籍资料"""
+    '''修改已上传的书籍资料'''
 
     pass
