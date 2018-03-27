@@ -119,30 +119,22 @@ def addbooks(request):
 def uploadfiles(request):
     '''上传图书附件'''
 
-
-    print (request.GET['bookid'],request.FILES.getlist('files-my'))
-    return HttpResponse(json.dumps({'succ':'succ'}))
-
-    if request.method == 'POST':
-        bookid = int(request.POST['bookid'])
-        fileobjs = request.FILES.getlist('files-my')
+    bookid = request.POST['bookid']
+    fileobjs = request.FILES.getlist('files-my')
+    if bookid == '':
+        return HttpResponse('请先上传书籍资料！')
+    else:
         for i in range(len(fileobjs)):
             #UploadFile objects
             oneobj = fileobjs[i]
+            print('oneobj:',oneobj)
             if oneobj:  #得到上传的一个 file对象，可以直接保存到 FileField字段中
-                booksid = Books.objects.get(id = bookid)
-                bookfile = BookFiles(name = oneobj.name,book_list = booksid,uploadfile = oneobj)
+                booksobj = Books.objects.get(id = bookid)
+                bookfile = BookFiles(name = oneobj.name,book_list = booksobj,uploadfile = oneobj)
+                print('saveoneobj',booksobj,bookfile)
                 bookfile.save()  #生成一条上传文件记录
 
-        bookobj = Books.objects.get(id = bookid)
-        booktypename = bookobj.booktype.name
-        publishername = bookobj.publisher.name
-        bookname = bookobj.name
-        detial = bookobj.detial
-        bookauthors = bookobj.authors
-
-    return render_to_response('addbooks.html',locals())
-
+        return HttpResponse(json.dumps('succ'),content_type = 'application/json')
 
 
 def booklistbytypename(request):
@@ -218,5 +210,6 @@ def downloadfile(request):
 
 def modifybook(request):
     '''修改已上传的书籍资料'''
-
-    pass
+    bookid = request.GET['bookid']
+    #得到一本书的内容，传到修改单元去。
+    return render_to_response('modifybook.html',locals())

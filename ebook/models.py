@@ -56,4 +56,3 @@ class BookFiles(models.Model):
     class Meta:
         ordering = ['name']
 
-        
