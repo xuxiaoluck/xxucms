@@ -39,7 +39,7 @@
 
 </head>
 
-<body>
+<body style="background: url({% static 'img/body00.jpg' %}">
 
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
@@ -146,7 +146,7 @@
                             </ul>
                     </div> <!-- 下拉菜单显示资源文件列表 -->
                     {%if request.user.is_authenticated%}
-					    <a href="/home/ebook/modifybook?bookid={{book.bookid}}">修改</a>
+					    <a href="/ebook/modifybook?bookid={{book.bookid}}">修改</a>
                     {%endif%}
 
                     <h5>出版社：{{book.bookpublisher}}</h5>
@@ -196,11 +196,6 @@
 	</div><!--/container-fluid-->
 
 	<footer>
-		<div class="footer-blurb">
-			<div class="container">
-
-			</div>
-        </div>
 
 	</footer>
 

@@ -212,4 +212,31 @@ def modifybook(request):
     '''修改已上传的书籍资料'''
     bookid = request.GET['bookid']
     #得到一本书的内容，传到修改单元去。
-    return render_to_response('modifybook.html',locals())
+    bookdict = {}
+    bookdict['bookid'] = bookid
+    bookobj = Books.objects.get(id = bookid)
+    bookdict['bookname'] = bookobj.name
+    bookdict['booktype'] = bookobj.booktype.name
+    bookdict['bookpublisher'] = bookobj.publisher.name
+    bookdict['bookauthors'] = bookobj.authors
+    bookdict['bookdetial'] = bookobj.detial
+
+
+    #下面得到书籍的附件列表，每条为一个字典
+    filelist = []
+    fileobjs = bookobj.bookfiles_set.all()
+    for onefile in fileobjs:
+        #一条文件信息，id 名称 路径 大小（K） 路径
+        tmpdict = {}
+        tmpdict['fileid'] = onefile.id
+        tmpdict['filename'] = onefile.name
+        #tmpdict['filepath'] = onefile.uploadfile.path
+        tmpdict['filesize'] = "{0:.2f}K".format(onefile.uploadfile.size / 1024.0)
+        filelist.append(tmpdict)
+
+
+    booktypelist = getallbooktype(request)
+    publisherlist = getallpublisher(request)
+
+    return render_to_response('modifybook.html',{'bookdict':json.dumps(bookdict),'filelist':filelist,
+                                                 'booktypelist':booktypelist,'publisherlist':publisherlist})
