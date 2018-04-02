@@ -58,19 +58,24 @@
      //新加或保存书籍资料
      $(function(){
          $("#addbooksave_btn").click(function(){
-             $.post("/ebook/addbooks/",
-                    {
-                        bookid:$("#addbookid").val(),
-                        bookname:$("#addbookname").val(),
-                        booktype:$("#addbookselecttype").val(),
-                        bookpublisher:$("#addbookselectpublisher").val(),
-                        bookauthors:$("#addbookauthor").val(),
-                        bookmemo:$("#addbookmemo").val()
-                    },
-                    function(ret){
-                        $("#showaddbookinfo_legend").html(ret.retinfo);
-                        $("#addbookid").val(ret.bookid);
-                    });//post
+             //if (($("#addbookname").val() == '') || ($("#addbookauthor").val() == '') || ($("#addbookmemo").val() == '')){
+             //    alert('请填写好所有内容后再提交！');
+             //    return;
+             //};
+
+                 $.post("/ebook/addbooks/",
+                        {
+                            bookid:$("#addbookid").val(),
+                            bookname:$("#addbookname").val(),
+                            booktype:$("#addbookselecttype").val(),
+                            bookpublisher:$("#addbookselectpublisher").val(),
+                            bookauthors:$("#addbookauthor").val(),
+                            bookmemo:$("#addbookmemo").val()
+                        },
+                        function(ret){
+                            $("#showaddbookinfo_legend").html(ret.retinfo);
+                            $("#addbookid").val(ret.bookid);
+                        });//post
 
          });//click
      });//ready

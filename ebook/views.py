@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import StreamingHttpResponse
 from django.utils.http import urlquote
 from datetime import datetime
-import json
+import json,os
 
 from ebook.models import Publisher,BookType,Books,BookFiles
 
@@ -89,7 +89,7 @@ def addbooks(request):
     info = ''
     #print('BookID:',bookid,bookname)
     if booktype == '' or bookname == '' or bookpublisher == '' or bookauthors == '' or bookmemo == '':
-        return HttpResponse(json.dumps({'retinfo':info,'bookid':''}),content_type = 'application/json')
+        return HttpResponse(json.dumps({'retinfo':'<font color=red>数据不全！</font>','bookid':''}),content_type = 'application/json')
 
     if bookid == '': #新建
         bookobj = Books(name = bookname,
@@ -240,3 +240,18 @@ def modifybook(request):
 
     return render_to_response('modifybook.html',{'bookdict':json.dumps(bookdict),'filelist':filelist,
                                                  'booktypelist':booktypelist,'publisherlist':publisherlist})
+
+def deleteonebookfile(request):
+    '''删除一本书资料的一个附件文件即实际的书籍'''
+
+    fileid = request.POST['fileid']
+
+    fileobj = BookFiles.objects.get(id = fileid)
+    filepath = fileobj.uploadfile.path
+    #得到文件对象及文件对象的实际路径
+
+    fileobj.delete()
+    os.remove(filepath)
+    print(filepath,fileobj)
+    return HttpResponse('delete OK')
+

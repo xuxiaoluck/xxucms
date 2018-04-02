@@ -15,4 +15,5 @@ urlpatterns = [
     path('booklistbytypename/',ebook.views.booklistbytypename),   #按类别名称列出一类书籍数据
     path('downloadfile/',ebook.views.downloadfile),  #下载文件到本地
     path('modifybook/',ebook.views.modifybook),
+    path('deleteonebookfile/',ebook.views.deleteonebookfile),
 ]
