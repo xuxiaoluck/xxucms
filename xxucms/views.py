@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from ebook.models import Books
-
+from eblog.models import Blogs
 
 def test(request):
     '''测试视图'''
@@ -24,7 +24,8 @@ def index(request):
         bookdetial = book.detial[:200]
         bookpublisher = book.publisher.name
         bookauthors = book.authors
-        bookupdatetime = book.updatetime.strftime('%Y%m%d')
+        bookupdatetime = book.updatetime.strftime('%Y-%m-%d %H:%M:%S')
+        bookaccessnums = book.accessnums
         bookfiles = book.bookfiles_set.all()  #得到所有附件
         filelist = []
         for onefile in bookfiles:
@@ -35,11 +36,19 @@ def index(request):
             tmpdict['fileid'] = onefile.id
             filelist.append(tmpdict)
 
-        bookrlt.append({'bookid':bookid,'bookname':bookname,'bookdetial':book.detial,
+        bookrlt.append({'bookid':bookid,'bookname':bookname,'bookdetial':book.detial,'updatetime':bookupdatetime,'accessnums':bookaccessnums,
                         'bookpublisher':bookpublisher,'bookauthors':bookauthors,'filelist':filelist})
 
 
-    return render_to_response('index.html',locals())
+    #下面取最新的10篇博客文章
+    blogn = Blogs.objects.order_by('updatetime')[:10]
+    blogrlt = []
+    for blog in blogn:
+        blogid = blog.id
+        blogname = blog.name
+        blogrlt.append({'blogid':blogid,'blogname':blogname})
+
+    return render_to_response('index.html',{'bookrlt':bookrlt,'blogrlt':blogrlt})
 
 def xlogin(request):
     '''登录视图'''

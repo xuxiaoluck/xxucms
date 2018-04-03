@@ -249,9 +249,23 @@ def deleteonebookfile(request):
     fileobj = BookFiles.objects.get(id = fileid)
     filepath = fileobj.uploadfile.path
     #得到文件对象及文件对象的实际路径
-
+    name = fileobj.name
     fileobj.delete()
     os.remove(filepath)
-    print(filepath,fileobj)
-    return HttpResponse('delete OK')
+    return HttpResponse('delete onefile [{0}] OK!'.format(name))
 
+
+def deleteonebook(request):
+    '''删除一本书籍所有信息'''
+    bookid = request.POST['bookid']
+    bookobj = Books.objects.get(id = bookid)
+    bookfilesobj = bookobj.bookfiles_set.all()
+    #print(bookfilesobj[0].name)
+    name = bookobj.name
+    for onefileobj in bookfilesobj:
+        os.remove(onefileobj.uploadfile.path)
+        print("remove")
+        #删除实际文件
+    bookobj.delete()
+    #删除books中的信息时自动删除关联它的外建的表
+    return HttpResponse('delete book [{0}] OK!'.format(name))

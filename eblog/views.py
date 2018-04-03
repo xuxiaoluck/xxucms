@@ -123,7 +123,11 @@ def modifyblog(request):
     blogid =  request.GET['blogid']
     blogobj = Blogs.objects.get(id=blogid)
     blogname = blogobj.name
-    #blogdetial = blogobj.detial
 
-    #return render_to_response('blogmodify.html',locals())
-    return render_to_response('blogmodify.html',{'blogid':blogid,'blogtype':blogobj.blogtype,'blogtypelist':blogtypelist,"blogname":blogname}) #,"blogdetial":blogdetial})
+    return render_to_response('blogmodify.html',{'blogid':blogid,'blogtype':blogobj.blogtype,'blogtypelist':blogtypelist,'blogname':blogname})
+
+
+def showoneblog(request):
+    '''显示一条博客内容，用在首页'''
+    blogid = request.GET['blogid']
+    return render_to_response('showoneblog.html',locals())

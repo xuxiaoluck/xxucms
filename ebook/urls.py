@@ -16,4 +16,5 @@ urlpatterns = [
     path('downloadfile/',ebook.views.downloadfile),  #下载文件到本地
     path('modifybook/',ebook.views.modifybook),
     path('deleteonebookfile/',ebook.views.deleteonebookfile),
+    path('deleteonebook/',ebook.views.deleteonebook),
 ]

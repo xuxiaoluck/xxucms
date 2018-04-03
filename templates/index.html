@@ -100,11 +100,11 @@
 				</div>
 
                 <ul class="nav nav-tabs nav-stacked">
-                    <li><a href="/ebook/">图书管理</a></li>
-                    <li><a href="#">软件下载</a></li>
-                    <li><a href="#">照片管理</a></li>
-                    <li><a href="/eblog/">博客文章</a></li>
-                    <li><a href="#">网站收集</a></li>
+                    <li><a href="/ebook/" style="color:blue">图书管理</a></li>
+                    <li><a href="#" style="color:blue">软件下载</a></li>
+                    <li><a href="#" style="color:blue">照片管理</a></li>
+                    <li><a href="/eblog/" style="color:blue">博客文章</a></li>
+                    <li><a href="#" style="color:blue">网站收集</a></li>
                 </ul>
 
 			</div>
@@ -112,9 +112,14 @@
 			<!-- Text Panel -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h1 class="panel-title"><span class="glyphicon glyphicon-cog"></span>文章列表</h1>
+					<h1 class="panel-title"><span class="glyphicon glyphicon-cog"></span>最新文章列表</h1>
 				</div>
+                <ul class="nav nav-tabs nav-stacked">
+                    {%for blog in blogrlt%}
+                    <li><a href="/eblog/showoneblog/?blogid={{blog.blogid}}">{{blog.blogname}}</a></li>
+                    {%endfor%}
 
+                </ul>
 			</div>
 
 
@@ -124,10 +129,11 @@
 		<!-- Center Column 中间列，主显示区，占6格（一半）-->
 		<div class="col-sm-6">
 
-			<!-- Alert -->
+			<!-- Alert
 			<div class="alert alert-success alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
+            -->
 
 			<!-- Articles -->
 			<div class="row">
@@ -151,8 +157,8 @@
                     <h6>作者：{{book.bookauthors}}</h6>
                     <h6>简介：{{book.bookdetial}}</h6>
 					<ul class="list-inline">
-						<li><a href="#"><span class="glyphicon glyphicon-comment"></span>上传时间</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-share"></span>访问次数</a></li>
+						<li><span class="glyphicon glyphicon-comment"></span>上传时间:{{book.updatetime}}</li>
+						<li><span class="glyphicon glyphicon-share"></span>访问次数:{{book.accessnums}}</li>
 					</ul>
                     {%endfor%}
 
@@ -161,22 +167,11 @@
 			<hr>
 			<div class="row">
 				<article class="col-xs-12">
-					<p class="pull-left"><span class="label label-default">最新文章</span></p>
-					<ul class="list-inline">
-						<li><a href="#">Yesterday</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 21 信息</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-share"></span> 36 共享</a></li>
-					</ul>
-				</article>
-			</div>
-			<hr>
-			<div class="row">
-				<article class="col-xs-12">
-					<p class="pull-left"><span class="label label-default">新的软件</span></p>
+					<p class="pull-left"><span class="label label-default">最新软件</span></p>
 					<ul class="list-inline">
 						<li><a href="#">2 Days Ago</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 12 Comments</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-share"></span> 18 Shares</a></li>
+						<li><span class="glyphicon glyphicon-comment"></span>上传时间：</a></li>
+						<li><span class="glyphicon glyphicon-share"></span>访问次数：</a></li>
 					</ul>
 				</article>
 			</div>
@@ -235,11 +230,9 @@
 	</div><!--/container-fluid-->
 
 	<footer>
-
         <div class="small-print">
         	<div class="container">
-        		<p><a href="#">Terms &amp; Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact</a></p>
-        		<p>版权 &copy; Example.com 2015 </p>
+        		<p>版权 &copy; xuxiaoluck 2018 </p>
         	</div>
         </div>
 	</footer>

@@ -105,14 +105,37 @@
 
 
 
-     //删除一条书籍记录,传入ID
+     //删除一条书籍的实际文件,传入ID
      function deleteonebookfile(buttonitem){
+
+         var isok;
+         isok = confirm("是否真的要删除该书籍？删除后无法恢复！");
+         if (isok == false){
+             return;
+         }
          var fileid = $(buttonitem).attr('value');
          $.post("/ebook/deleteonebookfile/",{fileid:fileid},
                 function(ret){
-                    //$("#showblogmemo").html(ret);
+                    alert(ret);
                 });
      };
+
+     //删除一项书籍资料（数据库及书籍附件）
+     $(function(){
+         $("#deleteonebook_btn").click(function(){
+             var isok;
+             isok = confirm("是否确实删除该项书籍所有资料，将删除该项书籍所有已上传的图书？请确认！");
+             if (isok == false){
+                 return;
+             }
+             $.post("/ebook/deleteonebook/",
+                    {bookid:$("#addbookid").val()},
+                    function(ret){
+                        alert(ret);
+                    }
+             );
+         });
+     });
 
     </script>
 
@@ -219,7 +242,7 @@
                     <fieldset>
                         <div id="legend" class="">
                             <legend class="" id="showaddbookinfo_legend">
-                                增加图书资源
+                                修改图书资源
                             </legend>
                         </div>
 
@@ -276,6 +299,7 @@
                         <div class="control-group">
                             <div class="controls">
                                 <button type="button" class="btn btn-primary" id="addbooksave_btn">保存</button>
+                                <button type="button" class="btn btn-danger" id="deleteonebook_btn">删除</button>
                             </div>
                         </div>
                     </fieldset>
@@ -328,7 +352,7 @@
                   <font color="red"> 已上传书籍文件</font>
               </div>
 
-              <table id="filetable" class="table"> <!--  data-toggle="table" -->
+              <table id="tablefiles" class="table"> <!--  data-toggle="table" -->
                 <thead>
                     <tr>
                         <th>名称</th>
