@@ -2,66 +2,66 @@
 <!DOCTYPE html>
 <!-- Template by Quackit.com -->
 <html lang="zh">
-<head>
-    <meta charset="butf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CMS.电子图书文档管理工具.增加图书资料</title>
+    <head>
+        <meta charset="butf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>CMS.电子图书文档管理工具.增加图书资料</title>
 
-    <script src="{% static 'bootstrap-3.3.7/js/jquery-1.11.3.min.js' %}"></script>
-    <script src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}" type="text/javascript"></script>
-    <link href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'bootstrap-3.3.7/css/custom.css' %}" rel="stylesheet">
- 	<script src="{% static 'bootstrap-3.3.7/js/holder.js' %}"></script>
- 	<script src="{% static 'bootstrap-3.3.7/js/validator.min.js' %}"></script>
-    <link href="{% static 'bootstrap-3.3.7/css/fileinput.css' %}" media="all" rel="stylesheet" type="text/css"/>
-    <link href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}" media="all" rel="stylesheet" type="text/css"/>
-    <link href="{% static 'bootstrap-3.3.7/themes/explorer-fa/theme.css' %}" media="all" rel="stylesheet" type="text/css"/>
-    <script src="{% static 'bootstrap-3.3.7/js/plugins/sortable.js' %}" type="text/javascript"></script>
-    <script src="{% static 'bootstrap-3.3.7/js/fileinput.js' %}" type="text/javascript"></script>
-    <script src="{% static 'bootstrap-3.3.7/js/locales/zh.js' %}" type="text/javascript"></script>
-    <script src="{% static 'bootstrap-3.3.7/themes/explorer-fa/theme.js' %}" type="text/javascript"></script>
-    <script src="{% static 'bootstrap-3.3.7/themes/fa/theme.js' %}" type="text/javascript"></script>
-    <script src="{% static 'bootstrap-3.3.7/js/popper.js' %}" type="text/javascript"></script>
+        <script src="{% static 'bootstrap-3.3.7/js/jquery-1.11.3.min.js' %}"></script>
+        <script src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}" type="text/javascript"></script>
+        <link href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'bootstrap-3.3.7/css/custom.css' %}" rel="stylesheet">
+ 	    <script src="{% static 'bootstrap-3.3.7/js/holder.js' %}"></script>
+ 	    <script src="{% static 'bootstrap-3.3.7/js/validator.min.js' %}"></script>
+        <link href="{% static 'bootstrap-3.3.7/css/fileinput.css' %}" media="all" rel="stylesheet" type="text/css"/>
+        <link href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}" media="all" rel="stylesheet" type="text/css"/>
+        <link href="{% static 'bootstrap-3.3.7/themes/explorer-fa/theme.css' %}" media="all" rel="stylesheet" type="text/css"/>
+        <script src="{% static 'bootstrap-3.3.7/js/plugins/sortable.js' %}" type="text/javascript"></script>
+        <script src="{% static 'bootstrap-3.3.7/js/fileinput.js' %}" type="text/javascript"></script>
+        <script src="{% static 'bootstrap-3.3.7/js/locales/zh.js' %}" type="text/javascript"></script>
+        <script src="{% static 'bootstrap-3.3.7/themes/explorer-fa/theme.js' %}" type="text/javascript"></script>
+        <script src="{% static 'bootstrap-3.3.7/themes/fa/theme.js' %}" type="text/javascript"></script>
+        <script src="{% static 'bootstrap-3.3.7/js/popper.js' %}" type="text/javascript"></script>
 
-    <script>
-     $(document).ready(function(){
-         $("#addpublisher_btn").click(function()
-             {
-                 $.post("/ebook/addpublisher/",
-                        {
-                            typename:$("#addpublishername").val()
-                        },
-                        function(ret){
-                            $("#addpublisherinfo").html(ret);
-                            $("#addbookselectpublisher").append("<option>"+$("#addpublishername").val()+"</option>");
-                        });
-             });
-     });
-
-
-     $(document).ready(function(){
-         $("#addbooktype_btn").click(function()
-             {
-                 $.post("/ebook/addbooktype/",
-                        {
-                            typename:$("#addbooktypename").val()
-                        },
-                        function(ret){
-                            $("#addbooktypeinfo").html(ret);
-                            $("#addbookselecttype").append("<option>"+$("#addbooktypename").val()+"</option>");
-                        });
-             });
-     });
+        <script>
+         $(document).ready(function(){
+             $("#addpublisher_btn").click(function()
+                 {
+                     $.post("/ebook/addpublisher/",
+                            {
+                                typename:$("#addpublishername").val()
+                            },
+                            function(ret){
+                                $("#addpublisherinfo").html(ret);
+                                $("#addbookselectpublisher").append("<option>"+$("#addpublishername").val()+"</option>");
+                            });
+                 });
+         });
 
 
-     //新加或保存书籍资料
-     $(function(){
-         $("#addbooksave_btn").click(function(){
-             //if (($("#addbookname").val() == '') || ($("#addbookauthor").val() == '') || ($("#addbookmemo").val() == '')){
-             //    alert('请填写好所有内容后再提交！');
-             //    return;
-             //};
+         $(document).ready(function(){
+             $("#addbooktype_btn").click(function()
+                 {
+                     $.post("/ebook/addbooktype/",
+                            {
+                                typename:$("#addbooktypename").val()
+                            },
+                            function(ret){
+                                $("#addbooktypeinfo").html(ret);
+                                $("#addbookselecttype").append("<option>"+$("#addbooktypename").val()+"</option>");
+                            });
+                 });
+         });
+
+
+         //新加或保存书籍资料
+         $(function(){
+             $("#addbooksave_btn").click(function(){
+                 //if (($("#addbookname").val() == '') || ($("#addbookauthor").val() == '') || ($("#addbookmemo").val() == '')){
+                 //    alert('请填写好所有内容后再提交！');
+                 //    return;
+                 //};
 
                  $.post("/ebook/addbooks/",
                         {
@@ -77,127 +77,127 @@
                             $("#addbookid").val(ret.bookid);
                         });//post
 
-         });//click
-     });//ready
+             });//click
+         });//ready
 
-     $(function(){
-         $("#addbooknew_btn").click(function(){
-             $("#addbookid").val('');
-             $("#addbookname").val('');
-             $("#addbookselecttype").val('');
-             $("#addbookselectpublisher").val('');
-             $("#addbookauthor").val('');
-             $("#addbookmemo").val('');
-         });//click
-     });//ready
+         $(function(){
+             $("#addbooknew_btn").click(function(){
+                 $("#addbookid").val('');
+                 $("#addbookname").val('');
+                 $("#addbookselecttype").val('');
+                 $("#addbookselectpublisher").val('');
+                 $("#addbookauthor").val('');
+                 $("#addbookmemo").val('');
+             });//click
+         });//ready
 
-    </script>
+        </script>
 
 
-</head>
+    </head>
 
-<body>
+    <body style="background: url({% static 'img/body00.jpg' %}" >
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-        <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+            <div class="container">
 
-            <!-- Navbar links -->
-            <div class="collapse navbar-collapse" id="navbar">
-                <ul class="nav navbar-nav">
-                    <li class="active">
-                        <a href="/home/">首页</a>
-                    </li>
-                    <li class="active">
-                        <a href="/ebook/">返回</a>
-                    </li>
+                <!-- Navbar links -->
+                <div class="collapse navbar-collapse" id="navbar">
+                    <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="/home/">首页</a>
+                        </li>
+                        <li class="active">
+                            <a href="/ebook/">返回</a>
+                        </li>
 
-                </ul>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
             </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container  导航头部 -->
-    </nav>
+            <!-- /.container  导航头部 -->
+        </nav>
 
-    <div class="container-fluid">
-	    <!-- 下面为显示区， -->
-    	<!-- 共两列 -->
-        <div class="col-sm-1">
-        </div>
-		<div class="col-sm-3">
+        <div class="container-fluid">
+	        <!-- 下面为显示区， -->
+    	    <!-- 共两列 -->
+            <div class="col-sm-1">
+            </div>
+		    <div class="col-sm-3">
 
-			<!-- List-Group Panel -->
-          <div class ="row">
-              <form class="form-horizontal" data-toggle="validator" role="form" method="post">
-                <fieldset>
-                    <div id="legend" class="">
-                        <legend id ="addpublisherinfo" name="addpublisherinfo" class="">
-                            增加出版社
-                        </legend>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="input01">出版社名称</label>
-                        <div class="controls">
-                            <input type="text" placeholder="请输入出版社名称" class="form-control input-xlarge" name ="addpublishername" id="addpublishername" required
-                                   data-bv-notempty-message="firstName不能为空(提示语)" >
-                            <div class="help-block">系统中用到的出版社名称或图书源出处</div>
-                        </div>
-                    </div>
+			    <!-- List-Group Panel -->
+                <div class ="row">
+                    <form class="form-horizontal" data-toggle="validator" role="form" method="post">
+                        <fieldset>
+                            <div id="legend" class="">
+                                <legend id ="addpublisherinfo" name="addpublisherinfo" class="">
+                                    增加出版社
+                                </legend>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="input01">出版社名称</label>
+                                <div class="controls">
+                                    <input type="text" placeholder="请输入出版社名称" class="form-control input-xlarge" name ="addpublishername" id="addpublishername" required
+                                           data-bv-notempty-message="firstName不能为空(提示语)" >
+                                    <div class="help-block">系统中用到的出版社名称或图书源出处</div>
+                                </div>
+                            </div>
 
-                    <div class="control-group">
-                        <div class="controls">
-                            <button type="button" id ="addpublisher_btn" name="addpublisher_btn" class="btn btn-primary">保存</button>
-                        </div>
-                    </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button type="button" id ="addpublisher_btn" name="addpublisher_btn" class="btn btn-primary">保存</button>
+                                </div>
+                            </div>
 
-                </fieldset>
-              </form>
-          </div>
-          <hr><hr>
+                        </fieldset>
+                    </form>
+                </div>
+                <hr><hr>
 
-          <div class="row">
-                  <form class="form-horizontal" data-toggle="validator" role="form" method="post" >
-                      <fieldset>
-                          <div id="legend" class="">
-                              <legend class="" id="addbooktypeinfo" name="addbooktypeinfo">
-                                  增加图书类别
-                              </legend>
-                          </div>
-                          <div class="control-group">
-                              <label class="control-label" for="input01">类别名称</label>
-                              <div class="controls">
-                                  <input type="text" placeholder="请输入图书类别名称" class="form-control input-xlarge" id="addbooktypename" name ="addbooktypename" required
-                                         data-bv-notempty-message="类别名称不能为空！" >
-                                  <div class="help-block">系统中用到的图书大分类、主分类</div>
-                              </div>
-                          </div>
+                <div class="row">
+                    <form class="form-horizontal" data-toggle="validator" role="form" method="post" >
+                        <fieldset>
+                            <div id="legend" class="">
+                                <legend class="" id="addbooktypeinfo" name="addbooktypeinfo">
+                                    增加图书类别
+                                </legend>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="input01">类别名称</label>
+                                <div class="controls">
+                                    <input type="text" placeholder="请输入图书类别名称" class="form-control input-xlarge" id="addbooktypename" name ="addbooktypename" required
+                                           data-bv-notempty-message="类别名称不能为空！" >
+                                    <div class="help-block">系统中用到的图书大分类、主分类</div>
+                                </div>
+                            </div>
 
-                          <div class="control-group">
-                              <div class="controls">
-                                  <button type="button" class="btn btn-primary" id ="addbooktype_btn" name="addbooktype_btn">保存</button>
-                              </div>
-                          </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button type="button" class="btn btn-primary" id ="addbooktype_btn" name="addbooktype_btn">保存</button>
+                                </div>
+                            </div>
 
-                      </fieldset>
-                  </form>
-          </div>
-          <hr><hr>
+                        </fieldset>
+                    </form>
+                </div>
+                <hr><hr>
 
-        </div> <!-- 左列 -->
+            </div> <!-- 左列 -->
 
-        <div class="col-sm-1">
-        </div>
-		<!-- Center Column 中间列，主显示区，占6格（一半）-->
-		<div class="col-sm-6">
+            <div class="col-sm-1">
+            </div>
+		    <!-- Center Column 中间列，主显示区，占6格（一半）-->
+		    <div class="col-sm-6">
 
-			<div class="row">
+			    <div class="row">
 					<!-- 下面是增加图书资源form  -->
-                <form class="form-horizontal"  method ="post"  data-toggle="validator" role="form">
+                    <form class="form-horizontal"  method ="post"  data-toggle="validator" role="form">
                         <fieldset>
                             <div id="legend" class="">
                                 <legend class="" id="showaddbookinfo_legend">
                                     增加图书资源
-                                    </legend>
+                                </legend>
                             </div>
 
                             <div class="control-group">
@@ -254,64 +254,64 @@
                                 <div class="controls">
                                     <button type="button" class="btn btn-info" id="addbooknew_btn">新建</button>
                                     <button type="button" class="btn btn-primary" id="addbooksave_btn">保存</button>
-                             </div>
+                                </div>
                             </div>
                         </fieldset>
                     </form>  <!-- 增加图书 FORM -->
-            </div>   <!-- addbooks row -->
-            <hr>
-            <div class="row"> <!-- uloadfiles row -->
-                <form class="form-horizontal" method="post" enctype='multipart/form-data'> <!-- action="/ebook/uploadfiles -->
-                    <div class="controls">
-                        <input type="file" class="file form-control"  id="files-my" name="files-my" multiple>
-                    </div>
-                    <!-- 
-                    <div class="control-group">
+                </div>   <!-- addbooks row -->
+                <hr>
+                <div class="row"> <!-- uloadfiles row -->
+                    <form class="form-horizontal" method="post" enctype='multipart/form-data'> <!-- action="/ebook/uploadfiles -->
                         <div class="controls">
-                            <button type="reset" class="btn btn-info">新建</button>
-                            <button type="submit" class="btn btn-primary">保存</button>
+                            <input type="file" class="file form-control"  id="files-my" name="files-my" multiple>
                         </div>
-                    </div>
-                    -->
-                </form>
-            </div> <!-- 上传文件ROW -->
-            <script type="text/javascript">
-             $("#files-my").fileinput({
-                 language: 'zh', //设置语言
-                 theme: 'explorer-fa',
-                 uploadUrl: "/ebook/uploadfiles/", //上传的地址,带BOOKID
-                 allowedFileExtensions: ['rar','zip','xls','xlsx','doc','docx','pdf','txt','ceb','txt','jpg','mobi'],//接收的文件后缀
-                 uploadAsync: true, //默认异步上传
-                 showUpload: true, //是否显示上传按钮
-                 showRemove : false, //显示移除按钮
-                 showPreview : true, //是否显示预览
-                 showCaption: true,//是否显示标题
-                 //browseClass: "btn btn-primary", //按钮样式
-                 dropZoneEnabled: false,//是否显示拖拽区域
-                 //minImageWidth: 50, //图片的最小宽度
-                 //minImageHeight: 50,//图片的最小高度
-                 //maxImageWidth: 1000,//图片的最大宽度
-                 //maxImageHeight: 1000,//图片的最大高度
-                 maxFileSize: 204800,//单位为kb，如果为0表示不限制文件大小 204800K = 200M
-                 //minFileCount: 0,
-                 maxFileCount: 10, //表示允许同时上传的最大文件个数
-                 enctype: 'multipart/form-data',
-                 validateInitialCount:true,
-                 //previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-                 msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-                 uploadExtraData:function(previewId, index) {   //额外参数的关键点
-                 //var obj = {};
-                 //obj.fodder = function(){return $("#addbookid")val();};
-                 //return obj;
-                 return {'bookid':$("#addbookid").val()};
-                 }
-             });
-            </script>
+                        <!-- 
+                             <div class="control-group">
+                             <div class="controls">
+                             <button type="reset" class="btn btn-info">新建</button>
+                             <button type="submit" class="btn btn-primary">保存</button>
+                             </div>
+                             </div>
+                           -->
+                    </form>
+                </div> <!-- 上传文件ROW -->
+                <script type="text/javascript">
+                 $("#files-my").fileinput({
+                     language: 'zh', //设置语言
+                     theme: 'explorer-fa',
+                     uploadUrl: "/ebook/uploadfiles/", //上传的地址,带BOOKID
+                     allowedFileExtensions: ['rar','zip','xls','xlsx','doc','docx','pdf','txt','ceb','txt','jpg','mobi'],//接收的文件后缀
+                     uploadAsync: true, //默认异步上传
+                     showUpload: true, //是否显示上传按钮
+                     showRemove : false, //显示移除按钮
+                     showPreview : true, //是否显示预览
+                     showCaption: true,//是否显示标题
+                     //browseClass: "btn btn-primary", //按钮样式
+                     dropZoneEnabled: false,//是否显示拖拽区域
+                     //minImageWidth: 50, //图片的最小宽度
+                     //minImageHeight: 50,//图片的最小高度
+                     //maxImageWidth: 1000,//图片的最大宽度
+                     //maxImageHeight: 1000,//图片的最大高度
+                     maxFileSize: 204800,//单位为kb，如果为0表示不限制文件大小 204800K = 200M
+                     //minFileCount: 0,
+                     maxFileCount: 10, //表示允许同时上传的最大文件个数
+                     enctype: 'multipart/form-data',
+                     validateInitialCount:true,
+                     //previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+                     msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+                     uploadExtraData:function(previewId, index) {   //额外参数的关键点
+                         //var obj = {};
+                         //obj.fodder = function(){return $("#addbookid")val();};
+                         //return obj;
+                         return {'bookid':$("#addbookid").val()};
+                     }
+                 });
+                </script>
 
-          </div>  <!-- 中间一列 -->
+            </div>  <!-- 中间一列 -->
 
-          <div class="col-sm-1">  <!-- right col space-1 -->
-           </div>
+            <div class="col-sm-1">  <!-- right col space-1 -->
+            </div>
   </div><!--/container-fluid-->
 
 
