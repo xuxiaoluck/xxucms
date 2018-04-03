@@ -18,6 +18,7 @@ from django.urls import path,include
 import xxucms.views
 import ebook.urls
 import eblog.urls
+import software.urls
 
 urlpatterns = [
     path('',xxucms.views.index),
@@ -30,4 +31,5 @@ urlpatterns = [
     path('regsave/',xxucms.views.regsave),   #userreg.html中点击了注册按钮
     path('ebook/',include(ebook.urls)),
     path('eblog/',include(eblog.urls)),
+    path('software/',include(software.urls)),
 ]

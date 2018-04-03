@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from ebook.models import Books
 from eblog.models import Blogs
+from software.models import Softs
 
 def test(request):
     '''测试视图'''
@@ -59,6 +60,9 @@ def xlogin(request):
 
     if user is not None and user.is_active:
         auth.login(request,user)
+        print('login')
+    else:
+        print('nologin')
 
     return HttpResponseRedirect("/home/")
 

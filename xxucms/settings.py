@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ebook',
     'eblog',
+    'software',
 ]
 
 MIDDLEWARE = [
@@ -147,4 +148,4 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 #MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-MEDIA_ROOT = '/home/xuxiaoc/data/media'
+MEDIA_ROOT = '/home/xuxiao/data/media'
