@@ -49,7 +49,7 @@ def index(request):
         blogname = blog.name
         blogrlt.append({'blogid':blogid,'blogname':blogname})
 
-    return render_to_response('index.html',{'bookrlt':bookrlt,'blogrlt':blogrlt})
+    return render_to_response('index.html',{'bookrlt':bookrlt,'blogrlt':blogrlt,'request':request})
 
 def xlogin(request):
     '''登录视图'''

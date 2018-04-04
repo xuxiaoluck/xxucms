@@ -1,6 +1,5 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-<!-- Template by Quackit.com -->
 <html lang="zh">
     <head>
         <meta charset="butf-8">
@@ -24,12 +23,17 @@
         <script src="{% static 'bootstrap-3.3.7/themes/fa/theme.js' %}" type="text/javascript"></script>
         <script src="{% static 'bootstrap-3.3.7/js/popper.js' %}" type="text/javascript"></script>
 
-        <script>
-
+        <script type="text/javascript">
          //点击增加软件分类,成功后将新的分类加入到下拉列表中
-         $(document).ready(function(){
+         $(function(){
              $("#addsofttype_btn").click(function()
                  {
+                     var softtypename = $("#addsofttypename").val();
+                     if (softtypename == ''){
+                         alert("请输入软件分类名称！");
+                         return;
+                     }
+
                      $.post("/software/addsofttype/",
                             {
                                 typename:$("#addsofttypename").val()
@@ -46,6 +50,17 @@
          });
 
 
+         //新建，清除信息
+         $(function(){
+             $("#softnew_btn").click(function(){
+                 $("softid").val('');
+                 $("#softname").val('');
+                 $("#softselecttype").val('');
+                 $("#softmemo").val('');
+             });//click
+         });//ready
+
+
          //新加或修改软件资料
          $(function(){
              $("#softsave_btn").click(function(){
@@ -54,36 +69,22 @@
                      return;
                  };
 
-                 $.post("/softw/addbooks/",
+                 $.post("/software/addsoft/",
                         {
-                            bookid:$("#addbookid").val(),
-                            bookname:$("#addbookname").val(),w
-                            booktype:$("#addbookselecttype").val(),
-                            bookpublisher:$("#addbookselectpublisher").val(),
-                            bookauthors:$("#addbookauthor").val(),
-                            bookmemo:$("#addbookmemo").val()
+                            softid:$("#softid").val(),
+                            softname:$("#softname").val(),
+                            softtype:$("#softselecttype").val(),
+                            softmemo:$("#softmemo").val()
                         },
                         function(ret){
-                            $("#showaddbookinfo_legend").html(ret.retinfo);
-                            $("#addbookid").val(ret.bookid);
+                            $("#showaddsoftinfo_legend").html(ret.retinfo);
+                            $("#softid").val(ret.softid);
                         });//post
 
              });//click
          });//ready
 
-         $(function(){
-             $("#addbooknew_btn").click(function(){
-                 $("#addbookid").val('');
-                 $("#addbookname").val('');
-                 $("#addbookselecttype").val('');
-                 $("#addbookselectpublisher").val('');
-                 $("#addbookauthor").val('');
-                 $("#addbookmemo").val('');
-             });//click
-         });//ready
-
         </script>
-
 
     </head>
 
@@ -136,7 +137,7 @@
                             </div>
                             <div class="control-group">
                                 <div class="controls">
-                                    <button type="button" class="btn btn-primary" id ="addsofttype_btn">保存</button>
+                                    <button type="button" class="btn btn-primary" id="addsofttype_btn">保存</button>
                                 </div>
                             </div>
                         </fieldset>

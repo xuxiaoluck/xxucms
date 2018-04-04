@@ -66,11 +66,12 @@ def addsoft(request):
     softtype = request.POST['softtype']
     softname = request.POST['softname']
     softmemo = request.POST['softmemo']
-    sfottypeobj = SoftType.objects.get(name = softtype)
+    softtypeobj = SoftType.objects.get(name = softtype)
     info = ''
 
-    if softtype == '' or softname == '' or softmemo == '':
-        return HttpResponse(json.dumps({'retinfo':'<font color=red>数据不全！</font>','softid':''}),content_type = 'application/json')
+    #判断是否有效放JS前端
+    #if softtype == '' or softname == '' or softmemo == '':
+    #    return HttpResponse(json.dumps({'retinfo':'<font color=red>数据不全！</font>','softid':''}),content_type = 'application/json')
 
     if softid == '': #新建
         softobj = Softs(name = softname,
@@ -82,7 +83,7 @@ def addsoft(request):
         softid = str(softobj.id)
         info = '增加<font color=red>({0}</font>)成功!'.format(softname)
     else: #修改
-        modiobj = Softs.objects.get(id = int(bookid))
+        modiobj = Softs.objects.get(id = int(softid))
         modiobj.name = softname
         modiobj.softtype = softtypeobj
         modiobj.detial = softmemo
@@ -104,10 +105,9 @@ def uploadfiles(request):
         for i in range(len(fileobjs)):
             #UploadFile objects
             oneobj = fileobjs[i]
-            print('oneobj:',oneobj)
             if oneobj:  #得到上传的一个 file对象，可以直接保存到 FileField字段中
                 softobj = Softs.objects.get(id = softid)
-                softfileobj = SoftFiles(name = oneobj.name,soft_list = softsobj,uploadfile = oneobj)
+                softfileobj = SoftFiles(name = oneobj.name,soft_list = softobj,uploadfile = oneobj)
                 softfileobj.save()  #生成一条上传文件记录
 
         return HttpResponse(json.dumps('succ'),content_type = 'application/json')
@@ -136,7 +136,7 @@ def softlistbytypename(request):
         softname = soft.name
         softdetial = soft.detial[:200]
         softupdatetime = soft.updatetime.strftime('%Y%m%d')
-        softfileboj = soft.softfiles_set.all()  #得到所有附件
+        softfileobj = soft.softfiles_set.all()  #得到所有附件
         filelist = []
         for onefile in softfileobj:
             tmpdict = {}
@@ -155,10 +155,10 @@ def softlistbytypename(request):
     softcount = len(softrlt)
     pagenums = range(1,paginator.num_pages + 1)
 
-    return render_to_response('softindex.html',{'softrlt':softrlt,'typelist':typelist,'typelist1':typelist1})
+    return render_to_response('software.html',{'softrlt':softrlt,'typelist':typelist,'typelist1':typelist1})
 
 
-def downloadfile(request):
+def downloadsoft(request):
     '''下载文件到本地'''
 
     def file_iterator(file_name, chunk_size=1024):
@@ -170,7 +170,7 @@ def downloadfile(request):
                 else:
                     break
 
-    onefile = BookFiles.objects.get(id = request.GET.get('fileid'))
+    onefile = SoftFiles.objects.get(id = request.GET.get('fileid'))
     the_file_name = onefile.uploadfile.path
     file_name = onefile.name
     response = StreamingHttpResponse(file_iterator(the_file_name))
@@ -180,9 +180,10 @@ def downloadfile(request):
     return response
 
 def modifybook(request):
-    '''修改已上传的书籍资料'''
-    bookid = request.GET['bookid']
-    #得到一本书的内容，传到修改单元去。
+    '''修改'''
+    return
+    softid = request.GET['softid']
+
     bookdict = {}
     bookdict['bookid'] = bookid
     bookobj = Books.objects.get(id = bookid)

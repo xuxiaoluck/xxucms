@@ -8,6 +8,10 @@ from software.views import *
 urlpatterns = [
     path('',index), #首页
     path('software/',index),
-    path('addsoftandtype/',openaddsoftandtype),
+    path('openaddsoftandtype/',openaddsoftandtype),
     path('addsofttype/',addsofttype),
+    path('addsoft/',addsoft),
+    path('uploadfiles/',uploadfiles),
+    path('softlistbytypename/',softlistbytypename),
+    path('downloadsoft/',downloadsoft),
 ]
