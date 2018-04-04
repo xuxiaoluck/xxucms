@@ -9,4 +9,5 @@ urlpatterns = [
     path('',index), #首页
     path('software/',index),
     path('addsoftandtype/',openaddsoftandtype),
+    path('addsofttype/',addsofttype),
 ]

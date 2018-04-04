@@ -26,33 +26,38 @@
 
         <script>
 
+         //点击增加软件分类,成功后将新的分类加入到下拉列表中
          $(document).ready(function(){
-             $("#addbooktype_btn").click(function()
+             $("#addsofttype_btn").click(function()
                  {
-                     $.post("/ebook/addbooktype/",
+                     $.post("/software/addsofttype/",
                             {
-                                typename:$("#addbooktypename").val()
+                                typename:$("#addsofttypename").val()
                             },
                             function(ret){
-                                $("#addbooktypeinfo").html(ret);
-                                $("#addbookselecttype").append("<option>"+$("#addbooktypename").val()+"</option>");
+                                $("#showaddsofttypeinfo").html(ret.info);
+                                var newflag = ret.newflag;
+                                if (newflag == true)
+                                    {
+                                        $("#softselecttype").append("<option>"+$("#addsofttypename").val()+"</option>");
+                                    }
                             });
                  });
          });
 
 
-         //新加或保存书籍资料
+         //新加或修改软件资料
          $(function(){
-             $("#addbooksave_btn").click(function(){
-                 //if (($("#addbookname").val() == '') || ($("#addbookauthor").val() == '') || ($("#addbookmemo").val() == '')){
-                 //    alert('请填写好所有内容后再提交！');
-                 //    return;
-                 //};
+             $("#softsave_btn").click(function(){
+                 if (($("#softname").val() == '') || ($("#softselecttype").val() == '') || ($("#softmemo").val().replace(/\ +/g,"") == '')){
+                     alert('请填写好所有内容后再提交！');
+                     return;
+                 };
 
-                 $.post("/ebook/addbooks/",
+                 $.post("/softw/addbooks/",
                         {
                             bookid:$("#addbookid").val(),
-                            bookname:$("#addbookname").val(),
+                            bookname:$("#addbookname").val(),w
                             booktype:$("#addbookselecttype").val(),
                             bookpublisher:$("#addbookselectpublisher").val(),
                             bookauthors:$("#addbookauthor").val(),
@@ -95,7 +100,7 @@
                             <a href="/home/">首页</a>
                         </li>
                         <li class="active">
-                            <a href="/ebook/">返回</a>
+                            <a href="/software/">返回</a>
                         </li>
 
                     </ul>
@@ -113,62 +118,31 @@
 		    <div class="col-sm-3">
 
 			    <!-- List-Group Panel -->
-                <div class ="row">
-                    <form class="form-horizontal" data-toggle="validator" role="form" method="post">
-                        <fieldset>
-                            <div id="legend" class="">
-                                <legend id ="addpublisherinfo" name="addpublisherinfo" class="">
-                                    增加出版社
-                                </legend>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="input01">出版社名称</label>
-                                <div class="controls">
-                                    <input type="text" placeholder="请输入出版社名称" class="form-control input-xlarge" name ="addpublishername" id="addpublishername" required
-                                           data-bv-notempty-message="firstName不能为空(提示语)" >
-                                    <div class="help-block">系统中用到的出版社名称或图书源出处</div>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <div class="controls">
-                                    <button type="button" id ="addpublisher_btn" name="addpublisher_btn" class="btn btn-primary">保存</button>
-                                </div>
-                            </div>
-
-                        </fieldset>
-                    </form>
-                </div>
-                <hr><hr>
 
                 <div class="row">
                     <form class="form-horizontal" data-toggle="validator" role="form" method="post" >
                         <fieldset>
                             <div id="legend" class="">
-                                <legend class="" id="addbooktypeinfo" name="addbooktypeinfo">
-                                    增加图书类别
+                                <legend class="" id="showaddsofttypeinfo" name="addsofttypeinfo">
+                                    增加软件类别
                                 </legend>
                             </div>
                             <div class="control-group">
                                 <label class="control-label" for="input01">类别名称</label>
                                 <div class="controls">
-                                    <input type="text" placeholder="请输入图书类别名称" class="form-control input-xlarge" id="addbooktypename" name ="addbooktypename" required
+                                    <input type="text" placeholder="请输入类别名称" class="form-control input-xlarge" id="addsofttypename" required
                                            data-bv-notempty-message="类别名称不能为空！" >
-                                    <div class="help-block">系统中用到的图书大分类、主分类</div>
                                 </div>
                             </div>
-
                             <div class="control-group">
                                 <div class="controls">
-                                    <button type="button" class="btn btn-primary" id ="addbooktype_btn" name="addbooktype_btn">保存</button>
+                                    <button type="button" class="btn btn-primary" id ="addsofttype_btn">保存</button>
                                 </div>
                             </div>
-
                         </fieldset>
                     </form>
                 </div>
                 <hr><hr>
-
             </div> <!-- 左列 -->
 
             <div class="col-sm-1">
@@ -181,92 +155,67 @@
                     <form class="form-horizontal"  method ="post"  data-toggle="validator" role="form">
                         <fieldset>
                             <div id="legend" class="">
-                                <legend class="" id="showaddbookinfo_legend">
-                                    增加图书资源
+                                <legend class="" id="showaddsoftinfo_legend">
+                                    增加软件资源
                                 </legend>
                             </div>
 
                             <div class="control-group">
                                 <div class="controls">
-                                    <input type="text" class="form-control input-xlarge"  id="addbookid" style="display:none">
+                                    <input type="text" class="form-control input-xlarge"  id="softid" style="display:none">
                                 </div>
                             </div>
 
                             <div class="control-group">
-                                <label class="control-label" for="input01">图书资源名称</label>
+                                <label class="control-label" for="input01">软件资源名称</label>
                                 <div class="controls">
-                                    <input type="text" placeholder="图书书籍名称" class="form-control input-xlarge" id="addbookname" required>
-                                    <p class="help-block">图书的细分名称，不一定是主要图书，可以是一个小类</p>
+                                    <input type="text" placeholder="软件资源名称" class="form-control input-xlarge" id="softname" required>
                                 </div>
                             </div>
 
                             <div class="control-group">
                                 <label class="control-label">分类</label>
                                 <div class="controls">
-                                    <select class="form-control input-xlarge" id="addbookselecttype">
-                                        {% for name in booktypelist%}
+                                    <select class="form-control input-xlarge" id="softselecttype">
+                                        {% for name in softtypelist%}
                                         <option>{{name}}</option>
                                         {%endfor%}
                                     </select>
                                 </div>
 
-                            </div><div class="control-group">
 
-                                <!-- Select Basic -->
-                                <label class="control-label">出版社</label>
-                                <div class="controls">
-                                    <select class="form-control input-xlarge" id="addbookselectpublisher">
-                                        {% for name in publisherlist%}
-                                        <option>{{name}}</option>
-                                        {%endfor%}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label">作者</label>
-                                <input type="text" placeholder="作者" class="form-control input-xlarge" id="addbookauthor" required>
-                                <p class="help-block">图书的作者，多个作者以空格分开</p>
-                            </div><div class="control-group">
-
+                                <div class="control-group">
                                 <label class="control-label">内容简介</label>
                                 <div class="controls">
                                     <div class="textarea">
-                                        <textarea type=""   style="height:300px" class="form-control" id="addbookmemo" required>
+                                        <textarea type=""   style="height:300px" class="form-control" id="softmemo" required>
                                         </textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="control-group">
                                 <div class="controls">
-                                    <button type="button" class="btn btn-info" id="addbooknew_btn">新建</button>
-                                    <button type="button" class="btn btn-primary" id="addbooksave_btn">保存</button>
+                                    <button type="button" class="btn btn-info" id="softnew_btn">新建</button>
+                                    <button type="button" class="btn btn-primary" id="softsave_btn">保存</button>
                                 </div>
                             </div>
                         </fieldset>
-                    </form>  <!-- 增加图书 FORM -->
-                </div>   <!-- addbooks row -->
+                    </form>
+                </div>
                 <hr>
                 <div class="row"> <!-- uloadfiles row -->
-                    <form class="form-horizontal" method="post" enctype='multipart/form-data'> <!-- action="/ebook/uploadfiles -->
+                    <form class="form-horizontal" method="post" enctype='multipart/form-data'>
                         <div class="controls">
                             <input type="file" class="file form-control"  id="files-my" name="files-my" multiple>
                         </div>
-                        <!-- 
-                             <div class="control-group">
-                             <div class="controls">
-                             <button type="reset" class="btn btn-info">新建</button>
-                             <button type="submit" class="btn btn-primary">保存</button>
-                             </div>
-                             </div>
-                           -->
                     </form>
                 </div> <!-- 上传文件ROW -->
                 <script type="text/javascript">
                  $("#files-my").fileinput({
                      language: 'zh', //设置语言
                      theme: 'explorer-fa',
-                     uploadUrl: "/ebook/uploadfiles/", //上传的地址,带BOOKID
-                     allowedFileExtensions: ['rar','zip','xls','xlsx','doc','docx','pdf','txt','ceb','txt','jpg','mobi'],//接收的文件后缀
+                     uploadUrl: "/software/uploadfiles/",
+                     allowedFileExtensions: ['rar','zip','tar','gz','exe','bz','bz2'],//接收的文件后缀
                      uploadAsync: true, //默认异步上传
                      showUpload: true, //是否显示上传按钮
                      showRemove : false, //显示移除按钮
@@ -289,7 +238,7 @@
                          //var obj = {};
                          //obj.fodder = function(){return $("#addbookid")val();};
                          //return obj;
-                         return {'bookid':$("#addbookid").val()};
+                         return {'softid':$("#softid").val()};
                      }
                  });
                 </script>

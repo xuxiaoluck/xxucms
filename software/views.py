@@ -45,6 +45,7 @@ def addsofttype(request):
 
     pname = request.POST.get('typename')
     info = ''
+    newflag = False
     if pname != '':
         try:
             tmpobj  = SoftType.objects.get(name = pname)
@@ -53,7 +54,9 @@ def addsofttype(request):
             db = SoftType(name = pname)
             db.save()
             info = '增加(<font color=red>{0}</font>)成功!'.format(pname)
-    return HttpResponse(info)
+            newflag = True
+
+    return HttpResponse(json.dumps({'info':info,'newflag':newflag}),content_type = 'application/json')
 
 
 def addsoft(request):
