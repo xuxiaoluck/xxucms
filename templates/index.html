@@ -102,9 +102,9 @@
                 <ul class="nav nav-tabs nav-stacked">
                     <li><a href="/ebook/" style="color:blue">图书管理</a></li>
                     <li><a href="/software/" style="color:blue">软件下载</a></li>
-                    <li><a href="#" style="color:blue">照片管理</a></li>
+                    <li><a href="#" style="color:yellow">照片管理</a></li>
                     <li><a href="/eblog/" style="color:blue">博客文章</a></li>
-                    <li><a href="#" style="color:blue">网站收集</a></li>
+                    <li><a href="#" style="color:yellow">网站收集</a></li>
                 </ul>
 
 			</div>
@@ -166,12 +166,27 @@
 			<hr>
 			<div class="row">
 				<article class="col-xs-12">
-					<p class="pull-left"><span class="label label-default">最新软件</span></p>
+					<p class="pull-right"><span class="label label-success">最新软件</span></p>
+                    <hr>
+                    {%for soft in softrlt%}
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{soft.softname}}
+                        </button>
+                        <ul class="dropdown-menu">
+                            {%for file in soft.filelist%}
+                            <li><a class="dropdown-item" href="/software/downloadsoft/?fileid={{file.fileid}}"><strong>{{file.name}}</strong>,
+                                {{file.size}},{{file.uploaddate}}</a></li>
+                            {%endfor%}
+                        </ul>
+
+                    </div>
+                    <h6>简介：{{soft.softdetial}}</h6>
 					<ul class="list-inline">
-						<li><a href="#">2 Days Ago</a></li>
-						<li><span class="glyphicon glyphicon-comment"></span>上传时间：</a></li>
-						<li><span class="glyphicon glyphicon-share"></span>访问次数：</a></li>
+						<li><span class="glyphicon glyphicon-comment"></span>上传时间:{{soft.updatetime}}</li>
+						<li><span class="glyphicon glyphicon-share"></span>访问次数:{{soft.accessnums}}</li>
 					</ul>
+                    {%endfor%}
 				</article>
 			</div>
 			<hr>

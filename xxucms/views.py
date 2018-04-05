@@ -41,6 +41,27 @@ def index(request):
                         'bookpublisher':bookpublisher,'bookauthors':bookauthors,'filelist':filelist})
 
 
+    #取前5个最新软件
+    softn = Softs.objects.order_by('updatetime')[:5]  #按更新时间取最新的五条
+    softrlt = []
+    for soft in softn:  #附件生成下拦菜单
+        softid = soft.id
+        softname = soft.name
+        softdetial = soft.detial[:200]
+        softupdatetime = soft.updatetime.strftime('%Y-%m-%d %H:%M:%S')
+        softaccessnums = soft.accessnums
+        softfiles = soft.softfiles_set.all()  #得到所有附件
+        filelist = []
+        for onefile in softfiles:
+            tmpdict = {}
+            tmpdict['name'] = onefile.name
+            tmpdict['size'] = "{0:.2f}K".format(onefile.uploadfile.size / 1024.0)
+            tmpdict['fileid'] = onefile.id
+            filelist.append(tmpdict)
+
+        softrlt.append({'softid':softid,'softname':softname,'softdetial':soft.detial,'updatetime':softupdatetime,'accessnums':softaccessnums,
+                        'filelist':filelist})
+
     #下面取最新的10篇博客文章
     blogn = Blogs.objects.order_by('updatetime')[:10]
     blogrlt = []
@@ -49,7 +70,7 @@ def index(request):
         blogname = blog.name
         blogrlt.append({'blogid':blogid,'blogname':blogname})
 
-    return render_to_response('index.html',{'bookrlt':bookrlt,'blogrlt':blogrlt,'request':request})
+    return render_to_response('index.html',{'bookrlt':bookrlt,'blogrlt':blogrlt,'softrlt':softrlt,'request':request})
 
 def xlogin(request):
     '''登录视图'''

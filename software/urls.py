@@ -14,4 +14,7 @@ urlpatterns = [
     path('uploadfiles/',uploadfiles),
     path('softlistbytypename/',softlistbytypename),
     path('downloadsoft/',downloadsoft),
+    path('modifysoft/',modifysoft),
+    path('deleteonesoftfile/',deleteonesoftfile),
+    path('deleteonesoft/',deleteonesoft),
 ]

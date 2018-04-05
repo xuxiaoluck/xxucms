@@ -113,6 +113,9 @@ def getoneblog(request):
     '''得到一条博文内容'''
     blogid = request.POST['blogid']
     blogobj = Blogs.objects.get(id=blogid)
+    blogobj.accessnums += 1
+    blogobj.save()
+    
     memo = blogobj.detial
     return HttpResponse(memo)
 
@@ -122,7 +125,11 @@ def modifyblog(request):
     blogtypelist = getallblogtype(request)
     blogid =  request.GET['blogid']
     blogobj = Blogs.objects.get(id=blogid)
+    blogobj.accessnums += 1
+    blogobj.save()
+
     blogname = blogobj.name
+
 
     return render_to_response('blogmodify.html',{'blogid':blogid,'blogtype':blogobj.blogtype,'blogtypelist':blogtypelist,'blogname':blogname})
 

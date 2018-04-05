@@ -200,6 +200,12 @@ def downloadfile(request):
                     break
 
     onefile = BookFiles.objects.get(id = request.GET.get('fileid'))
+    onefile.accessnums += 1
+    onefile.save()
+    bookobj = onefile.book_list
+    bookobj.accessnums += 1
+    bookobj.save()
+
     the_file_name = onefile.uploadfile.path
     file_name = onefile.name
     response = StreamingHttpResponse(file_iterator(the_file_name))
@@ -215,6 +221,9 @@ def modifybook(request):
     bookdict = {}
     bookdict['bookid'] = bookid
     bookobj = Books.objects.get(id = bookid)
+    bookobj.accessnums += 1
+    bookobj.save()
+
     bookdict['bookname'] = bookobj.name
     bookdict['booktype'] = bookobj.booktype.name
     bookdict['bookpublisher'] = bookobj.publisher.name

@@ -145,7 +145,7 @@
                             </ul>
                     </div> <!-- 下拉菜单显示资源文件列表 -->
                     {%if request.user.is_authenticated%}
-					    <a href="/software/modifysoftware?softid={{soft.softid}}">修改</a>
+					    <a href="/software/modifysoft?softid={{soft.softid}}">修改</a>
                     {%endif%}
                     <h5>简介：{{soft.softdetial}}</h5>
                     {%endfor%}

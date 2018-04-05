@@ -90,7 +90,7 @@ def addsoft(request):
         modiobj.updateuser = request.user.username
         modiobj.updatetime = datetime.now()
         modiobj.save()
-        info = '修改<font color=red>({0})</font>成功!'.format(bookname)
+        info = '修改<font color=red>({0})</font>成功!'.format(softname)
 
     return HttpResponse(json.dumps({'retinfo':info,'softid':softid}),content_type = 'application/json')
 
@@ -155,7 +155,7 @@ def softlistbytypename(request):
     softcount = len(softrlt)
     pagenums = range(1,paginator.num_pages + 1)
 
-    return render_to_response('software.html',{'softrlt':softrlt,'typelist':typelist,'typelist1':typelist1})
+    return render_to_response('software.html',{'softrlt':softrlt,'typelist':typelist,'typelist1':typelist1,'request':request})
 
 
 def downloadsoft(request):
@@ -170,7 +170,15 @@ def downloadsoft(request):
                 else:
                     break
 
+
     onefile = SoftFiles.objects.get(id = request.GET.get('fileid'))
+
+    onefile.accessnums += 1
+    onefile.save()
+    softobj = onefile.soft_list
+    softobj.accessnums += 1
+    softobj.save()  #更新访问列表
+
     the_file_name = onefile.uploadfile.path
     file_name = onefile.name
     response = StreamingHttpResponse(file_iterator(the_file_name))
@@ -179,46 +187,43 @@ def downloadsoft(request):
 
     return response
 
-def modifybook(request):
+def modifysoft(request):
     '''修改'''
-    return
+
     softid = request.GET['softid']
+    softdict = {}
+    softdict['softid'] = softid
+    softobj = Softs.objects.get(id = softid)
+    softobj.accessnums += 1
+    softobj.save()
 
-    bookdict = {}
-    bookdict['bookid'] = bookid
-    bookobj = Books.objects.get(id = bookid)
-    bookdict['bookname'] = bookobj.name
-    bookdict['booktype'] = bookobj.booktype.name
-    bookdict['bookpublisher'] = bookobj.publisher.name
-    bookdict['bookauthors'] = bookobj.authors
-    bookdict['bookdetial'] = bookobj.detial
+    softdict['softname'] = softobj.name
+    softdict['softtype'] = softobj.softtype.name
+    softdict['softdetial'] = softobj.detial
 
-
-    #下面得到书籍的附件列表，每条为一个字典
+    #下面得到软件的附件列表，每条为一个字典
     filelist = []
-    fileobjs = bookobj.bookfiles_set.all()
+    fileobjs = softobj.softfiles_set.all()
     for onefile in fileobjs:
         #一条文件信息，id 名称 路径 大小（K） 路径
         tmpdict = {}
         tmpdict['fileid'] = onefile.id
         tmpdict['filename'] = onefile.name
-        #tmpdict['filepath'] = onefile.uploadfile.path
         tmpdict['filesize'] = "{0:.2f}K".format(onefile.uploadfile.size / 1024.0)
         filelist.append(tmpdict)
 
 
-    booktypelist = getallbooktype(request)
-    publisherlist = getallpublisher(request)
+    softtypelist = getallsofttype(request)
 
-    return render_to_response('modifybook.html',{'bookdict':json.dumps(bookdict),'filelist':filelist,
-                                                 'booktypelist':booktypelist,'publisherlist':publisherlist})
+    return render_to_response('modifysoft.html',{'softdict':json.dumps(softdict),'filelist':filelist,
+                                                 'softtypelist':softtypelist})
 
-def deleteonebookfile(request):
-    '''删除一本书资料的一个附件文件即实际的书籍'''
+def deleteonesoftfile(request):
+    '''删除一项软件书资料的一个附件文件即实际的一个软件'''
 
     fileid = request.POST['fileid']
 
-    fileobj = BookFiles.objects.get(id = fileid)
+    fileobj = SoftFiles.objects.get(id = fileid)
     filepath = fileobj.uploadfile.path
     #得到文件对象及文件对象的实际路径
     name = fileobj.name
@@ -227,20 +232,18 @@ def deleteonebookfile(request):
     return HttpResponse('delete onefile [{0}] OK!'.format(name))
 
 
-def deleteonebook(request):
-    '''删除一本书籍所有信息'''
-    bookid = request.POST['bookid']
-    bookobj = Books.objects.get(id = bookid)
-    bookfilesobj = bookobj.bookfiles_set.all()
-    #print(bookfilesobj[0].name)
-    name = bookobj.name
-    for onefileobj in bookfilesobj:
+def deleteonesoft(request):
+    '''删除一项软件所有信息'''
+    softid = request.POST['softid']
+    softobj = Softs.objects.get(id = softid)
+    softfilesobj = softobj.softfiles_set.all()
+    name = softobj.name
+    for onefileobj in softfilesobj:
         os.remove(onefileobj.uploadfile.path)
-        print("remove")
         #删除实际文件
-    bookobj.delete()
-    #删除books中的信息时自动删除关联它的外建的表
-    return HttpResponse('delete book [{0}] OK!'.format(name))
+    softobj.delete()
+    #删除softs中的信息时自动删除关联它的外建的表
+    return HttpResponse('delete soft [{0}] OK!'.format(name))
 
 
 
