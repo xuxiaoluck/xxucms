@@ -71,7 +71,7 @@ def saveblog(request):
 
     blogtypeobj = BlogType.objects.get(name = typename)  #得到类型的外键对象
     retid = request.POST['blogid']
-    retinfo = '增加文章<font color=red>[{0}]</font>成功!'.format(typename)
+    retinfo = '增加文章<font color=red>[{0}]</font>成功!'.format(blogname)
 
     if retid == '':
         ##新建
@@ -89,7 +89,7 @@ def saveblog(request):
         blogobj.detial = blogmemo
         blogobj.blogtype = blogtypeobj
         blogobj.save()
-        retinfo = '修改文章<font color=red>[{0}]</font>成功!'.format(typename)
+        retinfo = '修改文章<font color=red>[{0}]</font>成功!'.format(blogname)
 
     return HttpResponse(json.dumps({'retinfo':retinfo,'retid':retid}),content_type = 'application/json')
 
@@ -115,7 +115,7 @@ def getoneblog(request):
     blogobj = Blogs.objects.get(id=blogid)
     blogobj.accessnums += 1
     blogobj.save()
-    
+
     memo = blogobj.detial
     return HttpResponse(memo)
 

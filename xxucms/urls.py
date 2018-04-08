@@ -19,6 +19,7 @@ import xxucms.views
 import ebook.urls
 import eblog.urls
 import software.urls
+import stock.urls
 
 urlpatterns = [
     path('',xxucms.views.index),
@@ -32,4 +33,5 @@ urlpatterns = [
     path('ebook/',include(ebook.urls)),
     path('eblog/',include(eblog.urls)),
     path('software/',include(software.urls)),
+    path('stock/',include(stock.urls)),
 ]

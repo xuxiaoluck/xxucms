@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'ebook',
     'eblog',
     'software',
+    'stock',
 ]
 
 MIDDLEWARE = [

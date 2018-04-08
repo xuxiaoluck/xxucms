@@ -1,0 +1,99 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!-- Template by Quackit.com -->
+<html lang="zh">
+<head>
+    <meta charset="butf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>CMS.股票分析工具</title>
+    {% include "head.html" %}
+
+
+
+</head>
+
+<body style="background: url({% static 'img/body00.jpg' %}">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="container">
+
+            <!-- 整体容器显示LOGO -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar">图标1</span>
+                    <span class="icon-bar">图标2</span>
+                    <span class="icon-bar">图标3</span>
+                </button>
+               <!--  <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-globe"></span> 显示Logo</a> -->
+            </div>
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="/home/">首页</a>
+                    </li>
+
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">操作<span class="caret"></span></a>
+						<ul class="dropdown-menu" aria-labelledby="about-us">
+
+						</ul>
+					</li>
+                </ul>
+
+				<!-- Search -->
+				<form class="navbar-form navbar-right" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control">
+					</div>
+					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>搜索</button>
+				</form>
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container  导航头部 -->
+    </nav>
+
+    <div class="container-fluid">
+	    <!-- 下面为显示区， -->
+        <div class="col-sm-1">
+        </div>
+
+		<div class="col-sm-2">
+
+
+
+		</div><!--/Left Column-->
+
+
+		<!-- Center Column 中间列，主显示区，占6格（一半）-->
+		<div class="col-sm-6">
+
+		</div><!--/Center Column-->
+
+
+	  <!-- Right Column 在边一行-->
+	  <div class="col-sm-2">
+
+
+	  </div><!--/Right Column -->
+
+      <div class="col-sm-1">
+      </div>
+
+
+	</div><!--/container-fluid-->
+
+	<footer>
+
+	</footer>
+
+</body>
+
+</html>
