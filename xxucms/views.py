@@ -17,7 +17,7 @@ def test(request):
 def index(request):
     """主页,显示最新上传的五个软件、文章、图书"""
 
-    bookn = Books.objects.order_by('updatetime')[:5]  #按更新时间取最新的五条图书数据
+    bookn = Books.objects.order_by('-updatetime')[:5]  #按更新时间取最新的五条图书数据
     bookrlt = [] #书籍列表
     for book in bookn:  #附件生成下拦菜单
         bookid = book.id
@@ -42,7 +42,7 @@ def index(request):
 
 
     #取前5个最新软件
-    softn = Softs.objects.order_by('updatetime')[:5]  #按更新时间取最新的五条
+    softn = Softs.objects.order_by('-updatetime')[:5]  #按更新时间取最新的五条
     softrlt = []
     for soft in softn:  #附件生成下拦菜单
         softid = soft.id
@@ -63,7 +63,7 @@ def index(request):
                         'filelist':filelist})
 
     #下面取最新的10篇博客文章
-    blogn = Blogs.objects.order_by('updatetime')[:10]
+    blogn = Blogs.objects.order_by('-updatetime')[:10]
     blogrlt = []
     for blog in blogn:
         blogid = blog.id
