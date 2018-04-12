@@ -14,14 +14,129 @@
     <script type="text/javascript">
      //更新行业数据
      $(function(){
-         $.post("/stock/updateindustry/",
-                {},
-                function(ret){
-                    //
-                }
-
-         );
+         $("#updateindustry_btn").click(function(){
+             $.post("/stock/updateindustry/",
+                    {},
+                    function(ret){
+                        alert(ret);
+                    }
+             );
+         });
      });
+
+
+     $(function(){
+         $("#updateconcept_btn").click(function(){
+             $.post("/stock/updateconcept/",
+                    {},
+                    function(ret){
+                        alert(ret);
+                    }
+             );
+         });
+     });
+
+     $(function(){
+         $("#updatearea_btn").click(function(){
+             $.post("/stock/updatearea/",
+                    {},
+                    function(ret){
+                        alert(ret);
+                    }
+             );
+         });
+     });
+
+     $(function(){
+         $("#updatesme_btn").click(function(){
+             $.post("/stock/updatesme/",
+                    {},
+                    function(ret){
+                        alert(ret);
+                    }
+             );
+         });
+     });
+
+     $(function(){
+         $("#updategem_btn").click(function(){
+             $.post("/stock/updategem/",
+                    {},
+                    function(ret){
+                        alert(ret);
+                    }
+             );
+         });
+     });
+
+     $(function(){
+         $("#updatehs300_btn").click(function(){
+             $.post("/stock/updatehs300/",
+                    {},
+                    function(ret){
+                        alert(ret);
+                    }
+
+             );
+         });
+     });
+
+     $(function(){
+         $("#updatesz50_btn").click(function(){
+             $.post("/stock/updatesz50/",
+                    {},
+                    function(ret){
+                        alert(ret);
+                    }
+             );
+         });
+     });
+
+     $(function(){
+         $("#updatezz500_btn").click(function(){
+             $.post("/stock/updatezz500/",
+                    {},
+                    function(ret){
+                        alert(ret);
+                    }
+             );
+         });
+     });
+
+     $(function(){
+         $("#updatest_btn").click(function(){
+             $.post("/stock/updatest/",
+                    {},
+                    function(ret){
+                        alert(ret);
+                    }
+             );
+         });
+     });
+
+     $(function(){
+         $("#updateterminate_btn").click(function(){
+             $.post("/stock/updateterminate/",
+                    {},
+                    function(ret){
+                        alert(ret);
+                    }
+             );
+         });
+     });
+
+     $(function(){
+         $("#updatesuspend_btn").click(function(){
+             $.post("/stock/updatesuspend/",
+                    {},
+                    function(ret){
+                        alert(ret);
+                    }
+             );
+         });
+         });
+
+
     </script>
 
 </head>
@@ -52,16 +167,16 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">数据管理<span class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="about-us">
                             <li><center><button type="button" class="btn btn-sm btn-success" id="updateindustry_btn">更新行业分类</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-info">更新地域分类</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-success">更新概念分类</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-info">更新中小板</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-success">更新创业板</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-info">更新风险警示板</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-success">更新上证50</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-info">更新中证500</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-success">更新沪深300及权重</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-info">更新暂停上市</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-success">更新终止上市</button></center></li>
+                            <li><center><button type="button" class="btn btn-sm btn-info" id="updatearea_btn">更新地域分类</button></center></li>
+                            <li><center><button type="button" class="btn btn-sm btn-success" id="updateconcept_btn">更新概念分类</button></center></li>
+                            <li><center><button type="button" class="btn btn-sm btn-info" id="updatesme_btn">更新中小板</button></center></li>
+                            <li><center><button type="button" class="btn btn-sm btn-success" id="updategem_btn">更新创业板</button></center></li>
+                            <li><center><button type="button" class="btn btn-sm btn-info" id="updatest_btn">更新风险警示板</button></center></li>
+                            <li><center><button type="button" class="btn btn-sm btn-success" id="updatesz50_btn">更新上证50</button></center></li>
+                            <li><center><button type="button" class="btn btn-sm btn-info" id="updatezz500_btn">更新中证500</button></center></li>
+                            <li><center><button type="button" class="btn btn-sm btn-success" id="updatehs300_btn">更新沪深300及权重</button></center></li>
+                            <li><center><button type="button" class="btn btn-sm btn-info" id="updatesuspend_btn">更新暂停上市</button></center></li>
+                            <li><center><button type="button" class="btn btn-sm btn-success" id="updateterminate_btn">更新终止上市</button></center></li>
 						</ul>
 					</li>
                     {%endif%}

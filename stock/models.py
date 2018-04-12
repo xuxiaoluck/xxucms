@@ -118,8 +118,8 @@ class stock_terminate(models.Model):
     '''终止上市:代码、名称、上市日期、终止日期'''
     code = models.CharField(max_length = 6)
     name = models.CharField(max_length = 20)
-    s_date = models.DateField()
-    e_date = models.DateField()
+    s_date = models.CharField(max_length = 10)
+    e_date = models.CharField(max_length = 10)
 
     def __str__(self):
         return self.name
@@ -132,8 +132,8 @@ class stock_suspend(models.Model):
     '''暂停上市:代码、名称、上市日期、暂停日期'''
     code = models.CharField(max_length = 6)
     name = models.CharField(max_length = 20)
-    s_date = models.DateField()
-    e_date = models.DateField()
+    s_date = models.CharField(max_length = 10)
+    e_date = models.CharField(max_length = 10)
 
     def __str__(self):
         return self.name
