@@ -8,133 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>CMS.股票分析工具</title>
+    <title>CMS.股票分析</title>
     {% include "head.html" %}
 
     <script type="text/javascript">
-     //更新行业数据
-     $(function(){
-         $("#updateindustry_btn").click(function(){
-             $.post("/stock/updateindustry/",
-                    {},
-                    function(ret){
-                        alert(ret);
-                    }
-             );
-         });
-     });
-
-
-     $(function(){
-         $("#updateconcept_btn").click(function(){
-             $.post("/stock/updateconcept/",
-                    {},
-                    function(ret){
-                        alert(ret);
-                    }
-             );
-         });
-     });
-
-     $(function(){
-         $("#updatearea_btn").click(function(){
-             $.post("/stock/updatearea/",
-                    {},
-                    function(ret){
-                        alert(ret);
-                    }
-             );
-         });
-     });
-
-     $(function(){
-         $("#updatesme_btn").click(function(){
-             $.post("/stock/updatesme/",
-                    {},
-                    function(ret){
-                        alert(ret);
-                    }
-             );
-         });
-     });
-
-     $(function(){
-         $("#updategem_btn").click(function(){
-             $.post("/stock/updategem/",
-                    {},
-                    function(ret){
-                        alert(ret);
-                    }
-             );
-         });
-     });
-
-     $(function(){
-         $("#updatehs300_btn").click(function(){
-             $.post("/stock/updatehs300/",
-                    {},
-                    function(ret){
-                        alert(ret);
-                    }
-
-             );
-         });
-     });
-
-     $(function(){
-         $("#updatesz50_btn").click(function(){
-             $.post("/stock/updatesz50/",
-                    {},
-                    function(ret){
-                        alert(ret);
-                    }
-             );
-         });
-     });
-
-     $(function(){
-         $("#updatezz500_btn").click(function(){
-             $.post("/stock/updatezz500/",
-                    {},
-                    function(ret){
-                        alert(ret);
-                    }
-             );
-         });
-     });
-
-     $(function(){
-         $("#updatest_btn").click(function(){
-             $.post("/stock/updatest/",
-                    {},
-                    function(ret){
-                        alert(ret);
-                    }
-             );
-         });
-     });
-
-     $(function(){
-         $("#updateterminate_btn").click(function(){
-             $.post("/stock/updateterminate/",
-                    {},
-                    function(ret){
-                        alert(ret);
-                    }
-             );
-         });
-     });
-
-     $(function(){
-         $("#updatesuspend_btn").click(function(){
-             $.post("/stock/updatesuspend/",
-                    {},
-                    function(ret){
-                        alert(ret);
-                    }
-             );
-         });
-         });
 
 
     </script>
@@ -162,40 +39,26 @@
                     <li class="active">
                         <a href="/home/">首页</a>
                     </li>
-                    {% if request.user.is_authenticated %}
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">数据管理<span class="caret"></span></a>
-						<ul class="dropdown-menu" aria-labelledby="about-us">
-                            <li><center><button type="button" class="btn btn-sm btn-success" id="updateindustry_btn">更新行业分类</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-info" id="updatearea_btn">更新地域分类</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-success" id="updateconcept_btn">更新概念分类</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-info" id="updatesme_btn">更新中小板</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-success" id="updategem_btn">更新创业板</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-info" id="updatest_btn">更新风险警示板</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-success" id="updatesz50_btn">更新上证50</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-info" id="updatezz500_btn">更新中证500</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-success" id="updatehs300_btn">更新沪深300及权重</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-info" id="updatesuspend_btn">更新暂停上市</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-success" id="updateterminate_btn">更新终止上市</button></center></li>
-						</ul>
-					</li>
+                    {%if request.user.is_authenticated%}
+                    <li>
+                        <a href="/stock/data_mgr/">数据管理</a>
+                    </li>
                     {%endif%}
-                    <li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">板块列表<span class="caret"></span></a>
-						<ul class="dropdown-menu" aria-labelledby="about-us">
-                            <li><center><button type="button" class="btn btn-sm btn-success">行业</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-primary">地域</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-success">概念</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-primary">中小板</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-success">创业板</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-primary">风险警示板</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-success">上证50</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-primary">中证500</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-success">沪深300及权重</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-primary">暂停上市</button></center></li>
-                            <li><center><button type="button" class="btn btn-sm btn-success">终止上市</button></center></li>
-						</ul>
-					</li>
+
+                    <li> <a href="/stock/type_info/">股票分类</a>
+                    </li>
+                    <li> <a href="/stock/basics_info/">基本面信息</a>
+                    </li>
+                    <li> <a href="/stock/trade_info/">交易信息</a>
+                    </li>
+                    <li> <a href="/stock/referto_info/">参考公告</a>
+                    </li>
+                    <li> <a href="/stock/marketnews_info/">市场新闻</a>
+                    </li>
+                    <li> <a href="/stock/macroindex_info">宏观经济指数</a>
+                    </li>
+
+
                 </ul>
 
 				<!-- Search -->

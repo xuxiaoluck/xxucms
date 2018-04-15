@@ -18,4 +18,6 @@ urlpatterns = [
     path('updategem/',update_gem), #创业板
     path('updatesme/',update_sme), #中小板
     path('updatest/',update_st),
+    path('data_mgr/',datamgr),  #数据管理
+    path('type_info/',typeinfo),
 ]

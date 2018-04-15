@@ -16,6 +16,18 @@ def index(request):
     return render_to_response('stock.html',locals())
 
 
+def datamgr(request):
+    '''打开管理数据页面'''
+    '''if not request.user.is_authenticated:
+        return render_to_response('nologin.html',locals())
+    '''
+    return render_to_response('stockdatamgr.html',{'request':request,'islogin':request.user.is_authenticated})
+
+def typeinfo(request):
+    '''打开分类页面'''
+    return render_to_response('stocktypeinfo.html',{'request':request,'islogin':request.user.is_authenticated})
+
+
 
 def update_industry(request):
     '''更新行业数据'''
@@ -180,3 +192,11 @@ def update_suspend(request):
     stock_suspend.objects.bulk_create(objlist)
 
     return HttpResponse('succ.{0}条!'.format(len(objlist)))
+
+''' 取得数据字段说明
+code,代码,name,名称,industry,所属行业,area,地区,pe,市盈率,outstanding,流通股本(亿),totals,总股本(亿),totalAssets,总资产(万),liquidAssets,流动资产,fixedAssets,固定资产,
+reserved,公积金,reservedPerShare,每股公积金,esp,每股收益,bvps,每股净资,pb,市净率,timeToMarket,上市日期,undp,未分利润,perundp, 每股未分配,rev,收入同比(%),profit,利润同比(%),gpr,毛利率(%),
+npr,净利润率(%),holders,股东人数
+'''
+def update_basics(request):
+    '''更新股票基本资料'''

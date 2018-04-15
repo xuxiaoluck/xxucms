@@ -72,6 +72,10 @@ def index(request):
 
     return render_to_response('index.html',{'bookrlt':bookrlt,'blogrlt':blogrlt,'softrlt':softrlt,'request':request})
 
+def nologin(request):
+    '''打开未登录界面'''
+    return render_to_response('nologin.html',locals())
+
 def xlogin(request):
     '''登录视图'''
 

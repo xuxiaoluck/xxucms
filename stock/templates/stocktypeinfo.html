@@ -1,0 +1,159 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!-- Template by Quackit.com -->
+<html lang="zh">
+<head>
+    <meta charset="butf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>CMS.股票分析工具.数据管理</title>
+
+    {% include "head.html" %}
+
+    <!--  检测是否登录 -->
+    {%if not  request.user.is_authenticated%}
+    <script language='javascript'>document.location = '/home/nologin/'</script>
+    {%endif%}
+
+
+    <script type="text/javascript">
+     $(function(){
+
+         $("#typeinfo_table").bootstrapTable({
+             url: '/stock/gettypeinfo',  //请求后台的URL（*）
+             method: 'post',   //请求方式（*）
+             //toolbar: '#toolbar',  //工具按钮用哪个容器
+             striped: true,   //是否显示行间隔色
+             cache: false,   //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+             pagination: true,   //是否显示分页（*）
+             sortable: false,   //是否启用排序
+             sortOrder: "asc",   //排序方式
+             //queryParams: oTableInit.queryParams,//传递参数（*）
+             sidePagination: "server",  //分页方式：client客户端分页，server服务端分页（*）
+             pageNumber:1,   //初始化加载第一页，默认第一页
+             pageSize: 20,   //每页的记录行数（*）
+             pageList: [20, 30, 50, 100], //可供选择的每页的行数（*）
+             strictSearch: true,
+             clickToSelect: true,  //是否启用点击选中行
+             //height: 460,   //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+             uniqueId: "id",   //每一行的唯一标识，一般为主键列
+             cardView: false,   //是否显示详细视图
+             detailView: false,   //是否显示父子表
+             columns: [{
+                 field: 'code',
+                 title: '代码'
+             }, {
+                 field: 'name',
+                 title: '名称'
+             }, {
+                 field: 'industry',
+                 title: '行业'
+             }]
+         });//bootstrapTable
+     });
+
+
+
+    </script>
+
+</head>
+
+<body style="background: url({% static 'img/body00.jpg' %}">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="container">
+
+            <!-- 整体容器显示LOGO -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar">图标1</span>
+                </button>
+                <!--  <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-globe"></span> 显示Logo</a> -->
+            </div>
+
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="/home/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/stock/">返回</a>
+                    </li>
+                </ul>
+
+				<!-- Search -->
+				<form class="navbar-form navbar-right" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control">
+					</div>
+					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>搜索</button>
+				</form>
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container  导航头部 -->
+    </nav>
+
+    <div class="container-fluid">
+	    <!-- 下面为显示区， -->
+        <div class="col-sm-1">
+        </div>
+
+		<div class="col-sm-2">
+
+	        <div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title"><span class="glyphicon glyphicon-random"></span>股票分类信息查询</h4>
+				</div>
+                <ul class="nav nav-tabs nav-stacked">
+                    <li><center><button type="button" class="btn btn-sm btn-success" id="industry_btn">行业</button></center></li>
+                    <li><center><button type="button" class="btn btn-sm btn-primary" id="area_btn">地域</button></center></li>
+                    <li><center><button type="button" class="btn btn-sm btn-success" id="concept_btn">概念</button></center></li>
+                    <li><center><button type="button" class="btn btn-sm btn-primary" id="">中小板</button></center></li>
+                    <li><center><button type="button" class="btn btn-sm btn-success">创业板</button></center></li>
+                    <li><center><button type="button" class="btn btn-sm btn-primary">风险警示板</button></center></li>
+                    <li><center><button type="button" class="btn btn-sm btn-success">上证50</button></center></li>
+                    <li><center><button type="button" class="btn btn-sm btn-primary">中证500</button></center></li>
+                    <li><center><button type="button" class="btn btn-sm btn-success">沪深300及权重</button></center></li>
+                    <li><center><button type="button" class="btn btn-sm btn-primary">暂停上市</button></center></li>
+                    <li><center><button type="button" class="btn btn-sm btn-success">终止上市</button></center></li>
+                </ul>
+            </div>
+
+		</div><!--/Left Column-->
+
+
+		<!-- Center Column 中间列，主显示区，占6格（一半）-->
+		<div class="col-sm-6">
+            <div class="panel panel-default">
+                <table id="typeinfo_table"></table>
+            </div>
+
+		</div><!--/Center Column-->
+
+
+	  <!-- Right Column 在边一行-->
+	  <div class="col-sm-2">
+
+
+	  </div><!--/Right Column -->
+
+      <div class="col-sm-1">
+      </div>
+
+
+	</div><!--/container-fluid-->
+
+	<footer>
+
+	</footer>
+
+</body>
+
+</html>
