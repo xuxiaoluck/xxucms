@@ -200,3 +200,18 @@ npr,净利润率(%),holders,股东人数
 '''
 def update_basics(request):
     '''更新股票基本资料'''
+
+
+
+def gettypeinfo(request):
+    '''显示股票分类'''
+    return HttpResponse('[2900]')
+
+
+
+
+
+
+
+
+

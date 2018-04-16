@@ -19,5 +19,6 @@ urlpatterns = [
     path('updatesme/',update_sme), #中小板
     path('updatest/',update_st),
     path('data_mgr/',datamgr),  #数据管理
-    path('type_info/',typeinfo),
+    path('type_info/',typeinfo), #打开行业数据
+    path('gettypeinfo/',gettypeinfo),#显示行业数据
 ]
