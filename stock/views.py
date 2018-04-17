@@ -205,7 +205,19 @@ def update_basics(request):
 
 def gettypeinfo(request):
     '''显示股票分类'''
-    return HttpResponse('[2900]')
+
+    limit = int(request.GET['limit'])
+    offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    total = stock_industry.objects.all().count()
+    objvalues = stock_industry.objects.all().order_by(request.GET['sortfield'])[offset:limit + offset]
+    rows = list(objvalues.values('code','name','i_name'))
+    rlt = {'total':total,'rows':rows}
+
+    #print('total','limit:{0},offset:{1}'.format(limit,offset),total)
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
 
 
 
