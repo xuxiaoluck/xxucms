@@ -203,8 +203,8 @@ def update_basics(request):
 
 
 
-def gettypeinfo(request):
-    '''显示股票分类'''
+def getindustryinfo(request):
+    '''显示股票行业数据'''
 
     limit = int(request.GET['limit'])
     offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
@@ -220,10 +220,165 @@ def gettypeinfo(request):
         return HttpResponse(json.dumps(rlt),content_type = 'application/json')
 
 
+def getareainfo(request):
+    '''显示地域数据'''
+
+    limit = int(request.GET['limit'])
+    offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    total = stock_area.objects.all().count()
+    objvalues = stock_area.objects.all().order_by(request.GET['sortfield'])[offset:limit + offset]
+    rows = list(objvalues.values('code','name','a_name'))
+    rlt = {'total':total,'rows':rows}
 
 
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
 
 
+def getconceptinfo(request):
+    '''显示概念数据'''
 
+    limit = int(request.GET['limit'])
+    offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    sortfield = request.GET['sortfield']
+    total = stock_concept.objects.all().count()
+    objvalues = stock_concept.objects.all().order_by(sortfield)[offset:limit + offset]
+    rows = list(objvalues.values('code','name','c_name'))
+    rlt = {'total':total,'rows':rows}
 
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
 
+def getsmeinfo(request):
+    '''显示中小板数据'''
+
+    limit = int(request.GET['limit'])
+    offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    sortfield = request.GET['sortfield']
+    total = stock_sme.objects.all().count()
+    objvalues = stock_sme.objects.all().order_by(sortfield)[offset:limit + offset]
+    rows = list(objvalues.values('code','name'))
+    rlt = {'total':total,'rows':rows}
+
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
+
+def getgeminfo(request):
+    '''显示创业板数据'''
+
+    limit = int(request.GET['limit'])
+    offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    sortfield = request.GET['sortfield']
+    total = stock_gem.objects.all().count()
+    objvalues = stock_gem.objects.all().order_by(sortfield)[offset:limit + offset]
+    rows = list(objvalues.values('code','name'))
+    rlt = {'total':total,'rows':rows}
+
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
+
+def getzz500info(request):
+    '''显示ZZ500板数据'''
+
+    limit = int(request.GET['limit'])
+    offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    sortfield = request.GET['sortfield']
+    total = stock_zz500.objects.all().count()
+    objvalues = stock_zz500.objects.all().order_by(sortfield)[offset:limit + offset]
+    rows = list(objvalues.values('code','name'))
+    rlt = {'total':total,'rows':rows}
+
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
+
+def getsz50info(request):
+    '''显示sZ50板数据'''
+
+    limit = int(request.GET['limit'])
+    offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    sortfield = request.GET['sortfield']
+    total = stock_sz50.objects.all().count()
+    objvalues = stock_sz50.objects.all().order_by(sortfield)[offset:limit + offset]
+    rows = list(objvalues.values('code','name'))
+    rlt = {'total':total,'rows':rows}
+
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
+
+def getstinfo(request):
+    '''显示st板数据'''
+
+    limit = int(request.GET['limit'])
+    offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    sortfield = request.GET['sortfield']
+    total = stock_st.objects.all().count()
+    objvalues = stock_st.objects.all().order_by(sortfield)[offset:limit + offset]
+    rows = list(objvalues.values('code','name'))
+    rlt = {'total':total,'rows':rows}
+
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
+
+def getterminateinfo(request):
+    '''显示终止上市数据'''
+
+    limit = int(request.GET['limit'])
+    offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    sortfield = request.GET['sortfield']
+    total = stock_terminate.objects.all().count()
+    objvalues = stock_terminate.objects.all().order_by(sortfield)[offset:limit + offset]
+    rows = list(objvalues.values('code','name','s_date','e_date'))
+    rlt = {'total':total,'rows':rows}
+
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
+
+def getsuspendinfo(request):
+    '''显示暂停上市数据'''
+
+    limit = int(request.GET['limit'])
+    offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    sortfield = request.GET['sortfield']
+    total = stock_suspend.objects.all().count()
+    objvalues = stock_suspend.objects.all().order_by(sortfield)[offset:limit + offset]
+    rows = list(objvalues.values('code','name','s_date','e_date'))
+    rlt = {'total':total,'rows':rows}
+
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
+
+def geths300info(request):
+    '''显示hs300数据'''
+
+    limit = int(request.GET['limit'])
+    offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    sortfield = request.GET['sortfield']
+    total = stock_hs300.objects.all().count()
+    objvalues = stock_hs300.objects.all().order_by(sortfield)[offset:limit + offset]
+    rows = list(objvalues.values('code','name','date','weight'))
+    for item in rows:
+        item['date'] = datetime.strftime(item['date'],'%Y-%m-%d')
+    rlt = {'total':total,'rows':rows}
+
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')

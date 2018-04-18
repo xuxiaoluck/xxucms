@@ -220,7 +220,7 @@ class stock_growth(models.Model):
     seg = models.FloatField() #股东权益增长率
     report_date = models.CharField(max_length = 6) #发布年季
 
-    
+
 class stock_deptpaying(models.Model):
     '''债务能力'''
     code = models.CharField(max_length = 6)

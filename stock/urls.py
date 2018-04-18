@@ -20,5 +20,15 @@ urlpatterns = [
     path('updatest/',update_st),
     path('data_mgr/',datamgr),  #数据管理
     path('type_info/',typeinfo), #打开行业数据
-    path('gettypeinfo/',gettypeinfo),#显示行业数据
+    path('getindustryinfo/',getindustryinfo),#显示行业数据
+    path('getareainfo/',getareainfo),
+    path('getconceptinfo/',getconceptinfo),
+    path('getstinfo/',getstinfo),
+    path('getgeminfo/',getgeminfo),
+    path('getsmeinfo/',getsmeinfo),
+    path('getzz500info/',getzz500info),
+    path('getsz50info/',getsz50info),
+    path('geths300info/',geths300info),
+    path('getterminateinfo/',getterminateinfo),
+    path('getsuspendinfo/',getsuspendinfo),
 ]
