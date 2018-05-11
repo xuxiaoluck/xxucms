@@ -26,7 +26,8 @@ class Publisher(models.Model):
 class Books(models.Model):
     '''书籍模型'''
     name = models.CharField(max_length = 60,verbose_name = '图书名称')
-    booktype = models.ForeignKey(BookType,on_delete = models.CASCADE)  #2.0开始要加 on_delete
+    #booktype = models.ForeignKey(BookType,on_delete = models.CASCADE)  #2.0开始要加 on_delete
+    booktypes = models.CharField(max_length = 100,default = 'none')
     publisher = models.ForeignKey(Publisher,on_delete = models.CASCADE)
     authors = models.CharField(max_length = 100,verbose_name = '作者列表')
     detial = models.TextField(verbose_name = '内容简介')   #书籍描述

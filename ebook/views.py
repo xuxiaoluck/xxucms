@@ -84,7 +84,7 @@ def addbooks(request):
     bookpublisher = request.POST['bookpublisher']
     bookauthors = request.POST['bookauthors']
     bookmemo = request.POST['bookmemo']
-    booktypeobj = BookType.objects.get(name = booktype)
+    #booktypeobj = BookType.objects.get(name = booktype)  #2018-05-11改为字符串，以 || 分隔多个类别
     publisherobj = Publisher.objects.get(name = bookpublisher)
     info = ''
     #print('BookID:',bookid,bookname)
@@ -95,7 +95,8 @@ def addbooks(request):
         bookobj = Books(name = bookname,
                           authors = bookauthors,
                           detial = bookmemo,
-                          booktype = booktypeobj,
+                          #booktype = booktypeobj,
+                          booktypes = booktype,
                           publisher = publisherobj,
                           updateuser = request.user.username
                           )
@@ -106,7 +107,8 @@ def addbooks(request):
         modiobj = Books.objects.get(id = int(bookid))
         modiobj.name = bookname
         modiobj.authors = bookauthors
-        modiobj.booktype = booktypeobj
+        #modiobj.booktype = booktypeobj
+        modiobj.booktypes = booktype
         modiobj.publisher = publisherobj
         modiobj.detial = bookmemo
         modiobj.updateuser = request.user.username
@@ -141,8 +143,9 @@ def booklistbytypename(request):
     '''按类别名称列出一类书籍数据'''
 
     typename = request.GET.get('typename')
-    booktype = BookType.objects.get(name = typename)
-    booklist = booktype.books_set.all() #先得到外键对象，再找到外键的所有对象列表
+    #booktype = BookType.objects.get(name = typename)
+    #booklist = booktype.books_set.all() #先得到外键对象，再找到外键的所有对象列表
+    booklist = Books.objects.filter(booktypes__contains = typename)  # 2018-05-11 改，查询分类在分类字段中， 分类以 || 分隔 多个分类
     paginator = Paginator(booklist, 10) # 一页显示10条
     page = request.GET.get('page',1)
     try:
@@ -225,10 +228,13 @@ def modifybook(request):
     bookobj.save()
 
     bookdict['bookname'] = bookobj.name
-    bookdict['booktype'] = bookobj.booktype.name
+    #bookdict['booktype'] = bookobj.booktype.name
+    #bookdict['booktype'] = bookobj.booktypes
     bookdict['bookpublisher'] = bookobj.publisher.name
     bookdict['bookauthors'] = bookobj.authors
     bookdict['bookdetial'] = bookobj.detial
+
+    existbooktypes = bookobj.booktypes.split('||')  #分解书籍分类为列表
 
 
     #下面得到书籍的附件列表，每条为一个字典
@@ -248,7 +254,9 @@ def modifybook(request):
     publisherlist = getallpublisher(request)
 
     return render_to_response('modifybook.html',{'bookdict':json.dumps(bookdict),'filelist':filelist,
-                                                 'booktypelist':booktypelist,'publisherlist':publisherlist})
+                                                 'booktypelist':booktypelist,'publisherlist':publisherlist,
+                                                 'existbooktypes':existbooktypes
+    })
 
 def deleteonebookfile(request):
     '''删除一本书资料的一个附件文件即实际的书籍'''

@@ -7,22 +7,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>CMS.电子图书文档管理工具.增加图书资料</title>
+        {% include "head.html" %}
 
-        <script src="{% static 'bootstrap-3.3.7/js/jquery-1.11.3.min.js' %}"></script>
-        <script src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}" type="text/javascript"></script>
-        <link href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}" rel="stylesheet">
-        <link href="{% static 'bootstrap-3.3.7/css/custom.css' %}" rel="stylesheet">
- 	    <script src="{% static 'bootstrap-3.3.7/js/holder.js' %}"></script>
- 	    <script src="{% static 'bootstrap-3.3.7/js/validator.min.js' %}"></script>
-        <link href="{% static 'bootstrap-3.3.7/css/fileinput.css' %}" media="all" rel="stylesheet" type="text/css"/>
-        <link href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}" media="all" rel="stylesheet" type="text/css"/>
-        <link href="{% static 'bootstrap-3.3.7/themes/explorer-fa/theme.css' %}" media="all" rel="stylesheet" type="text/css"/>
-        <script src="{% static 'bootstrap-3.3.7/js/plugins/sortable.js' %}" type="text/javascript"></script>
-        <script src="{% static 'bootstrap-3.3.7/js/fileinput.js' %}" type="text/javascript"></script>
-        <script src="{% static 'bootstrap-3.3.7/js/locales/zh.js' %}" type="text/javascript"></script>
-        <script src="{% static 'bootstrap-3.3.7/themes/explorer-fa/theme.js' %}" type="text/javascript"></script>
-        <script src="{% static 'bootstrap-3.3.7/themes/fa/theme.js' %}" type="text/javascript"></script>
-        <script src="{% static 'bootstrap-3.3.7/js/popper.js' %}" type="text/javascript"></script>
 
         <script>
          $(document).ready(function(){
@@ -62,12 +48,14 @@
                  //    alert('请填写好所有内容后再提交！');
                  //    return;
                  //};
+                 var booktypes = $("#addbookselecttype1 option").map(function(){return $(this).val();}).get().join("||");
+                 //以 || 分隔的类别列表
 
                  $.post("/ebook/addbooks/",
                         {
                             bookid:$("#addbookid").val(),
                             bookname:$("#addbookname").val(),
-                            booktype:$("#addbookselecttype").val(),
+                            booktype:booktypes,
                             bookpublisher:$("#addbookselectpublisher").val(),
                             bookauthors:$("#addbookauthor").val(),
                             bookmemo:$("#addbookmemo").val()
@@ -80,11 +68,12 @@
              });//click
          });//ready
 
+         //新建
          $(function(){
              $("#addbooknew_btn").click(function(){
                  $("#addbookid").val('');
                  $("#addbookname").val('');
-                 $("#addbookselecttype").val('');
+                 $("#addbookselecttype1").empty();
                  $("#addbookselectpublisher").val('');
                  $("#addbookauthor").val('');
                  $("#addbookmemo").val('');
@@ -96,10 +85,26 @@
          $(function(){
              $("#addselectbooktype_btn").click(function(){
                  var selecttype = $("#addbookselecttype").val();
+                 var isexist = false;
 
-                 $("#addbookselecttype1").append("<option>"+ selecttype +"</option>");
-             });
-         });
+                 $("#addbookselecttype1 option").each(function (){ //遍历已选看是否存在
+                     var txt = $(this).text();
+                     if (txt == selecttype){
+                         isexist = true;
+                         return false; //在JQuery中循环为 reutrn false
+                     }
+                 });
+                 if (isexist == false)
+                     $("#addbookselecttype1").append("<option>"+ selecttype +"</option>");
+             });//click
+         });//$(func)
+
+         //删除一个选中的已选类别
+         $(function(){
+             $("#delselectbooktype_btn").click(function(){
+                 $("#addbookselecttype1 option:selected").remove();
+             });//click
+         });//$(func)
         </script>
 
 
@@ -236,7 +241,7 @@
                                     <button class="btn btn-success" id="addselectbooktype_btn" type="button">Go-></button>
                                 </span>
                                 <div class="input-group-btn">
-                                    <select class="form-control input-xlarge" id="addbookselecttype1" style="width: 50%;">
+                                    <select class="form-control input-xlarge" id="addbookselecttype1" style="width: auto;">
                                     </select>
                                 </div>
                                 <span class="input-group-btn">
