@@ -44,10 +44,6 @@
          //新加或保存书籍资料
          $(function(){
              $("#addbooksave_btn").click(function(){
-                 //if (($("#addbookname").val() == '') || ($("#addbookauthor").val() == '') || ($("#addbookmemo").val() == '')){
-                 //    alert('请填写好所有内容后再提交！');
-                 //    return;
-                 //};
                  var booktypes = $("#addbookselecttype1 option").map(function(){return $(this).val();}).get().join("||");
                  //以 || 分隔的类别列表
 

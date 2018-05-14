@@ -66,7 +66,7 @@ def addsoft(request):
     softtype = request.POST['softtype']
     softname = request.POST['softname']
     softmemo = request.POST['softmemo']
-    softtypeobj = SoftType.objects.get(name = softtype)
+    #softtypeobj = SoftType.objects.get(name = softtype)
     info = ''
 
     #判断是否有效放JS前端
@@ -76,7 +76,7 @@ def addsoft(request):
     if softid == '': #新建
         softobj = Softs(name = softname,
                           detial = softmemo,
-                          softtype = softtypeobj,
+                          softtypes = softtype,
                           updateuser = request.user.username
                           )
         softobj.save()   #保存一项图书资源
@@ -85,7 +85,7 @@ def addsoft(request):
     else: #修改
         modiobj = Softs.objects.get(id = int(softid))
         modiobj.name = softname
-        modiobj.softtype = softtypeobj
+        modiobj.softtypes = softtype
         modiobj.detial = softmemo
         modiobj.updateuser = request.user.username
         modiobj.updatetime = datetime.now()
@@ -117,8 +117,7 @@ def softlistbytypename(request):
     '''按类别名称列出一类软件'''
 
     typename = request.GET.get('typename')
-    softtypeobj = SoftType.objects.get(name = typename)
-    softlistobj = softtypeobj.softs_set.all() #先得到外键对象，再找到外键的所有对象列表
+    softlistobj = Softs.objects.filter(softtypes__contains = typename)
     paginator = Paginator(softlistobj, 10) # 一页显示10条
     page = request.GET.get('page',1)
     try:
@@ -198,9 +197,10 @@ def modifysoft(request):
     softobj.save()
 
     softdict['softname'] = softobj.name
-    softdict['softtype'] = softobj.softtype.name
+    #softdict['softtype'] = softobj.softtype.name
     softdict['softdetial'] = softobj.detial
 
+    existsofttypes = softobj.softtypes.split('||') 
     #下面得到软件的附件列表，每条为一个字典
     filelist = []
     fileobjs = softobj.softfiles_set.all()
@@ -216,7 +216,7 @@ def modifysoft(request):
     softtypelist = getallsofttype(request)
 
     return render_to_response('modifysoft.html',{'softdict':json.dumps(softdict),'filelist':filelist,
-                                                 'softtypelist':softtypelist})
+                                                 'softtypelist':softtypelist,'existsofttypes':existsofttypes})
 
 def deleteonesoftfile(request):
     '''删除一项软件书资料的一个附件文件即实际的一个软件'''

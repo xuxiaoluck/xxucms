@@ -43,12 +43,12 @@
                      alert('请填写好所有内容后再提交！');
                      return;
                  };
-
+                 var softtypes = $("#softselecttype1 option").map(function(){return $(this).val();}).get().join("||");
                  $.post("/software/addsoft/",
                         {
                             softid:$("#softid").val(),
                             softname:$("#softname").val(),
-                            softtype:$("#softselecttype").val(),
+                            softtype:softtypes,
                             softmemo:$("#softmemo").val()
                         },
                         function(ret){
@@ -100,6 +100,31 @@
                  );
              });
          });
+
+         //新选择一个分类
+         $(function(){
+             $("#addselectsofttype_btn").click(function(){
+                 var selecttype = $("#softselecttype").val();
+                 var isexist = false;
+
+                 $("#softselecttype1 option").each(function (){ //遍历已选看是否存在
+                     var txt = $(this).text();
+                     if (txt == selecttype){
+                         isexist = true;
+                         return false; //在JQuery中循环为 reutrn false
+                     }
+                 });
+                 if (isexist == false)
+                     $("#softselecttype1").append("<option>"+ selecttype +"</option>");
+             });//click
+         });//$(func)
+
+         //删除一个选中的已选类别
+         $(function(){
+             $("#delselectsofttype_btn").click(function(){
+                 $("#softselecttype1 option:selected").remove();
+             });//click
+         });//$(func)
 
         </script>
 
@@ -192,13 +217,28 @@
                             </div>
 
                             <div class="control-group">
-                                <label class="control-label">分类</label>
-                                <div class="controls">
-                                    <select class="form-control input-xlarge" id="softselecttype">
-                                        {% for name in softtypelist%}
-                                        <option>{{name}}</option>
-                                        {%endfor%}
-                                    </select>
+                                <div class="control-group">
+                                    <label class="control-label">选择分类->软件类别</label>
+                                    <div class="input-group-btn">
+                                        <select class="form-control input-xlarge" id="softselecttype" style="width: auto;">
+                                            {% for name in softtypelist%}
+                                            <option>{{name}}</option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" id="addselectsofttype_btn" type="button">Go-></button>
+                                    </span>
+                                    <div class="input-group-btn">
+                                        <select class="form-control input-xlarge" id="softselecttype1" style="width: auto;">
+                                            {% for name in existsofttypes%}
+                                            <option>{{name}}</option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-warning" id="delselectsofttype_btn" type="button"><-del</button>
+                                    </span>
                                 </div>
 
 
