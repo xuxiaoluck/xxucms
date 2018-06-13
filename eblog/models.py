@@ -17,9 +17,9 @@ class BlogType(models.Model):
 class Blogs(models.Model):
     '''blog内容'''
 
-    name = models.CharField(max_length = 100)
+    name = models.CharField(max_length = 256)
     blogtype = models.ForeignKey(BlogType,on_delete = models.CASCADE)  #2.0开始要加 on_delete
-    authors = models.CharField(max_length = 20)
+    authors = models.CharField(max_length = 20,default='xxu')
     detial = models.TextField(verbose_name = '内容简介')   #内容
     accessnums = models.IntegerField(default = 0)
     thumbupnums = models.IntegerField(verbose_name = '点赞',default=0)

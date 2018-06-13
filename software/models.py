@@ -18,7 +18,7 @@ class SoftType(models.Model):
 
 class Softs(models.Model):
     '''软件信息'''
-    name = models.CharField(max_length = 60)
+    name = models.CharField(max_length = 256)
     #softtype = models.ForeignKey(SoftType,on_delete = models.CASCADE)  #2.0开始要加 on_delete
     softtypes = models.CharField(max_length = 100,default = 'none')
     detial = models.TextField(verbose_name = '内容简介')  
@@ -34,7 +34,7 @@ class Softs(models.Model):
 
 class SoftFiles(models.Model):
     '''软件的实际文件'''
-    name = models.CharField(max_length = 60,verbose_name = '名称')  #文件名称
+    name = models.CharField(max_length = 256,verbose_name = '名称')  #文件名称
     soft_list = models.ForeignKey(Softs,on_delete = models.CASCADE) #指向 Books
     uploadfile = models.FileField(upload_to='software/%Y/%m/%d/',verbose_name = '文件') #文件路径 直接挂在 MEDIA_ROOT
     accessnums = models.IntegerField(verbose_name = '访问次数',default=0)

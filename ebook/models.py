@@ -25,11 +25,11 @@ class Publisher(models.Model):
 
 class Books(models.Model):
     '''书籍模型'''
-    name = models.CharField(max_length = 60,verbose_name = '图书名称')
+    name = models.CharField(max_length = 256,verbose_name = '图书名称')
     #booktype = models.ForeignKey(BookType,on_delete = models.CASCADE)  #2.0开始要加 on_delete
     booktypes = models.CharField(max_length = 100,default = 'none')
     publisher = models.ForeignKey(Publisher,on_delete = models.CASCADE)
-    authors = models.CharField(max_length = 100,verbose_name = '作者列表')
+    authors = models.CharField(max_length = 100,verbose_name = '作者列表',default='xxu')
     detial = models.TextField(verbose_name = '内容简介')   #书籍描述
     accessnums = models.IntegerField(default = 0)
     thumbupnums = models.IntegerField(verbose_name = '点赞',default=0)
@@ -45,7 +45,7 @@ class Books(models.Model):
 
 class BookFiles(models.Model):
     '''书籍的实际文件，单独用一个表，这样可以把同类文件放在一个标题里，特别是在做文档管理时基本上都是多个文件的。'''
-    name = models.CharField(max_length = 60,verbose_name = '名称')  #文件名称
+    name = models.CharField(max_length = 256,verbose_name = '名称')  #文件名称
     book_list = models.ForeignKey(Books,on_delete = models.CASCADE) #指向 Books
     uploadfile = models.FileField(upload_to='ebooks/%Y/%m/%d/',verbose_name = '文件') #文件路径 直接挂在 MEDIA_ROOT
     accessnums = models.IntegerField(verbose_name = '访问次数',default=0)
