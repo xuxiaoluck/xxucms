@@ -1,0 +1,123 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!-- Template by Quackit.com -->
+<html lang="zh">
+<head>
+    <meta charset="butf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>CMS.个人收支管理工具</title>
+
+    {%include "head.html"%}
+
+
+
+</head>
+
+<body style="background: url({% static 'img/body00.jpg' %}">
+
+    <!-- 头部为导航区 -->
+    <nav class="navbar navbar-default  navbar-inverse navbar-static-top" role="navigation"> <!-- 设定导航条，固定在顶部，黑底navbar-fixed-top -->
+            <div class="container"> <!-- 导航条居中显示 -->
+                 <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                    <span class="sr-only">展开导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span> 
+                </button>
+                <a class="navbar-brand" href=""></a>  <!-- 标题头，一般设置一个LOGO之类的 -->
+                 </div>
+
+               <div class="collapse navbar-collapse" id="menu">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/home/">首页</a></li>
+                    <li><a href="/cost/sql/">查询</a></li>
+                    <li><a href="/cost/total/">统计</a></li>
+                    <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">系统<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">增加</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">修改</a></li>
+                            <li class="divider"></li>
+                        </ul>
+                    </li>
+                </ul>
+               </div>
+         </div>
+
+        </nav>
+
+     <!-- 下面为工作区、显示区 -->
+     <div class="container-fluid">
+         <div class="col-sm-1">
+             <!-- 左边留一列空白 -->
+
+         </div>
+
+		 <div class="col-sm-2">
+             <!-- 两列显示分类（可选日期、类别、科目等） -->
+	         <div class="panel panel-default">
+                 <div class="panel-heading">
+					 数据显示方式
+				 </div>
+
+				 <div class="panel-body">
+                     <div class="btn-group ">
+                         <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             年月
+                         </button>
+                         <ul class="dropdown-menu">
+                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>全部</strong>
+                             </a></li>
+                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>2</strong>
+                             </a></li>
+                         </ul>
+
+                         <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             类别
+                         </button>
+                         <ul class="dropdown-menu">
+                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>全部</strong>
+                             </a></li>
+                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>2</strong>
+                             </a></li>
+                         </ul>
+                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             科目
+                         </button>
+                         <ul class="dropdown-menu">
+                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>全部</strong>
+                             </a></li>
+                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>2</strong>
+                             </a></li>
+                         </ul>
+
+                     </div> <!-- 下拉菜单显示资源文件列表 -->
+				 </div>
+			 </div>
+
+
+		</div><!--/Left Column-->
+
+
+		<div class="col-sm-8">
+            <!-- 中间8列用表格显示明细 -->
+		</div>
+
+      <div class="col-sm-1">
+          <!-- 右边留白 -->
+      </div>
+
+
+	</div><!--/container-fluid-->
+
+	<footer>
+
+	</footer>
+
+</body>
+
+</html>

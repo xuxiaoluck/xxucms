@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'eblog',
     'software',
     'stock',
+    'cost',
 ]
 
 MIDDLEWARE = [
