@@ -26,11 +26,11 @@ class CostSubject(models.Model):
 
 class Money(models.Model):
     '''收支明细'''
-    name = models.CharField(max_length = 256)
+    name = models.CharField(max_length = 512)
     costtype = models.ForeignKey(CostType,on_delete = models.PROTECT)
     costsubject = models.ForeignKey(CostSubject,on_delete = models.PROTECT)
     money = models.FloatField()
-    date = models.DateField(auto_now = False,auto_now_add = True)
+    date = models.DateTimeField(auto_now = False,auto_now_add = True)
     year = models.IntegerField()
     month = models.IntegerField()
     day = models.IntegerField()
