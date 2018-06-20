@@ -26,7 +26,7 @@ class CostSubject(models.Model):
 
 class Money(models.Model):
     '''收支明细'''
-    name = models.CharField(max_length = 512)
+    name = models.TextField(max_length = 1024)
     costtype = models.ForeignKey(CostType,on_delete = models.PROTECT)
     costsubject = models.ForeignKey(CostSubject,on_delete = models.PROTECT)
     money = models.FloatField()
