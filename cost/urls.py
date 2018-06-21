@@ -6,5 +6,5 @@ from django.urls import path,include
 import cost.views
 
 urlpatterns = [
-    path('',cost.views.index), #首页
+    path('xxucost123456789/',cost.views.index), #首页
 ]

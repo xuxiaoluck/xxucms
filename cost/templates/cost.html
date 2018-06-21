@@ -67,37 +67,52 @@
 				 <div class="panel-body">
                      <div class="btn-group ">
                          <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             年月
+                             年
                          </button>
                          <ul class="dropdown-menu">
-                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>全部</strong>
+                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>all</strong>
                              </a></li>
-                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>2</strong>
+                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>2yar</strong>
                              </a></li>
                          </ul>
-
+                     </div>
+                     <div class="btn-group ">
+                         <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             月
+                         </button>
+                         <ul class="dropdown-menu">
+                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>all</strong>
+                             </a></li>
+                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>2yar</strong>
+                             </a></li>
+                         </ul>
+                     </div>
+                     <div class="btn-group ">
                          <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                              类别
                          </button>
                          <ul class="dropdown-menu">
-                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>全部</strong>
+                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>all</strong>
                              </a></li>
-                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>2</strong>
+                             {% for item in typelist%}
+                             <li><a class="dropdown-item" href=""><strong>{{item.name}}</strong>
+                                 {% endfor %}
                              </a></li>
                          </ul>
+                     </div>
+                     <div class="btn-group">
                          <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                              科目
                          </button>
                          <ul class="dropdown-menu">
-                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>全部</strong>
+                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>全部subject</strong>
                              </a></li>
-                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>2</strong>
+                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>2s</strong>
                              </a></li>
                          </ul>
-
                      </div> <!-- 下拉菜单显示资源文件列表 -->
-				 </div>
-			 </div>
+				 </div> <!-- panel body -->
+			 </div> <!-- panel -->
 
 
 		</div><!--/Left Column-->

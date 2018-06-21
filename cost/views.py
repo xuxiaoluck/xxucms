@@ -19,6 +19,9 @@ def index(request):
     if not request.user.is_authenticated:
         return render_to_response('nologin.html',locals())
 
+    typelist = list(CostType.objects.all().values())  #得到所有类型列表，每条为一个字典
+    subjectlist = list(CostSubject.objects.all().values())
+    yearmonth = Money.objects.all().values('year','month')
     return render_to_response('cost.html',locals())
 
 
