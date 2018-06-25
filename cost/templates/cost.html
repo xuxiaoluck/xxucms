@@ -14,24 +14,46 @@
 
 
 
+    <script type="text/javascript">
+
+     //下拦菜单击事件
+     function clickselecttype(aherf){
+         //alert($(aherf).attr("typeid"));
+         $("#showselectedtype").html($(aherf).attr("typename"));
+     }
+     function clickselectyear(aherf){
+         var year = $(aherf).attr("year");
+         $("#showselectedyear").html(year);
+     }
+     function clickselectmonth(aherf){
+         var month = $(aherf).attr("month");
+         $("#showselectedmonth").html(month);
+     }
+     function clickselectsubject(aherf){
+         var subjectname = $(aherf).attr("subjectname");
+         $("#showselectedsubject").html(subjectname);
+     }
+
+    </script>
+
 </head>
 
 <body style="background: url({% static 'img/body00.jpg' %}">
 
     <!-- 头部为导航区 -->
     <nav class="navbar navbar-default  navbar-inverse navbar-static-top" role="navigation"> <!-- 设定导航条，固定在顶部，黑底navbar-fixed-top -->
-            <div class="container"> <!-- 导航条居中显示 -->
-                 <div class="navbar-header">
+        <div class="container"> <!-- 导航条居中显示 -->
+            <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
-                    <span class="sr-only">展开导航</span>
+                    <span class="sr-only/">展开导航</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                    <span class="icon-bar"></span> 
+                    <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href=""></a>  <!-- 标题头，一般设置一个LOGO之类的 -->
-                 </div>
+            </div>
 
-               <div class="collapse navbar-collapse" id="menu">
+            <div class="collapse navbar-collapse" id="menu">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="/home/">首页</a></li>
                     <li><a href="/cost/sql/">查询</a></li>
@@ -45,70 +67,83 @@
                         </ul>
                     </li>
                 </ul>
-               </div>
-         </div>
+            </div>
+        </div>
 
-        </nav>
+    </nav>
 
-     <!-- 下面为工作区、显示区 -->
-     <div class="container-fluid">
-         <div class="col-sm-1">
-             <!-- 左边留一列空白 -->
+    <!-- 下面为工作区、显示区 -->
+    <div class="container-fluid">
+        <div class="col-sm-1">
+            <!-- 左边留一列空白 -->
 
-         </div>
+        </div>
 
-		 <div class="col-sm-2">
-             <!-- 两列显示分类（可选日期、类别、科目等） -->
-	         <div class="panel panel-default">
-                 <div class="panel-heading">
-					 数据显示方式
-				 </div>
+		<div class="col-sm-2">
+            <!-- 两列显示分类（可选日期、类别、科目等） -->
+	        <div class="panel panel-default">
+                <div class="panel-heading">
+					数据显示方式
+				</div>
 
-				 <div class="panel-body">
-                     <div class="btn-group ">
-                         <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             年
-                         </button>
-                         <ul class="dropdown-menu">
-                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>all</strong>
+				<div class="panel-body">
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            年
+                        </button>
+                        <div id="showselectedyear"></div>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="clickselectyear(this)" year="all"><strong>all</strong>
+                            </a></li>
+                            {%for item in yearlist%}
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="clickselectyear(this)" year="{{item.year}}"><strong>{{item.year}}</strong>
+                            </a></li>
+                            {%endfor%}
+                        </ul>
+                    </div>
+
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            月
+                        </button>
+                        <div id="showselectedmonth"></div>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="clickselectmonth(this)" month="all"><strong>all</strong>
                              </a></li>
-                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>2yar</strong>
+                             {%for item in monthlist%}
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="clickselectmonth(this)" month="{{item}}"><strong>{{item}}</strong>
                              </a></li>
+                             {%endfor%}
                          </ul>
                      </div>
+
                      <div class="btn-group ">
-                         <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             月
-                         </button>
-                         <ul class="dropdown-menu">
-                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>all</strong>
-                             </a></li>
-                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>2yar</strong>
-                             </a></li>
-                         </ul>
-                     </div>
-                     <div class="btn-group ">
-                         <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         <button type="button"   class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                              类别
                          </button>
-                         <ul class="dropdown-menu">
-                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>all</strong>
+                         <div id="showselectedtype"></div>
+                         <ul class="dropdown-menu" id="menutypename">
+                             <li><a class="dropdown-item a" href="javascript:void(0);" onclick="clickselecttype(this)" typeid="all" typename="all><strong>all</strong>
                              </a></li>
                              {% for item in typelist%}
-                             <li><a class="dropdown-item" href=""><strong>{{item.name}}</strong>
-                                 {% endfor %}
-                             </a></li>
+                             <li><a class="dropdown-item a" href="javascript:void(0);" onclick="clickselecttype(this)" typeid="{{item.id}}" typename="{{item.name}}"><strong>{{item.name}}</strong> </a>
+                             </li>
+                             {% endfor %}
                          </ul>
                      </div>
+
                      <div class="btn-group">
                          <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                              科目
                          </button>
+                         <div id="showselectedsubject"></div>
                          <ul class="dropdown-menu">
-                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>全部subject</strong>
+                             <li><a class="dropdown-item a" href="javascript:void(0);" onclick="clickselectsubject(this)" subjectid="all" subjectname="all"><a class="dropdown-item" href="/cost/showcostbysubject/?subjectid=all"><strong>all</strong>
                              </a></li>
-                             <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>2s</strong>
+                             {%for item in subjectlist%}
+                             <li><a class="dropdown-item a" href="javascript:void(0);" onclick="clickselectsubject(this)" subjectid="{{item.id}}" subjectname="{{item.name}}"><strong>{{item.name}}</strong>
                              </a></li>
+                             {%endfor%}
                          </ul>
                      </div> <!-- 下拉菜单显示资源文件列表 -->
 				 </div> <!-- panel body -->
