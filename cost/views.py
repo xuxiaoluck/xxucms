@@ -88,11 +88,35 @@ def index(request):
 def getcostinfo(request):
     '''显示数据'''
 
+    costtype = request.GET['costtype']
+    costsubject = request.GET['costsubject']
+    year = request.GET['year']
+    month = request.GET['month']
+    sqlstr = ''
+    if costtype != 'all':
+        sqlstr = 'costtype = {0}'.format(costtype)
+    if costsubject != 'all':
+        sqlstr = 'costsubject = {0}'.format(costsubject) if len(sqlstr) == 0 else '{0},costsubject = {1}'.format(sqlstr,costsubject)
+    if year != 'all':
+        sqlstr = 'year = {0}'.format(year) if len(sqlstr) == 0 else '{0},year = {1}'.format(sqlstr,year)
+    if month != 'all':
+        sqlstr = 'month = {0}'.format(month) if len(sqlstr) == 0 else '{0},month = {1}'.format(sqlstr,month)
+    #生成查询过滤条件
+    print(sqlstr)
+
+
     limit = int(request.GET['limit'])
     offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    
     total = Money.objects.all().count()
-    objvalues = Money.objects.all().order_by("-{0}".format(request.GET['sortfield']))[offset:limit + offset]
-    rows = list(objvalues.values('date','costtype','costsubject','money','name'))
+    #objvalues = Money.objects.all().order_by("-{0}".format(request.GET['sortfield'])).filter(sqlstr)
+    objvalues = Money.objects.filter(year=2018)
+
+    #[offset:limit + offset]
+
+    rows = list(objvalues.values('date','costtype','costsubject','money','name'))  #[0:20])
+    """取得数据，并生成一个列表，下面将日期转为字符串，外键转为名称
+    """
 
     (prikey,pubkey) = getpubprikey(os.environ["HOME"] + "/.pri")
 

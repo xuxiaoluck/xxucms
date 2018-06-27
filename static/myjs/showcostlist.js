@@ -12,7 +12,12 @@ function inittable_showcost(){
                  sortable: false,   //是否启用排序
                  //sortOrder: "asc",   //排序方式
                  queryParams: function(params){
-                     var pa = {limit: params.limit,offset:params.offset,sortfield:"date"};
+                     var pa = {limit: params.limit,offset:params.offset,sortfield:"date",
+                               year:$("#showselectedyear").attr("value"),
+                               month:$("#showselectedmonth").attr("value"),
+                               costtype: $("#showselectedtype").attr("value"),
+                               costsubject:$("#showselectedsubject").attr("value"),
+                              };
                      return pa;
                  },//每页长、页号
                  queryParamsType: "limit",
@@ -49,10 +54,10 @@ function inittable_showcost(){
                      if (row.costtype == "支出") {
                          strclass = 'warning';//还有一个active danger
                      }
-                     else if (row.costtype == "借") {
-                         strclass = 'warning';
+                     else if (row.costtype == "借出") {
+                         strclass = 'danger';
                      }
-                     else if (row.costtype.substring(0,1) == "") {
+                     else if (row.costtype.substring(0,1) == "还回") {
                          strclass = 'info';
                      }
                      else if (row.costtype == "收入") {
@@ -84,9 +89,31 @@ function inittable_showcost(){
          //点击显示列表
          $(function(){
              $("#showcost_btn").click(function(){
-                 ///alert(111);
                  inittable_showcost();
              });
          });
 
 
+//下拦菜单击事件事件，得到选择的分类（ID\名称），并设置到 showbutton的 HTML、ATTR (value)中
+     function clickselecttype(aherf){
+         var typename = $(aherf).attr("typename");
+         var typeid = $(aherf).attr("typeid");
+         $("#showselectedtype").html($(aherf).attr("typename"));
+         $("#showselectedtype").attr('value',typeid);
+     }
+     function clickselectyear(aherf){
+         var year = $(aherf).attr("year");
+         $("#showselectedyear").html(year);
+         $("#showselectedyear").attr("value",year);
+     }
+     function clickselectmonth(aherf){
+         var month = $(aherf).attr("month");
+         $("#showselectedmonth").html(month);
+         $("#showselectedmonth").attr("value",month);
+     }
+     function clickselectsubject(aherf){
+         var subjectname = $(aherf).attr("subjectname");
+         var subjectid = $(aherf).attr("subjectid");
+         $("#showselectedsubject").html(subjectname);
+         $("#showselectedsubject").attr('value',subjectid);
+     }

@@ -20,29 +20,7 @@
 
     <script type="text/javascript">
 
-     //下拦菜单击事件事件，得到选择的分类（ID\名称），并设置到 showbutton的 HTML、ATTR (value)中
-     function clickselecttype(aherf){
-         var typename = $(aherf).attr("typename");
-         var typeid = $(aherf).attr("typeid");
-         $("#showselectedtype").html($(aherf).attr("typename"));
-         $("#showselectedtype").attr('value',typeid);
-     }
-     function clickselectyear(aherf){
-         var year = $(aherf).attr("year");
-         $("#showselectedyear").html(year);
-         $("#showselectedyear").attr("value",year);
-     }
-     function clickselectmonth(aherf){
-         var month = $(aherf).attr("month");
-         $("#showselectedmonth").html(month);
-         $("#showselectedmonth").attr("value",month);
-     }
-     function clickselectsubject(aherf){
-         var subjectname = $(aherf).attr("subjectname");
-         var subjectid = $(aherf).attr("subjectid");
-         $("#showselectedsubject").html(subjectname);
-         $("#showselectedsubject").attr('value',subjectid);
-     }
+     
 
     </script>
 
@@ -102,7 +80,7 @@
                             <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 年
                             </button>
-                            <button class="btn btn-link" id="showselectedyear" value="">all</button>
+                            <button class="btn btn-link" id="showselectedyear" value="all">all</button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="javascript:void(0);" onclick="clickselectyear(this)" year="all"><strong>all</strong>
                                 </a></li>
@@ -117,7 +95,7 @@
                             <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 月
                             </button>
-                            <button class="btn btn-link" id="showselectedmonth" value="">all</button>
+                            <button class="btn btn-link" id="showselectedmonth" value="all">all</button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="javascript:void(0);" onclick="clickselectmonth(this)" month="all"><strong>all</strong>
                                 </a></li>
@@ -132,7 +110,7 @@
                             <button type="button"   class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 类别
                             </button>
-                            <button class="btn btn-link" id="showselectedtype" value="">all</button>
+                            <button class="btn btn-link" id="showselectedtype" value="all">all</button>
                             <ul class="dropdown-menu" id="menutypename">
                                 <li><a class="dropdown-item" href="javascript:void(0);" onclick="clickselecttype(this)" typeid="all" typename="all"><strong>all</strong>
                                 </a></li>
@@ -147,9 +125,9 @@
                             <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 科目
                             </button>
-                            <button class="btn btn-link" id="showselectedsubject" value="">all</button>
+                            <button class="btn btn-link" id="showselectedsubject" value="all">all</button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="javascript:void(0);" onclick="clickselectsubject(this)" subjectid="all" subjectname="all"><a class="dropdown-item" href="/cost/showcostbysubject/?subjectid=all"><strong>all</strong>
+                                <li><a class="dropdown-item" href="javascript:void(0);" onclick="clickselectsubject(this)" subjectid="all" subjectname="all"><strong>all</strong>
                                 </a></li>
                                 {%for item in subjectlist%}
                                 <li><a class="dropdown-item" href="javascript:void(0);" onclick="clickselectsubject(this)" subjectid="{{item.id}}" subjectname="{{item.name}}"><strong>{{item.name}}</strong>
