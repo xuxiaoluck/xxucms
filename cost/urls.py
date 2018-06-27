@@ -7,4 +7,5 @@ import cost.views
 
 urlpatterns = [
     path('xxucost123456789/',cost.views.index), #首页
+    path('getcostinfo/',cost.views.getcostinfo),
 ]
