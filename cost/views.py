@@ -92,25 +92,45 @@ def getcostinfo(request):
     costsubject = request.GET['costsubject']
     year = request.GET['year']
     month = request.GET['month']
-    sqlstr = ''
+    sqldict = {}
     if costtype != 'all':
-        sqlstr = 'costtype = {0}'.format(costtype)
+        sqldict['costtype'] = costtype
     if costsubject != 'all':
-        sqlstr = 'costsubject = {0}'.format(costsubject) if len(sqlstr) == 0 else '{0},costsubject = {1}'.format(sqlstr,costsubject)
+        sqldict['costsubject'] = costsubject
     if year != 'all':
-        sqlstr = 'year = {0}'.format(year) if len(sqlstr) == 0 else '{0},year = {1}'.format(sqlstr,year)
+        sqldict['year'] = year
     if month != 'all':
-        sqlstr = 'month = {0}'.format(month) if len(sqlstr) == 0 else '{0},month = {1}'.format(sqlstr,month)
+        sqldict['month'] = month
     #生成查询过滤条件
-    print(sqlstr)
 
+    sortfield = request.GET['sortfield']
 
     limit = int(request.GET['limit'])
     offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
-    
-    total = Money.objects.all().count()
-    #objvalues = Money.objects.all().order_by("-{0}".format(request.GET['sortfield'])).filter(sqlstr)
-    objvalues = Money.objects.filter(year=2018)
+
+    if len(sqldict) == 0:
+        total = Money.objects.all().count()
+    else:
+        total = Money.objects.filter(**sqldict).count()
+
+    if len(sqldict) == 0:
+        if sortfield == 'date':
+            objvalues = Money.objects.all().order_by('-date','costtype','costsubject')[offset:limit + offset]
+        elif sortfield == 'costtype':
+            objvalues = Money.objects.all().order_by('costtype','-date','costsubject')[offset:limit + offset]
+        elif sortfield == 'costsubject':
+            objvalues = Money.objects.all().order_by('costsubject','-date','costtype')[offset:limit + offset]
+        else:
+            objvalues = Money.objects.all().order_by('-money','costtype','costsubject')[offset:limit + offset]
+    else:
+        if sortfield == 'date':
+            objvalues = Money.objects.filter(**sqldict).order_by('-date','costtype','costsubject')[offset:limit + offset]
+        elif sortfield == 'costtype':
+            objvalues = Money.objects.filter(**sqldict).order_by('costtype','-date','costsubject')[offset:limit + offset]
+        elif sortfield == 'costsubject':
+            objvalues = Money.objects.filter(**sqldict).order_by('costsubject','-date','costtype')[offset:limit + offset]
+        else:
+            objvalues = Money.objects.filter(**sqldict).order_by('-money','costtype','costsubject')[offset:limit + offset]
 
     #[offset:limit + offset]
 

@@ -12,7 +12,7 @@ function inittable_showcost(){
                  sortable: false,   //是否启用排序
                  //sortOrder: "asc",   //排序方式
                  queryParams: function(params){
-                     var pa = {limit: params.limit,offset:params.offset,sortfield:"date",
+                     var pa = {limit: params.limit,offset:params.offset,sortfield:$("#showsortstyle").attr("value"),
                                year:$("#showselectedyear").attr("value"),
                                month:$("#showselectedmonth").attr("value"),
                                costtype: $("#showselectedtype").attr("value"),
@@ -94,6 +94,7 @@ function inittable_showcost(){
          });
 
 
+
 //下拦菜单击事件事件，得到选择的分类（ID\名称），并设置到 showbutton的 HTML、ATTR (value)中
      function clickselecttype(aherf){
          var typename = $(aherf).attr("typename");
@@ -117,3 +118,12 @@ function inittable_showcost(){
          $("#showselectedsubject").html(subjectname);
          $("#showselectedsubject").attr('value',subjectid);
      }
+     function clicksortstyle(aherf){ //排序
+         //alert(111);
+         var sortname = $(aherf).attr("sortname");
+         var sortid = $(aherf).attr("sortfield");
+         $("#showsortstyle").html(sortname);
+         $("#showsortstyle").attr('value',sortid);
+     }
+
+

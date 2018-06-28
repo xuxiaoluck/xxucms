@@ -76,6 +76,7 @@
 				    </div>
 
 				    <div class="panel-body">
+                        <div class="col-sm-6"> <!-- 一列显示过滤数据方式 -->
                         <div class="btn-group ">
                             <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 年
@@ -135,7 +136,24 @@
                                 {%endfor%}
                             </ul>
                         </div> <!-- 下拉菜单显示资源文件列表 -->
-                        <button type="button" class="btn btn-primary btn-sm" id="showcost_btn">确定</button>
+                             <div class="btn-group">
+                                <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                   排序
+                                </button>
+                                <button class="btn btn-link" id="showsortstyle" value="date">日期</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="javascript:void(0);" onclick="clicksortstyle(this)" sortfield="date" sortname="日期"><strong>日期</strong>
+                                    <li><a class="dropdown-item" href="javascript:void(0);" onclick="clicksortstyle(this)" sortfield="costtype" sortname="类别"><strong>类别</strong>
+                                        <li><a class="dropdown-item" href="javascript:void(0);" onclick="clicksortstyle(this)" sortfield="costsubject" sortname="科目"><strong>科目</strong>
+                                        </a></li>
+                                        <li><a class="dropdown-item" href="javascript:void(0);" onclick="clicksortstyle(this)" sortfield="money" sortname="金额"><strong>科目</strong>
+                                        </a></li>
+                                </ul>
+                             </div> <!-- 下拉菜单显示资源文件列表 -->
+                             <button type="button" class="btn btn-primary btn-sm" id="showcost_btn">确定</button>
+                             <div class="col-sm-6">
+                             </div>
+
 				    </div> <!-- panel body -->
 			    </div> <!-- panel -->
             </div>  <!-- row,显示选择类别，确定显示哪些数据 -->
