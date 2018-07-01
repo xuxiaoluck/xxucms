@@ -1,0 +1,92 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!-- Template by Quackit.com -->
+<html lang="zh">
+<head>
+    <meta charset="butf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>CMS.标题</title>
+
+    {%include "head.html"%}
+
+    {%if not  request.user.is_authenticated%}
+    <script language='javascript'>document.location = '/nologin/'</script>
+    {%endif%}
+
+    <script src="{% static 'myjs/showcostlist.js' %}" type="text/javascript"></script> <!-- TABLE显示数据 -->
+
+
+</head>
+
+<body style="background: url({% static 'img/body00.jpg' %}">
+
+    <!-- 头部为导航区 -->
+    <nav class="navbar navbar-default  navbar-inverse navbar-static-top" role="navigation"> <!-- 设定导航条，固定在顶部，黑底navbar-fixed-top -->
+        <div class="container"> <!-- 导航条居中显示 -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                    <span class="sr-only/">展开导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href=""></a>  <!-- 标题头，一般设置一个LOGO之类的 -->
+            </div>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">首页</a></li>
+                    <li class="active"><a href="#">返回</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+
+    <!-- 下面为工作区、显示区 -->
+    <div class="container-fluid">
+        <!-- 左边留白 -->
+		<div class="col-sm-2">
+        </div>
+
+		<div class="col-sm-8">
+            <!-- 中间8列用表格显示明细 -->
+            <!-- 显示分类（可选日期、类别、科目等） -->
+            <div class="row">
+	            <div class="panel panel-default">
+                    <div class="panel-heading">
+					    头部标题
+				    </div>
+
+				    <div class="panel-body">
+
+
+				    </div> <!-- panel body -->
+			    </div> <!-- panel -->
+            </div>  <!-- row,显示选择类别，确定显示哪些数据 -->
+
+            <div class="row">
+                <div class="panel panel-default">
+                    <table id="sqlcostlist_table"></table>
+                </div>
+            </div> <!-- 查询结果数据 -->
+
+		</div> <!-- cor8 -->
+
+      <div class="col-sm-2">
+          <!-- 右边留白 -->
+      </div>
+
+
+	</div><!--/container-fluid-->
+
+	<footer>
+
+	</footer>
+
+</body>
+
+</html>

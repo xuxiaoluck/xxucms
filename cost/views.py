@@ -164,3 +164,14 @@ def getcostinfo(request):
         return HttpResponse('0')
     else:
         return HttpResponse(json.dumps(rlt),content_type = 'application/json')
+
+
+def openinputcost(request):
+    """录入收支数据"""
+    if not request.user.is_authenticated:
+        return render_to_response('nologin.html',locals())
+
+    typelist = list(CostType.objects.all().values())  #得到所有类型列表，每条为一个字典,KEY为字段名
+    subjectlist = list(CostSubject.objects.all().values().order_by('name'))
+
+    return render_to_response('inputcost.html',locals())
