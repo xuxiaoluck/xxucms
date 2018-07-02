@@ -69,22 +69,20 @@ $(function(){
     $("#cost_money").moneyFormat();
 
     //3  点击了增加一条收支记录
+
     $("#inputcost_btn").click(function(){
 
-        /*
         var costtypeid = $("#cost_type").val();
         //得到选中的值(设置的 value)而非文本（用find("option:selected").text()得到选中的文本，直接用 text()返回所有文本）
-        var costsubjectid = $("cost_subject").val();
+        var costsubjectid = $("#cost_subject").val();
         var costdate = $("#cost_date").val();
-        var costmoney = $("cost_money").val();
-        var costmemo = $("cost_memo").val();
-
-        alert(costdate);
+        var costmoney = $("#cost_money").val();
+        var costmemo = $("#cost_memo").val();
 
 
-        if (costdate == "")
+        if (costdate == "" || costmoney == "")
         {
-            alert("日期不能为空");
+            alert("日期、金额不能为空!");
             return;
         }
 
@@ -101,7 +99,7 @@ $(function(){
                                 $("#showaddcostinforlt").html("录入收支数据" + ret);
                             });
         //post ajax增加数据
-         */
+
 
     }); //click(fun)
 

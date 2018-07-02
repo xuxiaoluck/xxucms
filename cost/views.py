@@ -25,7 +25,7 @@ def getpubprikey(keypath):
         pubfile.close()
         return (prikey,pubkey)
 
-#加密长字符串,传入是正常字符串,返回的是
+#加密长字符串,传入是正常字符串,返回的是 HEX加密字符串列表，保存时转为以逗号为隔的字符
 def encryptlongstr(longstr,pubkey):
         encodestr = longstr.encode()
         strlen = len(encodestr)
@@ -167,7 +167,7 @@ def getcostinfo(request):
 
 
 def openinputcost(request):
-    """录入收支数据"""
+    """打开录入收支数据"""
     if not request.user.is_authenticated:
         return render_to_response('nologin.html',locals())
 
@@ -175,3 +175,34 @@ def openinputcost(request):
     subjectlist = list(CostSubject.objects.all().values().order_by('name'))
 
     return render_to_response('inputcost.html',locals())
+
+
+"""
+保存数据时的备注数据为加密保存
+encryptlongstr:传入的一个长字符串、公钥，返回的是一个 hex16进制形式的字符串列表（所以长度至少是原长的2倍）;
+decryptlongstr:传入的是一个HEX16进制形式的字符串列表、私钥，返回解密后的长字符串;
+保存时要把加密得到的密文列表用 ','.join(mistr)转成以逗号分隔的字符串，取出数据时直接解密。
+"""
+def addonecost(request):
+        """增加一条收支数据"""
+
+        costdate = datetime.strptime(request.POST['costdate'],'%Y-%m-%d')
+        costtypeid = request.POST['costtypeid']
+        costsubjectid = request.POST['costsubjectid']
+        costmoney = request.POST['costmoney']
+
+        typeobj = CostType.objects.get(id = costtypeid)
+        subjectobj = CostSubject.objects.get(id = costsubjectid)  #得到外键
+        minstr = request.POST['costmemo']
+        (prikey,pubkey) = getpubprikey(os.environ["HOME"] + "/.pri")
+        milist = encryptlongstr(minstr,pubkey)
+        #得到是以hex形式的字符串列表
+
+
+        obj = Money(costtype = typeobj,costsubject = subjectobj,
+                    date = costdate,year = costdate.year,month = costdate.month,day = costdate.day,
+                    money = float(costmoney),name = ",".join(milist)
+        )
+        obj.save()
+
+        return HttpResponse('<font color=red >(succ,ID:{0})</font>'.format(obj.id))
