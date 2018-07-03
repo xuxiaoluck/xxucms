@@ -68,7 +68,54 @@ $(function(){
    //2  设置浮点录入限制 只有输入两位小数的浮点数
     $("#cost_money").moneyFormat();
 
-    //3  点击了增加一条收支记录
+    //3 增加分类
+    $("#addtype_btn").click(function(){
+        var typename = $("#cost_addtype").val();
+        if (typename == "")
+        {
+            alert("类别名不能为空");
+            return;
+        }
+        $.post("/cost/addonetype/",
+               {
+                   typename: typename
+               },
+               function(ret){
+                   if (ret.exists) //已存在
+                       $("#costtypepanelhead").html("增加新的分类" + ret.info);
+                   else{
+                       $("#costtypepanelhead").html("增加新的分类" + ret.info);
+                       $("#cost_type").append("<option value = " + ret.id + ">" +typename + "</option>");
+                   }
+               }
+              );
+    });
+
+    //增加科目
+ $("#addsubject_btn").click(function(){
+        var subjectname = $("#cost_addsubject").val();
+        if (subjectname == "")
+        {
+            alert("科目不能为空");
+            return;
+        }
+        $.post("/cost/addonesubject/",
+               {
+                   subjectname: subjectname
+               },
+               function(ret){
+                   if (ret.exists) //已存在
+                       $("#costsubjectpanelhead").html("增加新的科目" + ret.info);
+                   else{
+                       $("#costsubjectpanelhead").html("增加新的科目" + ret.info);
+                       $("#cost_subject").append("<option value = " + ret.id + ">" + subjectname + "</option>");
+                   }
+               }
+              );
+ });
+
+
+    //5  点击了增加一条收支记录
 
     $("#inputcost_btn").click(function(){
 

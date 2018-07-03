@@ -206,3 +206,41 @@ def addonecost(request):
         obj.save()
 
         return HttpResponse('<font color=red >(succ,ID:{0})</font>'.format(obj.id))
+
+
+def addonetype(request):
+        """增加一条分类数据"""
+        typename = request.POST["typename"]
+
+        rlt = {}
+        rlt['exists'] = False
+        if CostType.objects.filter(name = typename).exists(): #True表示已存在
+                rlt['exists'] = True
+                rlt['info'] = '<font color=red>(分类已存在！)</font>'
+        else:
+                obj = CostType(name = typename)
+                obj.save()
+                rlt['exists'] = False
+                rlt['info'] = '<font color=red>(succ,id={}！)</font>'.format(obj.id)
+                rlt['id'] = obj.id
+
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
+
+
+def addonesubject(request):
+        """增加一条科目数据"""
+        typename = request.POST["subjectname"]
+
+        rlt = {}
+        rlt['exists'] = False
+        if CostSubject.objects.filter(name = typename).exists(): #True表示已存在
+                rlt['exists'] = True
+                rlt['info'] = '<font color=red>(科目已存在！)</font>'
+        else:
+                obj = CostSubject(name = typename)
+                obj.save()
+                rlt['exists'] = False
+                rlt['info'] = '<font color=red>(succ,id={}！)</font>'.format(obj.id)
+                rlt['id'] = obj.id
+
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')

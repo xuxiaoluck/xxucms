@@ -10,4 +10,6 @@ urlpatterns = [
     path('getcostinfo/',cost.views.getcostinfo), #得到COST信息，在首页上显示相关信息
     path('openinputcost/',cost.views.openinputcost),
     path('addonecost/',cost.views.addonecost),
+    path('addonetype/',cost.views.addonetype),
+    path('addonesubject/',cost.views.addonesubject),
 ]
