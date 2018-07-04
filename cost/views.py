@@ -244,3 +244,21 @@ def addonesubject(request):
                 rlt['id'] = obj.id
 
         return HttpResponse(json.dumps(rlt),content_type = 'application/json')
+
+def opentotalcost(request):
+        """打开统计总体数据、汇总明细"""
+
+        if not request.user.is_authenticated:
+                return render_to_response('nologin.html',locals())
+
+
+        typelist = list(CostType.objects.all().values())  #得到所有类型列表，每条为一个字典,KEY为字段名
+        subjectlist = list(CostSubject.objects.all().values().order_by('name'))
+
+        return render_to_response('total.html',locals())
+
+def totalcost(request):
+        """统计总体数据、汇总明细"""
+
+        rlt = ''
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')

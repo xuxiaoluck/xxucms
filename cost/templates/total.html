@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>CMS.收支录入</title>
+    <title>CMS.标题</title>
 
     {%include "head.html"%}
 
@@ -16,7 +16,7 @@
     <script language='javascript'>document.location = '/nologin/'</script>
     {%endif%}
 
-    <script src="{% static 'myjs/inputcost.js' %}" type="text/javascript"></script> <!-- JS代码在一个专门文件中 -->
+    <script src="{% static 'myjs/totalcost.js' %}" type="text/javascript"></script> <!-- TABLE显示数据 -->
 
 
 </head>
@@ -39,7 +39,7 @@
             <div class="collapse navbar-collapse" id="menu">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">首页</a></li>
-                    <li class="active"><a href="/cost/xxucost123456789">返回</a></li>
+                    <li class="active"><a href="/cost/xxucost123456789/">返回</a></li>
                 </ul>
             </div>
         </div>
@@ -49,76 +49,16 @@
     <!-- 下面为工作区、显示区 -->
     <div class="container-fluid">
         <!-- 左边留白 -->
-		<div class="col-sm-1">
+		<div class="col-sm-2">
         </div>
 
-		<div class="col-sm-2"> <!-- 增加类别、科目 -->
-            <div class="row">
-                <div class="panel panel-default">
-                    <div class="panel-heading" id="costtypepanelhead">
-                        增加新的分类
-                    </div>
-                    <div class="panel-body">
-                <form class="form-horizontal" role="form">
-                    <fieldset>
-                        <div class="form-group">
-                            <label for="cost_addtype"  class="col-sm-3 control-label">分类</label>
-                            <div class="col-sm-9">
-                                <input class="form-control" id="cost_addtype" type="text" placeholder=""/>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                            </div>
-                            <div class="col-sm-9">
-                                <button type="button" class="btn btn-primary btn-sm" id="addtype_btn">增加</button>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
-                    </div> <!-- panel body -->
-                </div>
-            </div> <!-- row-->
-
-            <div class="row">
-                <div class="panel panel-default">
-                    <div class="panel-heading" id="costsubjectpanelhead">
-                        增加新的科目
-                    </div>
-                    <div class="panel-body">
-                        <form class="form-horizontal" role="form">
-                            <fieldset>
-                                <div class="form-group">
-                                    <label for="cost_addsubject"  class="col-sm-3 control-label">科目</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control" id="cost_addsubject" type="text" placeholder=""/>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset>
-                                <div class="form-group">
-                                    <div class="col-sm-3">
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <button type="button" class="btn btn-primary btn-sm" id="addsubject_btn">增加</button>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div> <!-- panel body -->
-                </div>
-            </div> <!-- row-->
-        </div>
-
-		<div class="col-sm-7">
+		<div class="col-sm-8">
             <!-- 中间8列用表格显示明细 -->
             <!-- 显示分类（可选日期、类别、科目等） -->
             <div class="row">
 	            <div class="panel panel-default">
-                    <div class="panel-heading" id="showaddcostinforlt">
-					    录入收支数据
+                    <div class="panel-heading" id="showtotalinfopanelhead">
+					    汇总统计收支数据
 				    </div>
 
 				    <div class="panel-body">
@@ -128,6 +68,7 @@
                                     <label class="col-sm-2 control-label" for="cost_type">分类</label>
                                     <div class="col-sm-4">
                                         <select id="cost_type" class="form-control">
+                                            <option value="all">all</option>
                                             {% for item in typelist%}
                                             <option value="{{item.id}}">{{item.name}}</option>
                                             {%endfor%}
@@ -136,6 +77,7 @@
                                     <label class="col-sm-2 control-label" for="cost_subject">科目</label>
                                     <div class="col-sm-4">
                                         <select id="cost_subject" class="form-control">
+                                            <option value="all">all</option>
                                             {% for item in subjectlist%}
                                             <option value="{{item.id}}">{{item.name}}</option>
                                             {%endfor%}
@@ -143,15 +85,26 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="cost_date">日期</label>
+                                    <label class="col-sm-2 control-label" for="cost_date1">开始日期</label>
                                     <div class="col-sm-4">
-                                    <div class="input-group date" data-provide="datepicker">
-                                        <input type="text" id="cost_date" class="form-control">
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-th"></span>
+                                        <div class="input-group date" data-provide="datepicker">
+                                            <input type="text" id="cost_date1" class="form-control">
+                                            <div class="input-group-addon">
+                                                <span class="glyphicon glyphicon-th"></span>
+                                            </div>
                                         </div>
                                     </div>
+                                    <label class="col-sm-2 control-label" for="cost_date2">结束日期</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group date" data-provide="datepicker">
+                                            <input type="text" id="cost_date2" class="form-control">
+                                            <div class="input-group-addon">
+                                                <span class="glyphicon glyphicon-th"></span>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-sm-2 control-label" for="cost_money">金额</label>
                                     <div class="col-sm-4">
                                         <input class="form-control" id="cost_money" type="text" value="0.00"/>
@@ -160,22 +113,15 @@
                             </fieldset>
                             <fieldset>
                                 <div class="form-group">
-                                    <label for="cost_memo"  class="col-sm-2 control-label">备注</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" id="cost_memo" type="text" placeholder=""/>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset>
-                                <div class="form-group">
                                     <div class="col-sm-2">
                                     </div>
                                     <div class="col-sm-10">
-                                        <button type="button" class="btn btn-primary btn-sm" id="inputcost_btn">增加</button>
+                                        <button type="button" class="btn btn-primary btn-sm" id="totalcost_btn">统计</button>
                                     </div>
                                 </div>
                             </fieldset>
                         </form>
+
 
 				    </div> <!-- panel body -->
 			    </div> <!-- panel -->
@@ -183,15 +129,14 @@
 
             <div class="row">
                 <div class="panel panel-default">
-                    <table id="sqlcostlist_table"></table>
+                    <table id="showtotaldetail_table"></table>
                 </div>
             </div> <!-- 查询结果数据 -->
 
 		</div> <!-- cor8 -->
 
-        <div class="col-sm-2">
-            <!-- 右边留白 -->
-
+      <div class="col-sm-2">
+          <!-- 右边留白 -->
       </div>
 
 

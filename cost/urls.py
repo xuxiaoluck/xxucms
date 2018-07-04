@@ -12,4 +12,6 @@ urlpatterns = [
     path('addonecost/',cost.views.addonecost),
     path('addonetype/',cost.views.addonetype),
     path('addonesubject/',cost.views.addonesubject),
+    path('opentotalcost/',cost.views.opentotalcost),
+    path('totalcost/',cost.views.totalcost),
 ]
