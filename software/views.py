@@ -8,6 +8,7 @@ from django.shortcuts import render_to_response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import StreamingHttpResponse
 from django.utils.http import urlquote
+from django.utils.encoding import escape_uri_path
 from datetime import datetime
 import json,os
 
@@ -182,7 +183,9 @@ def downloadsoft(request):
     file_name = onefile.name
     response = StreamingHttpResponse(file_iterator(the_file_name))
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="{0}"'.format(urlquote(file_name))
+    #response['Content-Disposition'] = 'attachment;filename="{0}"'.format(urlquote(file_name))
+    response['Content-Disposition'] = 'attachment;filename="{0}"'.format(escape_uri_path(file_name))
+    #下载中文路径文件不会乱码
 
     return response
 
