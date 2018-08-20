@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 """
+徐潇
 2018-08-19
 设计一个培训考试练习工具
 """
@@ -14,12 +15,25 @@ class Qts_userid(models.Model):
     id_ip = models.IPAddressField()  #生成日期、客户端ip地址
     id_password = models.CharField(max_length = 10,default = '111111')
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+
 
 class Qts_Profession(models.Model):
     '''题库专业分类'''
     name = models.CharField(max_length = 50)
 
-class Qts_Choice(models.Model):
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+
+
+class Qts_library(models.Model):
     '''题库'''
     '''备选答案choosableanswer字段：保存为一个长字符串。
         判断题直接为 T/F;
@@ -47,14 +61,27 @@ class Qts_Choice(models.Model):
         ordering = ['name']
 
 
-
 class Qts_testpapers(models.Model):
     '''测试考试试卷列表'''
     userid = models.ForeignKey(Qts_userid)
-    testpaperserial = models.IntegerField() #试卷号
+    testpaperserial = models.CharField(max_length = 12) #试卷号 T\E开头分别代表练习、测试，T20180101120000000,标志 + 日期时间 + 子卷号
     testpaperdate = models.DateTimeField(auto_now_add = True) #试卷日期
     testpaperdetail = models.TextField()  #该张试卷详细 用json.dumps 生成字符串，可直接用 json.loads()生成对象
-    '''
+    """
     试卷详情：为一个字典
-    
-    '''
+    {
+       'qts_singlechoice' : [题号列表],  #单项选择题列表
+       'qts_multichoice' : [题号列表],  #多项选择题列表
+       'qts_judge' : [题号列表], #判断题列表
+       'qts_gapfilling' :[....],  #填空题列表
+       'qts_shortanswer' : [...], #简答
+       'qts_analyze' : [...], #分析题
+       'rltqts_error' : [[singlelist],[multilist],[judgelist],[shortanswerlist],[analyze]], #答错题列表,按序保存
+       'rltqts_correct' : [[singlelist],[multilist],[judgelist],[shortanswerlist],[analyze]], #答对题列表,按序保存
+       'score' : [float,],  #得分列表，跟上面一样的顺序
+       'scoring_rate' : [得分率%,] #顺序同上
+       'totalscore' : float,
+       'totalscoring_rate' : str%,  #总得分、总得分率
+    }
+    """
+
