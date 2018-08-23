@@ -36,7 +36,7 @@ class Qts_Profession(models.Model):
 class Qts_library(models.Model):
     '''题库'''
     '''备选答案choosableanswer字段：保存为一个长字符串。
-        判断题直接为 T/F;
+        判断题直接为 T/F、对/错、正确、错误、True、False几样，以判断 T、对、正确、OK为主;
         单选与多选每个备选答案用 ||| 分隔开，每条备选第一个字符为 T/F分别代表该条是否为正确答案，当为多选时有多个正确答案;
         填空为所有答案的顺序列表，无空格用逗号分开;
         其它为最终答案'''

@@ -130,11 +130,11 @@ def uploadfiles(request):
         for i in range(len(fileobjs)):
             #UploadFile objects
             oneobj = fileobjs[i]
-            print('oneobj:',oneobj)
+            #print('oneobj:',oneobj)
             if oneobj:  #得到上传的一个 file对象，可以直接保存到 FileField字段中
                 booksobj = Books.objects.get(id = bookid)
                 bookfile = BookFiles(name = oneobj.name,book_list = booksobj,uploadfile = oneobj)
-                print('saveoneobj',booksobj,bookfile)
+                #print('saveoneobj',booksobj,bookfile)
                 bookfile.save()  #生成一条上传文件记录
 
         return HttpResponse(json.dumps('succ'),content_type = 'application/json')
