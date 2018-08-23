@@ -26,7 +26,8 @@ from trainexam.models import Qts_Profession,Qts_userid,Qts_library,Qts_testpaper
 6、第5列为难度、级别
 7、第6列为来源
 8、第7列为出题人
-9、在倒入判断、问答、分析、填空时备选答案与正确答案都直接到字段中，单选、多选时把答案直接组合到备选项的前面，
+9、第8列为备注
+10、在倒入判断、问答、分析、填空时备选答案与正确答案都直接到字段中，单选、多选时把答案直接组合到备选项的前面，
    以便于把备选答案打乱出题。
 """
 
@@ -35,6 +36,7 @@ from trainexam.models import Qts_Profession,Qts_userid,Qts_library,Qts_testpaper
 import xlrd
 #只能读不能写
 book = xlrd.open_workbook('stu.xls')#打开一个excel
+#book._all_sheets_count  属性所有页数
 sheet = book.sheet_by_index(0)#根据顺序获取sheet
 sheet2 = book.sheet_by_name('case1_sheet')#根据sheet页名字获取sheet
 print(sheet.cell(0,0).value)#指定行和列获取数据
@@ -70,11 +72,10 @@ finally:
 """
 
 
-def uploadfile(request):
+def import_qtsfiles(request):
     '''接收上传的文件，xls、xlsx'''
     """
     fobj = request.FILES.getlist('my-files')
-
     baseDir = os.path.dirname(os.path.abspath(__name__));
     jpgdir = os.path.join(baseDir,'static','jpg');
     filename = os.path.join(jpgdir,f.name);
@@ -83,9 +84,6 @@ def uploadfile(request):
         fobj.write(chrunk);
     fobj.close();
     """
-
-def importqts_singlechoice(request,xlsfile):
-    '''倒入单项选择题库'''
 
 
 
