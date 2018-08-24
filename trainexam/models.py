@@ -41,7 +41,7 @@ class Qts_library(models.Model):
         填空为所有答案的顺序列表，无空格用逗号分开;
         其它为最终答案'''
     qts_profession = models.ForeignKey(Qts_Profession,on_delete = models.CASCADE) #专业分类
-    qts_types = models.CharField(max_length = 10)  #题型 判断、单选、多选、填空、简答、分析
+    qts_types = models.CharField(max_length = 16)  #题型 判断、单选、多选、填空、简答、分析
     name = models.TextField() #题目内容
     choosableanswer = models.TextField() #备选答案
     trainnums = models.IntegerField(default = 0)
