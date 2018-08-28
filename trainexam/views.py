@@ -80,6 +80,8 @@ def import_qtsjudge(onerowflag,onerowdata):
     """
     if onerowdata[3].strip().upper() in ['T','Ｔ','1','TRUE','OK','正确','对','ＯＫ']:  #第４列（从０开始叫第３列）
         answey = '正确'
-        
+
+
+
 
 
