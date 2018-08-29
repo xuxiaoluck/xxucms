@@ -21,6 +21,7 @@ import eblog.urls
 import software.urls
 import stock.urls
 import cost.urls
+import trainexam.urls
 
 urlpatterns = [
     path('',xxucms.views.index),
@@ -37,4 +38,5 @@ urlpatterns = [
     path('software/',include(software.urls)),
     path('stock/',include(stock.urls)),
     path('cost/',include(cost.urls)),
+    path('trainexam/',include(trainexam.urls)),
 ]

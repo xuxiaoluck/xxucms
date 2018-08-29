@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'software',
     'stock',
     'cost',
+    'trainexam',
 ]
 
 MIDDLEWARE = [
