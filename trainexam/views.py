@@ -186,9 +186,35 @@ def autogenuser00001(request):
     userobj.save()
     return HttpResponse('登录ID：{0}\n用户名:{1}\n请使用ID登录系统\n用户名可自行更改'.format(userobj.id,userobj.name))
 
+
+
 def userlogin00001(request):
     '''登录考试系统'''
-    
+
+    uid = request.POST['uid']
+    upwd = request.POST['upwd']
+    if uid == '' or upwd == '':
+        return HttpResponse('登录错误，用户ID或密码不能为空！')
+    else:
+        tmpobj = Qts_Userid.objects.filter(id = uid)
+        if tmpobj.count() == 0:
+            return HttpResponse('用户不存在！')
+        if tmpobj[0].id_password != upwd:
+            return HttpResponse('密码错误！')
+
+        tmpobj = Qts_Userid.get(id = uid)
+        tmpobj.is_login = True
+        tmpobj.save()
+    return HttpResponse('登录成功！')
+
+def userlogout00001(request):
+    '''用户登出'''
+    uid = request.POST['uid']
+    tmpobj = Qts_Userid.get(id = uid)
+    tmpobj.is_login = False
+    tmpobj.save()
+    return HttpResponse('已退出系统')
+
 
 def import_qtsfiles(request):
     '''接收上传的文件，xls、xlsx'''

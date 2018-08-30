@@ -14,6 +14,7 @@ class Qts_Userid(models.Model):
     id_date = models.DateTimeField(auto_now_add = True)
     id_ip = models.GenericIPAddressField()  #生成日期、客户端ip地址
     id_password = models.CharField(max_length = 10,default = '111111')
+    is_login = models.BooleanField(default = False)
 
     def __str__(self):
         return self.name

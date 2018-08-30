@@ -9,4 +9,5 @@ urlpatterns = [
     path('',index), #首页
     path('autogenuser/',autogenuser00001),
     path('userlogin/',userlogin00001),
+    path('userlogout/',userlogout00001),
 ]
