@@ -5,9 +5,12 @@ from django.contrib import auth
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
-from ebook.models import Books
+from ebook.models import Books,BookFiles
 from eblog.models import Blogs
 from software.models import Softs
+import json
+
+
 
 def test(request):
     '''测试视图'''
@@ -116,4 +119,53 @@ def regsave(request):
     return render_to_response('userreg.html',locals())
 
 
+
+def showbooklist(request):
+    '''首页显示书籍列表'''
+
+    limit = int(request.GET['limit'])
+    offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    #sortfield = request.GET['sortfield']
+    total = Books.objects.all().count()
+    objvalues = Books.objects.all().order_by('-updatetime')[offset:limit + offset]
+    rows = list(objvalues.values('id','name','booktypes','detial'))
+    rlt = {'total':total,'rows':rows}
+
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
+
+def showchildbooklist(request):
+    '''得到实际书籍文件'''
+
+    parentid = int(request.GET['parentid'])
+    #print('bookid:',parentid,request.GET['limit'])
+    #limit = int(request.GET['limit'])
+    #offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    total = BookFiles.objects.all().count()
+    objvalues = BookFiles.objects.filter(id = parentid).order_by('name') #[0:100]#offset:limit + offset]
+    rows = list(objvalues.values('id','name'))
+    rlt = {'total':total,'rows':rows}
+    print(rlt)
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
+
+
+def showsoftlist(request):
+    '''首页显示软件列表'''
+
+    limit = int(request.GET['limit'])
+    offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    total = Softs.objects.all().count()
+    objvalues = Softs.objects.all().order_by('-updatetime')[offset:limit + offset]
+    rows = list(objvalues.values('id','name','softtypes','detial'))
+    rlt = {'total':total,'rows':rows}
+
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
 
