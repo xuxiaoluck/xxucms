@@ -56,32 +56,51 @@ function inittable_showbook(){
         $(cur_table).bootstrapTable({
             url: '/homeshowchildbooklist/',
             method: 'get',
+            queryParams: { parentid: parentid },
+            ajaxOptions: { parentid: parentid },
+            clickToSelect: true,
+            //detailView: true,//父子表
+            uniqueId: "id",
+            /*
             queryParams:  function(params){
                 var pa = {limit: params.limit,offset:params.offset,parentid:parentid};
                 return pa;
             },
-            clickToSelect: true,
-            //detailView: true,//父子表
-            queryParamsType: "limit",
+            */
+            cache: false,
             pagination: false,
-            uniqueId: "id",
-            pageSize: 20,
-            pageList: [20,30,50],
+            //pageSize: 20,
+            //pageList: [20,30,50],
             columns: [{
-                checkbox: true
-            }, {
                 field: 'id',
-                title: 'ID'
+                title: 'ID',
+                visible:false
             }, {
                 field: 'name',
                 title: '名称'
+            },{
+                field:'size',
+                title:'文件大小'
             }],
+            responseHandler: function(res) {   //处理 从后端 返回的数据
+                     //console.log(res);
+                     if (res == 0) {
+                         //alert('无数据！');
+                     } else {
+                         //var orderListData = res['rows'];  //##### 重要！！#####
+                         return res;//orderListData;
+                     }
+                 },
             //无线循环取子表，直到子表里面没有记录
             onExpandRow: function (index, row, $Subdetail) {
                 initbooksubtable(index, row, $Subdetail);
+            }, //行点击事件，row 为行内容 row.id row.name....
+            onClickRow: function (row) {
+                //alert(row.name);
+                window.location.href="/ebook/downloadfile?fileid=" + row.id
             }
         });
-        return initbooksubtable;
+        //return initbooksubtable;
     };
 
          //加载后显示列表
@@ -172,6 +191,7 @@ function inittable_showsoft(){
                  }
              });//bootstrapTable
          };
+
 
          //加载后显示列表
          $(function(){

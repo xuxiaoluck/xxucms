@@ -140,18 +140,20 @@ def showchildbooklist(request):
     '''得到实际书籍文件'''
 
     parentid = int(request.GET['parentid'])
-    #print('bookid:',parentid,request.GET['limit'])
-    #limit = int(request.GET['limit'])
-    #offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
-    total = BookFiles.objects.all().count()
-    objvalues = BookFiles.objects.filter(id = parentid).order_by('name') #[0:100]#offset:limit + offset]
-    rows = list(objvalues.values('id','name'))
-    rlt = {'total':total,'rows':rows}
-    print(rlt)
+    objvalues = BookFiles.objects.filter(book_list__id = parentid).order_by('name') #[0:100]#offset:limit + offset]
+    #rows = list(objvalues.values('id','name'))
+    rows = []
+    for item in objvalues:
+        tmpdict = {}
+        tmpdict['size'] = "{0:.2f}K".format(item.uploadfile.size / 1024.0)
+        tmpdict['id'] = item.id
+        tmpdict['name'] = item.name
+        rows.append(tmpdict)
+
     if len(rows) == 0:
         return HttpResponse('0')
     else:
-        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
+        return HttpResponse(json.dumps(rows),content_type = 'application/json')
 
 
 def showsoftlist(request):
