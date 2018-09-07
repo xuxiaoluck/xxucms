@@ -17,4 +17,7 @@ urlpatterns = [
     path('modifybook/',ebook.views.modifybook),
     path('deleteonebookfile/',ebook.views.deleteonebookfile),
     path('deleteonebook/',ebook.views.deleteonebook),
+    path('showbooktypelist/',ebook.views.showbooktypelist), #2018－09－07改，加载分类列表数据到表格
+    path('showbooklist/',ebook.views.showbooklist),
+    path('showbooksublist/',ebook.views.showbooksublist),
 ]

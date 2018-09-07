@@ -55,7 +55,7 @@ function inittable_industry(){
                      else{
                          return {};
                      }
-                     return {classes: strclass}
+                     return {classes: strclass};
                  },
                  responseHandler: function(res) {   //处理 从后端 返回的数据
                      //console.log(res);

@@ -11,6 +11,18 @@
     <title>CMS.电子图书文档管理工具</title>
 
     {%include "head.html"%}
+    {%if not  request.user.is_authenticated%}
+    <script language='javascript'>
+     //document.location = '/nologin/'
+     var islogin = 0;
+    </script>
+    {%else%}
+    <script language="javascript">
+     var islogin = 1;
+    </script>
+    {%endif%}
+
+    <script src="{% static 'myjs/ebook.js' %}" type="text/javascript"></script> <!-- TABLE显示数据 -->
 
 
 
@@ -72,25 +84,7 @@
 
 			<!-- List-Group Panel -->
 			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title"><span class="glyphicon glyphicon-random"></span>图书资源分类</h4>
-				</div>
-
-                <div class="col-sm-6">
-                    <ul class="nav nav-tabs nav-stacked">
-                        {%for typename in typelist%}
-                        <li><a href="/ebook/booklistbytypename/?typename={{typename | urlencode}}">{{typename}}</a></li>
-                        {%endfor%}
-                   </ul>
-                </div>
-                <div class="col-sm-6">
-                    <ul class="nav nav-tabs nav-stacked">
-                        {%for typename in typelist1%}
-                        <li><a href="/ebook/booklistbytypename/?typename={{typename | urlencode}}">{{typename}}</a></li>
-                        {%endfor%}
-                    </ul>
-                </div>
-                <!-- 分两列显示分类 -->
+                <table id="showbooktypelist_table"></table>
 			</div>
 
 
@@ -103,34 +97,7 @@
 			<!-- Articles -->
 			<div class="row">
 				<article class="col-xs-12">
-                    <ul class="pagination">
-                        <li><a href="#">&laquo;</a></li>
-                        {%for i in pagenums%}
-                        <li><a href="/ebook/openbooksbypage/?pagenum={{i}}">{{i}}</a></li>
-                        {%endfor%}
-                        <li><a href="#">&raquo;</a></li>
-                    </ul><br>
-
-                    {%for book in bookrlt%}
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{book.bookname}}
-                        </button>
-                            <ul class="dropdown-menu">
-                            {%for file in book.filelist%}
-                                <li><a class="dropdown-item" href="/ebook/downloadfile/?fileid={{file.fileid}}"><strong>{{file.name}}</strong>,
-                                    {{file.size}},{{file.uploaddate}}</a></li>
-                                {%endfor%}
-                            </ul>
-                    </div> <!-- 下拉菜单显示资源文件列表 -->
-                    {%if request.user.is_authenticated%}
-					    <a href="/ebook/modifybook?bookid={{book.bookid}}">修改</a>
-                        {%endif%}
-
-                    <h5>出版社：{{book.bookpublisher}}</h5>
-                    <h5>作者：{{book.bookauthors}}</h5>
-                    <h5>简介：{{book.bookdetial}}</h5>
-                    {%endfor%}
+                    <table id ="showbooklist_table"></table>
 				</article>
 			  </div>
 		</div><!--/Center Column-->

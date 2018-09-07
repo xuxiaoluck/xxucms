@@ -33,9 +33,6 @@ urlpatterns = [
     path('logout/',xxucms.views.xlogout),
     path('userreg/',xxucms.views.userreg),   #index中点了用户注册
     path('regsave/',xxucms.views.regsave),   #userreg.html中点击了注册按钮
-    path('homeshowbooklist/',xxucms.views.showbooklist),
-    path('homeshowchildbooklist/',xxucms.views.showchildbooklist),
-    path('homeshowsoftlist/',xxucms.views.showsoftlist),
     path('ebook/',include(ebook.urls)),
     path('eblog/',include(eblog.urls)),
     path('software/',include(software.urls)),

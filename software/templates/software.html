@@ -10,29 +10,20 @@
 
     <title>CMS.软件下载</title>
 
-    <script src="{% static 'bootstrap-3.3.7/js/jquery-1.11.3.min.js' %}"></script>
-    <script src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}" type="text/javascript"></script>
+    {%include "head.html"%}
 
-    <link href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'bootstrap-3.3.7/css/custom.css' %}" rel="stylesheet">
- 	<script src="{% static 'bootstrap-3.3.7/js/holder.js' %}"></script>
- 	<script src="{% static 'bootstrap-3.3.7/js/validator.min.js' %}"></script>
+    {%if not  request.user.is_authenticated%}
+    <script language='javascript'>
+     //document.location = '/nologin/'
+     var islogin = 0;
+    </script>
+    {%else%}
+    <script language="javascript">
+     var islogin = 1;
+    </script>
+    {%endif%}
 
-    <link href="{% static 'bootstrap-3.3.7/css/fileinput.css' %}" media="all" rel="stylesheet" type="text/css"/>
-    <link href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}" media="all" rel="stylesheet" type="text/css"/>
-    <link href="{% static 'bootstrap-3.3.7/themes/explorer-fa/theme.css' %}" media="all" rel="stylesheet" type="text/css"/>
-
-    <script src="{% static 'bootstrap-3.3.7/js/plugins/sortable.js' %}" type="text/javascript"></script>
-    <script src="{% static 'bootstrap-3.3.7/js/fileinput.js' %}" type="text/javascript"></script>
-    <script src="{% static 'bootstrap-3.3.7/js/locales/zh.js' %}" type="text/javascript"></script>
-    <script src="{% static 'bootstrap-3.3.7/themes/explorer-fa/theme.js' %}" type="text/javascript"></script>
-    <script src="{% static 'bootstrap-3.3.7/themes/fa/theme.js' %}" type="text/javascript"></script>
-    <script src="{% static 'bootstrap-3.3.7/js/popper.js' %}" type="text/javascript"></script>
-
-    <script src="{% static 'summernote3/summernote.js' %}" type="text/javascript"></script>
-    <link href="{% static 'summernote3/summernote.css' %}" media="all" rel="stylesheet" type="text/css"/>
-    <script src="{% static 'summernote3/lang/summernote-zh-CN.js' %}" type="text/javascript"></script>
-
+    <script src="{% static 'myjs/software.js' %}" type="text/javascript"></script> <!-- TABLE显示数据 -->
 
 
 
@@ -93,27 +84,8 @@
 
 			<!-- List-Group Panel -->
 			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title"><span class="glyphicon glyphicon-random"></span>软件资源分类</h4>
-				</div>
-
-                <div class="col-sm-6">
-                    <ul class="nav nav-tabs nav-stacked">
-                        {%for typename in typelist%}
-                        <li><a href="/software/softlistbytypename/?typename={{typename | urlencode}}">{{typename}}</a></li>
-                        {%endfor%}
-                   </ul>
-                </div>
-                <div class="col-sm-6">
-                    <ul class="nav nav-tabs nav-stacked">
-                        {%for typename in typelist1%}
-                        <li><a href="/software/softlistbytypename/?typename={{typename | urlencode}}">{{typename}}</a></li>
-                        {%endfor%}
-                    </ul>
-                </div>
-                <!-- 分两列显示分类 -->
+                <table id ="showsofttypelist_table"></table>
 			</div>
-
 
 		</div><!--/Left Column-->
 
@@ -124,31 +96,7 @@
 			<!-- Articles -->
 			<div class="row">
 				<article class="col-xs-12">
-                    <ul class="pagination">
-                        <li><a href="#">&laquo;</a></li>
-                        {%for i in pagenums%}
-                        <li><a href="/software/opensoftbypage/?pagenum={{i}}">{{i}}</a></li>
-                        {%endfor%}
-                        <li><a href="#">&raquo;</a></li>
-                    </ul><br>
-
-                    {%for soft in softrlt%}
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{soft.softname}}
-                        </button>
-                            <ul class="dropdown-menu">
-                            {%for file in soft.filelist%}
-                                <li><a class="dropdown-item" href="/software/downloadsoft/?fileid={{file.fileid}}"><strong>{{file.name}}</strong>,
-                                    {{file.size}},{{file.uploaddate}}</a></li>
-                                {%endfor%}
-                            </ul>
-                    </div> <!-- 下拉菜单显示资源文件列表 -->
-                    {%if request.user.is_authenticated%}
-					    <a href="/software/modifysoft?softid={{soft.softid}}">修改</a>
-                    {%endif%}
-                    <h5>简介：{{soft.softdetial}}</h5>
-                    {%endfor%}
+                    <table id="showsoftlist_table"></table>
 				</article>
 			  </div>
 		</div><!--/Center Column-->

@@ -288,3 +288,56 @@ def deleteonebook(request):
     bookobj.delete()
     #删除books中的信息时自动删除关联它的外建的表
     return HttpResponse('delete book [{0}] OK!'.format(name))
+
+
+
+#以下为2018－09－07后改的代码
+
+def showbooktypelist(request):
+    '''加载分类数据，到表格中'''
+    objvalues = BookType.objects.all()
+    rows = list(objvalues.values('id','name'))
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rows),content_type = 'application/json')
+
+def showbooklist(request):
+    '''加载分类下的图书数据'''
+
+    limit = int(request.GET['limit'])
+    offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    if 'typename' in request.GET:
+        typename = request.GET['typename']
+        objvalues = Books.objects.filter(booktypes__contains = typename)[offset:limit + offset]
+        total = Books.objects.filter(booktypes__contains = typename).count()
+    else:
+        total = Books.objects.all().count()
+        objvalues = Books.objects.all().order_by('-updatetime')[offset:limit + offset]
+
+
+    rows = list(objvalues.values('id','name','booktypes','detial'))
+    rlt = {'total':total,'rows':rows}
+
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
+
+
+def showbooksublist(request):
+    '''加载书籍的实际文件列表'''
+    bookid = int(request.GET['bookid'])
+    objvalues = BookFiles.objects.filter(book_list__id = bookid).order_by('name') #[0:100]#offset:limit + offset]
+    rows = []
+    for item in objvalues:
+        tmpdict = {}
+        tmpdict['size'] = "{0:.2f}K".format(item.uploadfile.size / 1024.0)
+        tmpdict['id'] = item.id
+        tmpdict['name'] = item.name
+        rows.append(tmpdict)
+
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rows),content_type = 'application/json')

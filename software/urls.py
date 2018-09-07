@@ -17,4 +17,7 @@ urlpatterns = [
     path('modifysoft/',modifysoft),
     path('deleteonesoftfile/',deleteonesoftfile),
     path('deleteonesoft/',deleteonesoft),
+    path('showsoftlist/',showsoftlist), #2018-09-07后改
+    path('showsoftsublist/',showsoftsublist),
+    path('showsofttypelist/',showsofttypelist),
 ]

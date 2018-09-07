@@ -250,3 +250,54 @@ def deleteonesoft(request):
 
 
 
+#以下为2018－09－07后改的代码
+def showsofttypelist(request):
+    '''加载分类数据，到表格中'''
+    objvalues = SoftType.objects.all()
+    rows = list(objvalues.values('id','name'))
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rows),content_type = 'application/json')
+
+
+
+def showsoftlist(request):
+    '''显示软件列表'''
+
+    limit = int(request.GET['limit'])
+    offset = int(request.GET['offset'])  #每页长及起妈偏移地址（切片start）
+    if 'typename' not in request.GET:
+        total = Softs.objects.all().count()
+        objvalues = Softs.objects.all().order_by('-updatetime')[offset:limit + offset]
+    else:
+        typename = request.GET['typename']
+        objvalues = Softs.objects.filter(softtypes__contains = typename)[offset:limit + offset]
+        total = Softs.objects.filter(softtypes__contains = typename).count()
+
+    rows = list(objvalues.values('id','name','softtypes','detial'))
+    print(rows)
+    rlt = {'total':total,'rows':rows}
+
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rlt),content_type = 'application/json')
+
+
+def showsoftsublist(request):
+    '''加载soft的实际文件列表'''
+    softid = int(request.GET['softid'])
+    objvalues = SoftFiles.objects.filter(soft_list__id = softid).order_by('name') #[0:100]#offset:limit + offset]
+    rows = []
+    for item in objvalues:
+        tmpdict = {}
+        tmpdict['size'] = "{0:.2f}K".format(item.uploadfile.size / 1024.0)
+        tmpdict['id'] = item.id
+        tmpdict['name'] = item.name
+        rows.append(tmpdict)
+
+    if len(rows) == 0:
+        return HttpResponse('0')
+    else:
+        return HttpResponse(json.dumps(rows),content_type = 'application/json')
