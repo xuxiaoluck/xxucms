@@ -215,7 +215,7 @@ def downloadfile(request):
     response = StreamingHttpResponse(file_iterator(the_file_name))
     response['Content-Type'] = 'application/octet-stream'
     #response['Content-Disposition'] = 'attachment;filename="{0}"'.format(urlquote(file_name))
-    response['Content-Disposition'] = 'attachment;filename="{0}"'.format(escape_uri_path(file_name))  #解决下载中文文件路径问题
+    response['Content-Disposition'] = "attachment;filename*=''utf-8{0}".format(escape_uri_path(file_name))  #解决下载中文文件路径问题
 
     return response
 
