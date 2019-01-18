@@ -4,10 +4,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import StreamingHttpResponse
 from django.utils.http import urlquote
 from datetime import datetime
+from django.conf import settings
 import json,os
 import rsa,binascii
 
 from cost.models import CostType,CostSubject,Money
+
 
 '''2018-06-14
 '''
@@ -71,7 +73,6 @@ def decryptlongstr(longstrlist,prikey):
         return minwenstr.decode()
 
 
-
 def index(request):
     '''首页'''
 
@@ -87,6 +88,10 @@ def index(request):
 
 def getcostinfo(request):
     '''显示数据'''
+
+
+    if not request.user.is_authenticated:
+        return render_to_response('nologin.html',locals())
 
     costtype = request.GET['costtype']
     costsubject = request.GET['costsubject']
@@ -138,7 +143,12 @@ def getcostinfo(request):
     """取得数据，并生成一个列表，下面将日期转为字符串，外键转为名称
     """
 
-    (prikey,pubkey) = getpubprikey(os.environ["HOME"] + "/.pri")
+    if settings.ISSERVER == 'NO':
+        (prikey,pubkey) = getpubprikey("/home/xuxiaoc/.pri")
+    elif settings.ISSERVER == 'YES':
+        (prikey,pubkey) = getpubprikey("/home/xuxiaos/.pri")
+    else:
+        (prikey,pubkey) = getpubprikey("/home/xuxiao/.pri")
 
     for item in rows:
         tmpstr = item['date'].strftime("%Y-%m-%d")
@@ -186,6 +196,9 @@ decryptlongstr:传入的是一个HEX16进制形式的字符串列表、私钥，
 def addonecost(request):
         """增加一条收支数据"""
 
+        if not request.user.is_authenticated:
+                return render_to_response('nologin.html',locals())
+
         costdate = datetime.strptime(request.POST['costdate'],'%Y-%m-%d')
         costtypeid = request.POST['costtypeid']
         costsubjectid = request.POST['costsubjectid']
@@ -194,7 +207,13 @@ def addonecost(request):
         typeobj = CostType.objects.get(id = costtypeid)
         subjectobj = CostSubject.objects.get(id = costsubjectid)  #得到外键
         minstr = request.POST['costmemo']
-        (prikey,pubkey) = getpubprikey(os.environ["HOME"] + "/.pri")
+        if settings.ISSERVER == 'NO':
+            (prikey,pubkey) = getpubprikey("/home/xuxiaoc/.pri")
+        elif settings.ISSERVER == 'YES':
+            (prikey,pubkey) = getpubprikey("/home/xuxiaos/.pri")
+        else:
+            (prikey,pubkey) = getpubprikey("/home/xuxiao/.pri")
+
         milist = encryptlongstr(minstr,pubkey)
         #得到是以hex形式的字符串列表
 
